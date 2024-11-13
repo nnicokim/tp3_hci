@@ -33,6 +33,12 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+//private val HybridColorScheme = lightColorScheme(
+//    primary = Purple40,
+//    secondary = PurpleGrey40,
+//    tertiary = Pink40
+//)
+
 @Composable
 fun Tp3_hciTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
