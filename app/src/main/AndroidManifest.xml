@@ -10,13 +10,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/our_logo_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Tp3_hci"
+        android:theme="@style/Theme.PocketPay"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Tp3_hci">
+            android:theme="@style/Theme.PocketPay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -40,9 +40,8 @@ private val LightColorScheme = lightColorScheme(
 //)
 
 @Composable
-fun Tp3_hciTheme(
+fun PocketPayTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -51,7 +50,6 @@ fun Tp3_hciTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
