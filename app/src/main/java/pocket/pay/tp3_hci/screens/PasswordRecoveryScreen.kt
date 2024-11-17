@@ -1,17 +1,23 @@
 package pocket.pay.tp3_hci.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pocket.pay.tp3_hci.ui.theme.Purple
+import pocket.pay.tp3_hci.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,8 +29,21 @@ fun PasswordRecoveryScreen() {
             TopAppBar(
                 title = { Text("") },
                 navigationIcon = {
-                    Button(onClick = { /* falta implementar algo */ }) {
-                        Text("←", fontSize = 25.sp) // cambiar por icono
+                    Button(onClick = { /* falta implementar algo */ },
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape),
+                             colors = ButtonDefaults.buttonColors(
+                                 containerColor = Color.Gray
+                             ),
+                        contentPadding = PaddingValues(0.dp)
+                        ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.go_back_icon),
+                            contentDescription = "Go back",
+                            tint = Color.White,
+                            modifier = Modifier.size(29.dp)
+                        )
                     }
                 }
             )
@@ -43,9 +62,11 @@ fun PasswordRecoveryScreen() {
             Text(
                 text = "Password recovery",
                 fontSize = 35.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.padding(bottom = 25.dp)
+                modifier = Modifier.padding(bottom = 27.dp)
             )
 
             Text(
@@ -75,7 +96,7 @@ fun PasswordRecoveryScreen() {
                 colors = ButtonDefaults.buttonColors(containerColor = Purple)
             ) {
                 Text(text = "Accept",
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    color = Color.White,
                     fontSize = 17.sp)
             }
         }
