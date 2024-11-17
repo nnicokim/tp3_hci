@@ -37,6 +37,9 @@ android {
     buildFeatures {
         compose = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.6.7"
+    }
 }
 
 dependencies {
@@ -56,5 +59,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+
+    implementation("androidx.compose.ui:ui:1.6.7")
+    implementation("androidx.compose.runtime:runtime:1.6.7")
+    implementation("androidx.compose.foundation:foundation:1.6.7")
 
 }
