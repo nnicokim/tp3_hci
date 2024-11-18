@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Pocket Pay</string>
+    <string name="login">Login</string>
+    <string name="home">Home</string>
+    <string name="payments">Payments</string>
+    <string name="cards">Cards</string>
+    <string name="investments">Investments</string>
+    <string name="map">Map</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
 </resources>
