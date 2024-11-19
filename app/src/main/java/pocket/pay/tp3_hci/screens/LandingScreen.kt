@@ -24,11 +24,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.ui.theme.Purple
 
 @Composable
-fun LandingScreen() {
+fun LandingScreen(goToLogin : () -> Unit, goToRegister : () -> Unit) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -45,7 +47,7 @@ fun LandingScreen() {
             Image(
                 painter = painterResource(id = R.drawable.pplogo),
                 contentDescription = "Logo",
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(85.dp)
             )
 
             Spacer(modifier = Modifier.width(15.dp))
@@ -87,7 +89,7 @@ fun LandingScreen() {
 
         Button(
             onClick = {
-                // falta implementar
+                goToLogin()
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -99,7 +101,7 @@ fun LandingScreen() {
 
         Button(
             onClick = {
-                // falta implementar
+                goToRegister()
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
@@ -113,8 +115,8 @@ fun LandingScreen() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun LandingScreenPreview() {
-    LandingScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun LandingScreenPreview() {
+//    LandingScreen(goToLogin = {}, goToRegister = {})
+//}

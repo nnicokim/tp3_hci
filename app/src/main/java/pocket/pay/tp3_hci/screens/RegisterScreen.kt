@@ -21,11 +21,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import pocket.pay.tp3_hci.R
+import pocket.pay.tp3_hci.navigations.AppDestinations
 import pocket.pay.tp3_hci.ui.theme.Purple
 
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit) {
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -155,7 +157,11 @@ fun RegisterScreen() {
 
 
         Button(
-            onClick = { /* crear la cuenta */ },
+            onClick = {
+                // Falta implementar la logica de registro
+                onLoginSuccess()
+                goToHome()
+            },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Purple, contentColor = Color.White)
         ) {
@@ -168,7 +174,7 @@ fun RegisterScreen() {
 @Preview(showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen()
+    RegisterScreen(onLoginSuccess = {}, goToHome = {})
 }
 
 
