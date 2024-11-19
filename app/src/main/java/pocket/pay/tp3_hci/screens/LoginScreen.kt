@@ -23,11 +23,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import pocket.pay.tp3_hci.R
+import pocket.pay.tp3_hci.navigations.AppDestinations
 import pocket.pay.tp3_hci.ui.theme.Purple
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goToHome: () -> Unit,
+                goToRegister: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -39,7 +42,6 @@ fun LoginScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(48.dp))
-
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
@@ -63,27 +65,14 @@ fun LoginScreen() {
                 fontWeight = FontWeight.Bold
             )
         }
-
         Spacer(modifier = Modifier.height(20.dp))
-
         Text(
             text = "Your entire wallet in your pocket",
             color = Color.Gray,
             fontSize = 30.sp,
             textAlign = TextAlign.Center
         )
-
         Spacer(modifier = Modifier.height(30.dp))
-
-        Text(
-            text = "Enter your username and password to access your account",
-            color = Color.Black,
-            fontSize = 17.sp,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -91,49 +80,47 @@ fun LoginScreen() {
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
-
         Spacer(modifier = Modifier.height(16.dp))
-
         PasswordInputField(
             password = password,
             onPasswordChange = { password = it }
         )
-
         Spacer(modifier = Modifier.height(27.dp))
-
         Button(
-            onClick = { /* Lógica o nav de login */ },
+            onClick = {
+                // Falta implementar la logica de login
+                onLoginSuccess()
+                goToHome()
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Login",
-                fontSize = 17.sp,)
+            Text(text = "Login", fontSize = 17.sp)
         }
-
         Spacer(modifier = Modifier.height(13.dp))
-
         Button(
-            onClick = { /* Lógica o nav de register */ },
+            onClick = {
+                goToRegister()
+            },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Purple,
                 contentColor = Color.White
             )
         ) {
-            Text(text = "Register",
-                fontSize = 17.sp,)
+            Text(text = "Register", fontSize = 17.sp)
         }
-
         Spacer(modifier = Modifier.height(16.dp))
-
         TextButton(
-            onClick = { /* nav al screen para recuperar contraseña */ },
+            onClick = {
+                onPasswordRecovery()
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Forgot your password?",
-                fontSize = 19.sp,)
+            Text(text = "Forgot your password?", fontSize = 19.sp)
         }
     }
 }
+
 
 @Composable
 fun PasswordInputField(
@@ -168,10 +155,10 @@ fun PasswordInputField(
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    LoginScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun LoginScreenPreview() {
+//    LoginScreen(onLoginSuccess = {}, onPasswordRecovery = {}, goToHome = {}, goToRegister = {})
+//}
 
 

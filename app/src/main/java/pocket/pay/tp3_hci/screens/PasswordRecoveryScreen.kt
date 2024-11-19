@@ -16,12 +16,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.R
+import pocket.pay.tp3_hci.navigations.AppDestinations
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordRecoveryScreen() {
+fun PasswordRecoveryScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit) {
     var email by remember { mutableStateOf("") }
 
     Scaffold(
@@ -90,7 +92,9 @@ fun PasswordRecoveryScreen() {
 
             Button(
                 onClick = {
-                    // falta implementar
+                    // Falta implementar de que se envie un correo con la contraseña
+                    onLoginSuccess()
+                    goToHome()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Purple)
@@ -106,5 +110,5 @@ fun PasswordRecoveryScreen() {
 @Preview(showBackground = true)
 @Composable
 fun PasswordRecoveryScreenPreview() {
-    PasswordRecoveryScreen()
+    PasswordRecoveryScreen(onLoginSuccess = {}, goToHome = {})
 }
