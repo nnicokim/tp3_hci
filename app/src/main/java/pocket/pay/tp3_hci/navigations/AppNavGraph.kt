@@ -14,6 +14,7 @@ import pocket.pay.tp3_hci.screens.PasswordRecoveryScreen
 import pocket.pay.tp3_hci.screens.PaymentsScreen
 import pocket.pay.tp3_hci.screens.RegisterScreen
 import androidx.compose.ui.Modifier
+import pocket.pay.tp3_hci.screens.AddCardScreen
 
 @Composable
 fun AppNavGraph(
@@ -29,13 +30,13 @@ fun AppNavGraph(
         startDestination = startDestination
     ) {
         composable(route = AppDestinations.HOME.route) {
-            HomeScreen()
+            HomeScreen(goToMap = { navController.navigate("map") })
         }
         composable(route = AppDestinations.PAYMENTS.route) {
             PaymentsScreen()
         }
         composable(route = AppDestinations.CARDS.route) {
-            CardsScreen()
+            CardsScreen(goToCreateCard = { navController.navigate("addcard") })
         }
         composable(route = AppDestinations.INVESTMENTS.route) {
             InvestmentsScreen()
@@ -59,7 +60,10 @@ fun AppNavGraph(
                 AppDestinations.HOME.route) })
         }
         composable(route = "map") {
-            MapScreen()
+            MapScreen(goBackToHome = { navController.navigate(AppDestinations.HOME.route) })
+        }
+        composable(route = "addcard") {
+            AddCardScreen(goBackToCards = { navController.navigate(AppDestinations.CARDS.route) })
         }
     }
 }
