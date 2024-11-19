@@ -5,6 +5,8 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import pocket.pay.tp3_hci.navigations.AppDestinations
+import pocket.pay.tp3_hci.screens.HomeScreen
+import pocket.pay.tp3_hci.screens.LandingScreen
 
 @Composable
 fun BottomBar( currentRoute: String?,
@@ -28,3 +30,12 @@ fun BottomBar( currentRoute: String?,
         }
     }
 }
+
+@Preview
+@Composable
+fun BottomBarPreview() {
+    BottomBar(currentRoute = "payments",
+        onNavigateToRoute = {
+    })
+}
+
