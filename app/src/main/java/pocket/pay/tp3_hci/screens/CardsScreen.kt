@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pocket.pay.tp3_hci.ui.theme.Purple
 
@@ -54,4 +55,10 @@ fun CardsScreen(goToCreateCard : () -> Unit) {
             Text("Add new card")
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CardsScreenPreview() {
+    CardsScreen { }
 }
