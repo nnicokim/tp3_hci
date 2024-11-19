@@ -114,7 +114,7 @@ fun HomeScreen(goToMap : () -> Unit) {
 
 
         Text(
-            text = "See the branch offices near you",
+            text = "See banks or branch offices near you",
             fontSize = 20.sp,
             modifier = Modifier.padding(16.dp)
         )

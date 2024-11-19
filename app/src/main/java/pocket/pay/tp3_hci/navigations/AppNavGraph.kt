@@ -53,7 +53,7 @@ fun AppNavGraph(
         }
         composable(route = "register") {
             RegisterScreen(onLoginSuccess = onLoginSuccess, goToHome = { navController.navigate(
-                AppDestinations.HOME.route) })
+                AppDestinations.HOME.route) }, goToLogin = { navController.navigate("login") })
         }
         composable(route = "passwordRecovery") {
             PasswordRecoveryScreen(onLoginSuccess = onLoginSuccess, goToHome = { navController.navigate(

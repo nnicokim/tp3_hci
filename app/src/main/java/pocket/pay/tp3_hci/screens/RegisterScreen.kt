@@ -8,6 +8,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +28,7 @@ import pocket.pay.tp3_hci.navigations.AppDestinations
 import pocket.pay.tp3_hci.ui.theme.Purple
 
 @Composable
-fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit) {
+fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin : () -> Unit) {
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -44,7 +45,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Spacer(modifier = Modifier.height(33.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -168,13 +169,35 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit) {
             Text(text = "Create my account",
                 fontSize = 19.sp)
         }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            text = "Already have an account?",
+            color = Color.Gray,
+            fontSize = 20.sp
+        )
+
+        Spacer(modifier = Modifier.height(3.dp))
+
+        TextButton(
+            onClick = {
+                goToLogin()
+            }
+        ) {
+            Text(
+                text = "Go to Login",
+                color = Purple,
+                fontSize = 20.sp
+            )
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen(onLoginSuccess = {}, goToHome = {})
+    RegisterScreen(onLoginSuccess = {}, goToHome = {}, goToLogin = {})
 }
 
 
