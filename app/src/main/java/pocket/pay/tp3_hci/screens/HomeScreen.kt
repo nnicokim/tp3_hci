@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import pocket.pay.tp3_hci.components.BottomBar
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pocket.pay.tp3_hci.ui.theme.Purple
@@ -59,8 +60,11 @@ fun HomeScreen(goToMap : () -> Unit) {
         ) {
             Text(text = "See map", fontSize = 19.sp)
         }
-
-
-
     }
+}
+
+@Preview
+@Composable
+fun HomeScreenPreview(){
+    HomeScreen {  }
 }

@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import pocket.pay.tp3_hci.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
@@ -155,10 +156,11 @@ fun PasswordInputField(
     )
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun LoginScreenPreview() {
-//    LoginScreen(onLoginSuccess = {}, onPasswordRecovery = {}, goToHome = {}, goToRegister = {})
-//}
+@PreviewScreenSizes
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenPreview() {
+    LoginScreen(onLoginSuccess = {}, onPasswordRecovery = {}, goToHome = {}, goToRegister = {})
+}
 
 
