@@ -14,4 +14,12 @@
     <string name="deposit">Deposit</string>
     <string name="map_text">See banks or branch offices near you</string>
     <string name="see_map">See map</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="error">Error</string>
+    <string name="estimated_profit">Estimated monthly profit percent: </string>
+    <string name="add_fund">Add fund</string>
+    <string name="withdrawal">Withdrawal</string>
+
+
 </resources>

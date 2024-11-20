@@ -15,4 +15,10 @@
     <string name="deposit">Depositar</string>
     <string name="map_text">Encuentre bancos o sucursales cerca suyo</string>
     <string name="see_map">Ver mapa</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="error">Error</string>
+    <string name="estimated_profit">Porcentaje de ganancia mensual estimada: </string>
+    <string name="add_fund">Añadir fondo</string>
+    <string name="withdrawal">Retirar</string>
 </resources>
