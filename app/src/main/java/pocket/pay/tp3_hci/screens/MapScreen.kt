@@ -101,6 +101,12 @@ fun GoogleMapComposable(modifier: Modifier = Modifier) {
                             .title("Itba SDF")
 
                     )
+                    googleMap.addMarker(
+                        MarkerOptions()
+                            .position(LatLng(-34.605563582295474, -58.37252855300904))
+                            .title("Banco Galicia")
+
+                    )
                 }
             }
         },

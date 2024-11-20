@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pocket Pay</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="home">Inicio</string>
+    <string name="payments">Pagos</string>
+    <string name="cards">Tarjetas</string>
+    <string name="investments">Inversiones</string>
+    <string name="map">Mapa</string>
+    <string name="profile">Perfil</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="alias">Alias/CBU</string>
+    <string name="deposit">Depositar</string>
+    <string name="map_text">Encuentre bancos o sucursales cerca suyo</string>
+    <string name="see_map">Ver mapa</string>
+</resources>

@@ -10,5 +10,8 @@
     <string name="logout">Logout</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-
+    <string name="alias">Alias/CBU</string>
+    <string name="deposit">Deposit</string>
+    <string name="map_text">See banks or branch offices near you</string>
+    <string name="see_map">See map</string>
 </resources>
