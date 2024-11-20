@@ -15,6 +15,7 @@ import pocket.pay.tp3_hci.screens.PaymentsScreen
 import pocket.pay.tp3_hci.screens.RegisterScreen
 import androidx.compose.ui.Modifier
 import pocket.pay.tp3_hci.screens.AddCardScreen
+import pocket.pay.tp3_hci.screens.Profile
 
 @Composable
 fun AppNavGraph(
@@ -64,6 +65,9 @@ fun AppNavGraph(
         }
         composable(route = "addcard") {
             AddCardScreen(goBackToCards = { navController.navigate(AppDestinations.CARDS.route) })
+        }
+        composable(route = "profile") {
+            Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) })
         }
     }
 }

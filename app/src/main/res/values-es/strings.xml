@@ -11,4 +11,8 @@
     <string name="logout">Cerrar sesión</string>
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
+    <string name="alias">Alias/CBU</string>
+    <string name="deposit">Depositar</string>
+    <string name="map_text">Encuentre bancos o sucursales cerca suyo</string>
+    <string name="see_map">Ver mapa</string>
 </resources>

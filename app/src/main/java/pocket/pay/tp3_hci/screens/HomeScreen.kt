@@ -27,6 +27,7 @@ import pocket.pay.tp3_hci.components.BottomBar
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,7 +43,7 @@ fun HomeScreen(goToMap : () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(80.dp))
 
         Card(
             colors = CardDefaults.cardColors(
@@ -91,7 +92,7 @@ fun HomeScreen(goToMap : () -> Unit) {
                     painter = painterResource(id = R.drawable.dollar_sign_icon),
                     contentDescription = "Deposit"
                 )
-                Text("Deposit")
+                Text(text = stringResource(id = R.string.deposit))
             }
 
             Spacer(modifier = Modifier.width(20.dp))
@@ -107,14 +108,14 @@ fun HomeScreen(goToMap : () -> Unit) {
                     painter = painterResource(id = R.drawable.bank_icon),
                     contentDescription = "Deposit"
                 )
-                Text(" Alias/CBU")
+                Text(text = stringResource(id = R.string.alias))
             }
 
         }
 
 
         Text(
-            text = "See banks or branch offices near you",
+            text = stringResource(id = R.string.map_text),
             fontSize = 20.sp,
             modifier = Modifier.padding(16.dp)
         )
@@ -130,7 +131,8 @@ fun HomeScreen(goToMap : () -> Unit) {
                 contentColor = Color.White
             )
         ) {
-            Text(text = "See map", fontSize = 19.sp)
+            Text(text = stringResource(id = R.string.see_map),
+                fontSize = 19.sp)
         }
 
         Spacer(
