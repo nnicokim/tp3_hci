@@ -12,6 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import pocket.pay.tp3_hci.components.RecentPayments
+
 
 @Composable
 fun PaymentsScreen() {
@@ -20,7 +22,9 @@ fun PaymentsScreen() {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(80.dp))
+
+        RecentPayments()
 
         Text(
             text = "Payments Screen",
