@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -26,15 +27,19 @@ import androidx.navigation.compose.rememberNavController
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.navigations.AppDestinations
 import pocket.pay.tp3_hci.ui.theme.Purple
+import pocket.pay.tp3_hci.viewmodel.RegisterViewModel
 
 @Composable
-fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin : () -> Unit) {
+fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin : () -> Unit,
+                   viewModel: RegisterViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
 
-    var name by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
-    var mobileNumber by remember { mutableStateOf("") }
+    val name by viewModel.name.collectAsState()
+    val email by viewModel.email.collectAsState()
+    val password by viewModel.password.collectAsState()
+    val confirmPassword by viewModel.confirmPassword.collectAsState()
+    val mobileNumber by viewModel.mobileNumber.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState()
+
     var isPasswordVisible by remember { mutableStateOf(false) }
     var isConfirmPasswordVisible by remember { mutableStateOf(false) }
 
@@ -68,7 +73,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
         Spacer(modifier = Modifier.height(17.dp))
 
         Text(
-            text = "Please fill out the information to create an account",
+            text = stringResource(id = R.string.register_text),
             color = Color.Gray,
             fontSize = 23.sp,
             textAlign = TextAlign.Center
@@ -78,7 +83,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
 
         OutlinedTextField(
             value = name,
-            onValueChange = { name = it },
+            onValueChange = { viewModel.updateName(it) },
             label = { Text("Name") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -87,7 +92,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
 
         OutlinedTextField(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = { viewModel.updateEmail(it) },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
@@ -97,7 +102,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
 
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = { viewModel.updatePassword(it) },
             label = { Text("Password") },
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -112,7 +117,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
                     Icon(
                         painter = icon,
                         contentDescription = if (isPasswordVisible) "Hide password" else "Show password",
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(25.dp)
                     )
                 }
             }
@@ -122,11 +127,10 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
 
         OutlinedTextField(
             value = confirmPassword,
-            onValueChange = { confirmPassword = it },
+            onValueChange = { viewModel.updateConfirmPassword(it) },
             label = { Text("Confirm Password") },
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            // keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
             trailingIcon = {
                 val icon = if (isPasswordVisible) {
                     painterResource(id = R.drawable.ic_visibility_off)
@@ -148,7 +152,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
 
         OutlinedTextField(
             value = mobileNumber,
-            onValueChange = { mobileNumber = it },
+            onValueChange = { viewModel.updateMobileNumber(it) },
             label = { Text("Mobile Number") },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
@@ -156,24 +160,27 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
 
         Spacer(modifier = Modifier.height(32.dp))
 
-
         Button(
             onClick = {
-                // Falta implementar la logica de registro
-                onLoginSuccess()
-                goToHome()
+                viewModel.validateAndRegister(
+                    onLoginSuccess = {
+                        onLoginSuccess()
+                        goToHome()
+                    },
+                    onError = { "Error" }
+                )
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Purple, contentColor = Color.White)
         ) {
-            Text(text = "Create my account",
+            Text(text = stringResource(id = R.string.create_my_account),
                 fontSize = 19.sp)
         }
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = "Already have an account?",
+            text = stringResource(id = R.string.account_question),
             color = Color.Gray,
             fontSize = 20.sp
         )
@@ -186,7 +193,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
             }
         ) {
             Text(
-                text = "Go to Login",
+                text = stringResource(id = R.string.go_to_login),
                 color = Purple,
                 fontSize = 20.sp
             )

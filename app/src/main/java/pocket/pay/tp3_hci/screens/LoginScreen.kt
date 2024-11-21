@@ -7,6 +7,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -28,12 +30,16 @@ import androidx.navigation.compose.rememberNavController
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.navigations.AppDestinations
 import pocket.pay.tp3_hci.ui.theme.Purple
+import pocket.pay.tp3_hci.viewmodel.LoginViewModel
 
 @Composable
 fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goToHome: () -> Unit,
-                goToRegister: () -> Unit) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+                goToRegister: () -> Unit,
+                viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+
+    val email by viewModel.email.collectAsState()
+    val password by viewModel.password.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState()
 
     Column(
         modifier = Modifier
@@ -43,6 +49,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goTo
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(48.dp))
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
@@ -73,31 +80,49 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goTo
             fontSize = 30.sp,
             textAlign = TextAlign.Center
         )
+
         Spacer(modifier = Modifier.height(30.dp))
+
         OutlinedTextField(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = { viewModel.updateEmail(it) },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
+
         Spacer(modifier = Modifier.height(16.dp))
+
         PasswordInputField(
             password = password,
-            onPasswordChange = { password = it }
+            onPasswordChange = { viewModel.updatePassword(it) }
         )
+
         Spacer(modifier = Modifier.height(27.dp))
+
         Button(
             onClick = {
-                // Falta implementar la logica de login
-                onLoginSuccess()
-                goToHome()
+                viewModel.validateAndLogin(onLoginSuccess = {
+                    onLoginSuccess()
+                    goToHome()
+                })
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Login", fontSize = 17.sp)
         }
+
+        if (errorMessage.isNotEmpty()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+
+
         Spacer(modifier = Modifier.height(13.dp))
+
         Button(
             onClick = {
                 goToRegister()
@@ -110,7 +135,9 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goTo
         ) {
             Text(text = "Register", fontSize = 17.sp)
         }
+
         Spacer(modifier = Modifier.height(16.dp))
+
         TextButton(
             onClick = {
                 onPasswordRecovery()
@@ -121,6 +148,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goTo
         }
     }
 }
+
 
 
 @Composable
@@ -160,7 +188,8 @@ fun PasswordInputField(
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(onLoginSuccess = {}, onPasswordRecovery = {}, goToHome = {}, goToRegister = {})
+    LoginScreen(onLoginSuccess = {}, onPasswordRecovery = {}, goToHome = {}, goToRegister = {},
+        viewModel = LoginViewModel())
 }
 
 

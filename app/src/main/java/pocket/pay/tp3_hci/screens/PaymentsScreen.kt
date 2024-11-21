@@ -1,6 +1,9 @@
 package pocket.pay.tp3_hci.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.remember
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,19 +20,18 @@ import pocket.pay.tp3_hci.components.RecentPayments
 
 @Composable
 fun PaymentsScreen() {
+
+    val scrollState = rememberScrollState()
+
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+        .verticalScroll(scrollState),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(80.dp))
 
         RecentPayments()
-
-        Text(
-            text = "Payments Screen",
-            modifier = Modifier.padding(16.dp)
-        )
     }
 }
 
