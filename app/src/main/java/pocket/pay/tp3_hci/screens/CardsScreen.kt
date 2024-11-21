@@ -1,5 +1,6 @@
 package pocket.pay.tp3_hci.screens
 
+import android.graphics.Paint.Align
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pocket.pay.tp3_hci.ui.theme.Purple
 
@@ -24,10 +27,10 @@ fun CardsScreen(goToCreateCard : () -> Unit) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Text(
-            text = "Cards Screen",
+            text = "My Cards",
             modifier = Modifier.padding(16.dp)
         )
 
@@ -54,4 +57,10 @@ fun CardsScreen(goToCreateCard : () -> Unit) {
             Text("Add new card")
         }
     }
+}
+
+@Preview (showBackground = true)
+@Composable
+fun CardsScreenPreview(){
+    CardsScreen {  }
 }
