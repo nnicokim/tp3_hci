@@ -11,7 +11,7 @@
     <string name="logout">Cerrar sesión</string>
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
-    <string name="alias">Alias/CBU</string>
+    <string name="alias"> Alias/CBU</string>
     <string name="deposit">Depositar</string>
     <string name="map_text">Encuentre bancos o sucursales cerca suyo</string>
     <string name="see_map">Ver mapa</string>
@@ -20,5 +20,10 @@
     <string name="error">Error</string>
     <string name="estimated_profit">Porcentaje de ganancia mensual estimada: </string>
     <string name="add_fund">Añadir fondo</string>
-    <string name="withdrawal">Retirar</string>
+    <string name="withdrawal"> Retirar</string>
+    <string name="recent_transactions">Transacciones recientes</string>
+    <string name="enter_invest">Ingrese el monto a invertir: </string>
+    <string name="enter_withdraw">Ingrese el monto a retirar: </string>
+    <string name="enter_add">Ingrese el monto a ingresar: </string>
+
 </resources>

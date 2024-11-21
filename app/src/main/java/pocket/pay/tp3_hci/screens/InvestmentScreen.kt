@@ -31,24 +31,24 @@ fun InvestmentScreen(viewModel: InvestmentViewModel = viewModel()) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(105.dp))
+        Spacer(modifier = Modifier.height(107.dp))
 
         Text(text = "Current Investment: $${String.format("%.2f", investmentAmount)}",
             fontSize = 33.sp,
             style = androidx.compose.ui.text.TextStyle(lineHeight = 40.sp))
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(33.dp))
 
         Text(text = stringResource(id = R.string.estimated_profit),
-            fontSize = 19.sp,
+            fontSize = 21.sp,
             modifier = Modifier.padding(5.dp))
 
         Text(text = "2,5%",
-            fontSize = 21.sp,
+            fontSize = 23.sp,
             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
             modifier = Modifier.padding(8.dp))
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(25.dp))
 
         Button(
             onClick = { viewModel.showAddFundDialog() },
@@ -59,7 +59,7 @@ fun InvestmentScreen(viewModel: InvestmentViewModel = viewModel()) {
                 fontSize = 17.sp)
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(19.dp))
 
         Button(
             onClick = { viewModel.showWithdrawDialog() },
@@ -105,7 +105,8 @@ fun AddFundDialog(onDismiss: () -> Unit, onConfirm: (Float) -> Unit) {
         title = { Text("Add Fund") },
         text = {
             Column {
-                Text(text = "Enter amount to invest:")
+                Text(text = stringResource(id = R.string.enter_invest),
+                    fontSize = 17.sp)
                 TextField(
                     value = amountText,
                     onValueChange = { amountText = it },
@@ -121,12 +122,14 @@ fun AddFundDialog(onDismiss: () -> Unit, onConfirm: (Float) -> Unit) {
                     onDismiss()
                 }
             }) {
-                Text(text = stringResource(id = R.string.accept))
+                Text(text = stringResource(id = R.string.accept),
+                    fontSize = 17.sp)
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text(text = stringResource(id = R.string.cancel))
+                Text(text = stringResource(id = R.string.cancel),
+                    fontSize = 17.sp)
             }
         }
     )
@@ -143,10 +146,11 @@ fun WithdrawDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Withdraw Funds") },
+        title = { Text("Withdraw Funds")},
         text = {
             Column {
-                Text(text = "Enter amount to withdraw:")
+                Text(text = stringResource(id = R.string.enter_withdraw),
+                    fontSize = 17.sp)
                 TextField(
                     value = amountText,
                     onValueChange = {
@@ -177,12 +181,14 @@ fun WithdrawDialog(
                     onDismiss()
                 }
             }) {
-                Text(text = "Confirm")
+                Text(text = stringResource(id = R.string.accept),
+                    fontSize = 17.sp)
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text(text = "Cancel")
+                Text(text = stringResource(id = R.string.cancel),
+                    fontSize = 17.sp)
             }
         }
     )

@@ -76,7 +76,7 @@ fun HomeScreen(goToMap : () -> Unit) {
             }
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(27.dp))
 
         Row {
             Button(
@@ -84,7 +84,9 @@ fun HomeScreen(goToMap : () -> Unit) {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.LightGray,
                     contentColor = Color.DarkGray
-                )
+                ),
+                modifier = Modifier.wrapContentWidth()
+                    .padding(horizontal = 10.dp),
             )
 
             {
@@ -95,24 +97,45 @@ fun HomeScreen(goToMap : () -> Unit) {
                 Text(text = stringResource(id = R.string.deposit))
             }
 
-            Spacer(modifier = Modifier.width(20.dp))
+            Spacer(modifier = Modifier.width(21.dp))
 
             Button(
                 onClick = {},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.LightGray,
                     contentColor = Color.DarkGray
-                )
-            ){
+                ),
+                modifier = Modifier.wrapContentWidth()
+                    .padding(horizontal = 10.dp),
+            ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.bank_icon),
-                    contentDescription = "Deposit"
+                    painter = painterResource(id = R.drawable.moneysign_icon),
+                    contentDescription = "Withdrawal"
                 )
-                Text(text = stringResource(id = R.string.alias))
+                Text(text = stringResource(id = R.string.withdrawal))
             }
 
         }
 
+        Spacer(modifier = Modifier.height(21.dp))
+
+        Button(
+            onClick = {},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.LightGray,
+                contentColor = Color.DarkGray
+            ),
+            modifier = Modifier.wrapContentWidth()
+                .padding(horizontal = 10.dp),
+        ){
+            Icon(
+                painter = painterResource(id = R.drawable.bank_icon),
+                contentDescription = "Deposit"
+            )
+            Text(text = stringResource(id = R.string.alias))
+        }
+
+        Spacer(modifier = Modifier.height(25.dp))
 
         Text(
             text = stringResource(id = R.string.map_text),
@@ -141,11 +164,11 @@ fun HomeScreen(goToMap : () -> Unit) {
 
         Card() {
             Column(
-
+            // TODO: Falta hacer
 
             ) {
                 Text(
-                    text = "Recent Transactions",
+                    text = stringResource(id = R.string.recent_transactions),
                     fontSize = 20.sp,
                     fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                     modifier = Modifier.padding(16.dp)
