@@ -21,9 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import pocket.pay.tp3_hci.components.BottomBar
+
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -51,7 +49,7 @@ fun HomeScreen(goToMap : () -> Unit) {
             )
         ) {
             Text(
-                text = "Balance",
+                text = stringResource(id = R.string.balance),
                 fontSize = 30.sp,
                 fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                 modifier = Modifier.padding(16.dp)

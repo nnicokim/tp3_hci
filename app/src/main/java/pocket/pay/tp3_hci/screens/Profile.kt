@@ -69,7 +69,7 @@ fun ProfileScreen(modifier: Modifier) {
     ) {
         Spacer(modifier = Modifier.height(40.dp))
         Text(
-            text = "User Profile",
+            text = stringResource(id = R.string.user_profile),
             modifier = Modifier.padding(20.dp)
         )
 
