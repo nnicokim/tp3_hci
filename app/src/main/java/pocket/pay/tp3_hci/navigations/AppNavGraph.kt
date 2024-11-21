@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import pocket.pay.tp3_hci.screens.CardsScreen
 import pocket.pay.tp3_hci.screens.HomeScreen
-import pocket.pay.tp3_hci.screens.InvestmentsScreen
+import pocket.pay.tp3_hci.screens.InvestmentScreen
 import pocket.pay.tp3_hci.screens.LandingScreen
 import pocket.pay.tp3_hci.screens.LoginScreen
 import pocket.pay.tp3_hci.screens.MapScreen
@@ -15,6 +15,9 @@ import pocket.pay.tp3_hci.screens.PaymentsScreen
 import pocket.pay.tp3_hci.screens.RegisterScreen
 import androidx.compose.ui.Modifier
 import pocket.pay.tp3_hci.screens.AddCardScreen
+import pocket.pay.tp3_hci.screens.InvestmentScreen
+import pocket.pay.tp3_hci.screens.Profile
+import pocket.pay.tp3_hci.viewmodel.InvestmentViewModel
 
 @Composable
 fun AppNavGraph(
@@ -24,6 +27,8 @@ fun AppNavGraph(
     onLoginSuccess: () -> Unit
 ) {
     val startDestination = if (isUserLoggedIn) AppDestinations.HOME.route else "landing"
+
+    val investmentViewModel = InvestmentViewModel()
 
     NavHost(
         navController = navController,
@@ -39,7 +44,7 @@ fun AppNavGraph(
             CardsScreen(goToCreateCard = { navController.navigate("addcard") })
         }
         composable(route = AppDestinations.INVESTMENTS.route) {
-            InvestmentsScreen()
+            InvestmentScreen(investmentViewModel)
         }
         composable(route = "landing") {
             LandingScreen(goToLogin = { navController.navigate("login") },
@@ -53,7 +58,7 @@ fun AppNavGraph(
         }
         composable(route = "register") {
             RegisterScreen(onLoginSuccess = onLoginSuccess, goToHome = { navController.navigate(
-                AppDestinations.HOME.route) })
+                AppDestinations.HOME.route) }, goToLogin = { navController.navigate("login") })
         }
         composable(route = "passwordRecovery") {
             PasswordRecoveryScreen(onLoginSuccess = onLoginSuccess, goToHome = { navController.navigate(
@@ -65,6 +70,10 @@ fun AppNavGraph(
         composable(route = "addcard") {
             AddCardScreen(goBackToCards = { navController.navigate(AppDestinations.CARDS.route) })
         }
+        composable(route = "profile") {
+            Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) })
+        }
     }
 }
+
 

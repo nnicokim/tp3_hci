@@ -1,13 +1,19 @@
 package pocket.pay.tp3_hci.screens
 
 import android.graphics.Paint.Align
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -15,51 +21,120 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import pocket.pay.tp3_hci.ui.theme.Purple
+import pocket.pay.tp3_hci.R
+
 
 @Composable
 fun CardsScreen(goToCreateCard : () -> Unit) {
+
+    Column(
+        modifier = Modifier.fillMaxSize().padding(5.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
+    ){
+        Text(
+            text = stringResource(id = R.string.cards_title),
+            modifier = Modifier.padding(20.dp),
+            fontSize = 25.sp,
+            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+            textAlign = TextAlign.Left
+        )
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(70.dp))
 
+        Box(
+            modifier = Modifier.width(320.dp)
+                .height(100.dp)
+                .background(
+                    color = Color(0XFFFEE12B),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .padding(16.dp)
+        ){
+            Row {
+                Column (
+                    modifier = Modifier
+                        .width(160.dp)
+                        .height(100.dp)
+                ) {
+                    Text(
+                        text = "Hwa Pyoung Kim",
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = "**** **** **** 4952",
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+
+                }
+                Column (
+                    modifier = Modifier
+                        .width(160.dp)
+                        .height(100.dp)
+                ){
+                    Text(
+                        text = "06/25",
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.End,
+                        modifier = Modifier
+                            .padding(end = 8.dp, bottom = 8.dp)
+                            .align(Alignment.End)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(50.dp))
+
+        // Agregar el condicional si NO hay tarjetas
         Text(
-            text = "My Cards",
+            text = stringResource(id = R.string.no_cards),
+            fontSize = 20.sp,
             modifier = Modifier.padding(16.dp)
         )
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        Text(
-            text = "No cards added yet",
-            modifier = Modifier.padding(16.dp)
-        )
 
-        Spacer(modifier = Modifier.height(30.dp))
-
-        // Agregar el condicional si NO hay tarjetas
         Button(
             onClick = {
                 goToCreateCard()
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.wrapContentWidth()
+                .padding(horizontal = 9.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Purple,
                 contentColor = Color.White
             )
         ) {
-            Text("Add new card")
+            Text(text = stringResource(id = R.string.add_card),
+                fontSize = 19.sp)
         }
     }
 }
 
-@Preview (showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun CardsScreenPreview(){
     CardsScreen {  }

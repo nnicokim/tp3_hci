@@ -7,8 +7,34 @@
     <string name="investments">Investments</string>
     <string name="map">Map</string>
     <string name="profile">Profile</string>
+    <string name="user_profile">User Profile</string>
+    <string name="signin">Sign in</string>
+    <string name="signin_create">Sign in or create an account</string>
+    <string name="register">Register</string>
     <string name="logout">Logout</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="balance">Balance</string>
+    <string name="alias"> Alias/CBU</string>
+    <string name="deposit">Deposit</string>
+    <string name="map_text">See banks or branch offices near you</string>
+    <string name="see_map">See map</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="error">Error</string>
+    <string name="estimated_profit">Estimated monthly profit percent: </string>
+    <string name="add_fund">Add fund</string>
+    <string name="withdrawal"> Withdrawal</string>
+    <string name="recent_transactions">Recent transactions</string>
+    <string name="enter_invest">Enter amount to invest: </string>
+    <string name="enter_withdraw">Enter amount to withdraw: </string>
+    <string name="enter_add">Enter amount to add: </string>
+    <string name="cards_title">Your cards</string>
+    <string name="no_cards">No cards added yet</string>
+    <string name="add_card">Add new card</string>
+    <string name="save_card">Save card</string>
+
+
+
 
 </resources>

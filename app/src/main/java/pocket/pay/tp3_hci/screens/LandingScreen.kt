@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -79,7 +80,7 @@ fun LandingScreen(goToLogin : () -> Unit, goToRegister : () -> Unit) {
         Spacer(modifier = Modifier.height(50.dp))
 
         Text(
-            text = "Sign in or create an account",
+            text = stringResource(id = R.string.signin_create),
             color = Color.Black,
             fontSize = 23.sp,
             textAlign = TextAlign.Center
@@ -93,7 +94,8 @@ fun LandingScreen(goToLogin : () -> Unit, goToRegister : () -> Unit) {
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Sign in",
+            Text(
+                stringResource(id = R.string.signin),
                 fontSize = 17.sp,)
         }
 
@@ -109,7 +111,8 @@ fun LandingScreen(goToLogin : () -> Unit, goToRegister : () -> Unit) {
                 contentColor = Color.White
             )
         ) {
-            Text("Register", color = Color.White,
+            Text(stringResource(id = R.string.register),
+                color = Color.White,
                 fontSize = 17.sp,)
         }
     }

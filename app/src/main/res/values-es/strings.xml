@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pocket Pay</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="home">Inicio</string>
+    <string name="payments">Pagos</string>
+    <string name="cards">Tarjetas</string>
+    <string name="investments">Inversiones</string>
+    <string name="map">Mapa</string>
+    <string name="profile">Perfil</string>
+    <string name="user_profile">Perfil del usuario</string>
+    <string name="signin_create">Iniciar sesión o crear una cuenta</string>
+    <string name="signin">Iniciar sesión</string>
+    <string name="register">Registrarse</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="balance">Balance</string>
+    <string name="alias"> Alias/CBU</string>
+    <string name="deposit">Depositar</string>
+    <string name="map_text">Encuentre bancos o sucursales cerca suyo</string>
+    <string name="see_map">Ver mapa</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="error">Error</string>
+    <string name="estimated_profit">Porcentaje de ganancia mensual estimada: </string>
+    <string name="add_fund">Añadir fondo</string>
+    <string name="withdrawal"> Retirar</string>
+    <string name="recent_transactions">Transacciones recientes</string>
+    <string name="enter_invest">Ingrese el monto a invertir: </string>
+    <string name="enter_withdraw">Ingrese el monto a retirar: </string>
+    <string name="enter_add">Ingrese el monto a ingresar: </string>
+    <string name="cards_title">Tus tarjetas</string>
+    <string name="no_cards">No hay tarjetas agregadas</string>
+    <string name="add_card">Agregar tarjeta</string>
+    <string name="save_card">Guardar tarjeta</string>
+
+
+</resources>

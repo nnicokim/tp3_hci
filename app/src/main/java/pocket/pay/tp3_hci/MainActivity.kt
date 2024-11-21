@@ -16,6 +16,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import pocket.pay.tp3_hci.components.BottomBar
+import pocket.pay.tp3_hci.components.Header
 import pocket.pay.tp3_hci.navigations.AppDestinations
 import pocket.pay.tp3_hci.navigations.AppNavGraph
 import pocket.pay.tp3_hci.ui.theme.PocketPayTheme
@@ -40,6 +41,21 @@ fun PocketPayApp() {
     val currentRoute = backStackEntry?.destination?.route
 
     Scaffold(
+        topBar = {
+            if (currentRoute in listOf(
+                    AppDestinations.HOME.route,
+                    AppDestinations.PAYMENTS.route,
+                    AppDestinations.CARDS.route,
+                    AppDestinations.INVESTMENTS.route
+                )
+            ) {
+                Header(
+                    username = "John Doe", // TODO: ver como obtener el nombre de usuario
+                    modifier = Modifier,
+                    navController = navController
+                )
+            }
+        },
         bottomBar = {
             if (currentRoute in listOf(
                     AppDestinations.HOME.route,
