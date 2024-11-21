@@ -34,6 +34,9 @@
     <string name="no_cards">No hay tarjetas agregadas</string>
     <string name="add_card">Agregar tarjeta</string>
     <string name="save_card">Guardar tarjeta</string>
+    <string name="expand">Expandir</string>
+    <string name="colapse">Colapsar</string>
+    <string name="recent_payments">Pagos Recientes</string>
 
 
 </resources>

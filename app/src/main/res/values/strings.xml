@@ -33,6 +33,10 @@
     <string name="no_cards">No cards added yet</string>
     <string name="add_card">Add new card</string>
     <string name="save_card">Save card</string>
+    <string name="expand">Expand</string>
+    <string name="colapse">Colapse</string>
+    <string name="recent_payments">Recent Payments</string>
+
 
 
 
