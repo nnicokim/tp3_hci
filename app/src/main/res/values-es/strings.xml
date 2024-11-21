@@ -33,6 +33,7 @@
     <string name="cards_title">Tus tarjetas</string>
     <string name="no_cards">No hay tarjetas agregadas</string>
     <string name="add_card">Agregar tarjeta</string>
+    <string name="save_card">Guardar tarjeta</string>
 
 
 </resources>

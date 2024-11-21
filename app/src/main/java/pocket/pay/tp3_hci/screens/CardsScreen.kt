@@ -29,11 +29,13 @@ fun CardsScreen(goToCreateCard : () -> Unit) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(90.dp))
 
         Text(
             text = stringResource(id = R.string.cards_title),
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(20.dp),
+            fontSize = 32.sp,
+            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(50.dp))
