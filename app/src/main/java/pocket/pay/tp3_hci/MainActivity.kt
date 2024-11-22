@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.window.core.layout.WindowWidthSizeClass
 import pocket.pay.tp3_hci.components.BottomBar
 import pocket.pay.tp3_hci.components.Header
 import pocket.pay.tp3_hci.navigations.AppDestinations
@@ -47,7 +48,8 @@ fun PocketPayApp() {
     val configuration = LocalConfiguration.current
     val adaptiveInfo = currentWindowAdaptiveInfo()
 
-    if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+    if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT &&
+        adaptiveInfo.windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT){
     Scaffold(
         topBar = {
             if (currentRoute in listOf(
