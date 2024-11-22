@@ -14,12 +14,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,14 +34,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.R
+import pocket.pay.tp3_hci.viewmodel.CardsViewModel
 import kotlin.math.round
 
 
 @Composable
-fun AddCardScreen(goBackToCards: () -> Unit, goCardNameStep: () -> Unit) {
-    var email by remember { mutableStateOf("") }
+fun AddCardScreen(
+    goBackToCards: () -> Unit,
+    goCardNameStep: () -> Unit,
+    viewModel: CardsViewModel = viewModel()
+) {
+    val number by viewModel.cardNumber.collectAsState()
+    val errorMessage by viewModel.errorTextCardNumber.collectAsState()
 
 
     Column(
@@ -70,8 +79,8 @@ fun AddCardScreen(goBackToCards: () -> Unit, goCardNameStep: () -> Unit) {
 
 
         OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
+            value = number,
+            onValueChange = { viewModel.updateCardNumber(it) },
             label = { Text(stringResource(id = R.string.add_card_number)) },
             modifier = Modifier.fillMaxWidth().
                 height(65.dp),
@@ -82,6 +91,25 @@ fun AddCardScreen(goBackToCards: () -> Unit, goCardNameStep: () -> Unit) {
                 fontSize = 16.sp
             )
         )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        if (errorMessage.isNotEmpty()) {
+            if (errorMessage == "empty"){
+                Text(
+                    text = stringResource(R.string.empty_card_number),
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            } else {
+                Text(
+                    text = stringResource(R.string.invalid_card_number),
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+
+        }
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -106,8 +134,9 @@ fun AddCardScreen(goBackToCards: () -> Unit, goCardNameStep: () -> Unit) {
 
             Button(
                 onClick = {
-                    // Falta implementar el agregado de la tarjeta
-                    goCardNameStep()
+                    viewModel.validateCardNumber(onValidNumber = {
+                        goCardNameStep()
+                    })
                 },
                 modifier = Modifier.wrapContentWidth()
                     .padding(horizontal = 9.dp),

@@ -43,6 +43,16 @@
     <string name="add_card_cvv">CVV</string>
     <string name="continue_string">Continue</string>
     <string name="save_card">Save card</string>
+
+    <string name="empty_card_number">Card number cannot be empty</string>
+    <string name="empty_card_name">Cardholder\'s name cannot be empty</string>
+    <string name="empty_card_exp_date">Expiration date cannot be empty</string>
+    <string name="empty_card_cvv">CVV code cannot be empty</string>
+
+    <string name="invalid_card_number">Invalid card number. Number must have 16 digits</string>
+    <string name="invalid_card_exp_date">Invalid expiration date. Format must be MM/YY</string>
+    <string name="invalid_card_cvv">Invalid CVV code. Code must have 3 digits</string>
+
     <string name="expand">Expand</string>
     <string name="colapse">Colapse</string>
     <string name="recent_payments">Recent Payments</string>
