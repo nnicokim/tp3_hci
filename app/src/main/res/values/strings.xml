@@ -26,6 +26,7 @@
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="error">Error</string>
+    <string name="close">Close</string>
     <string name="estimated_profit">Estimated monthly profit percent: </string>
     <string name="add_fund">Add fund</string>
     <string name="withdrawal"> Withdrawal</string>
@@ -43,7 +44,7 @@
     <string name="add_card_cvv">CVV</string>
     <string name="continue_string">Continue</string>
     <string name="save_card">Save card</string>
-
+    <string name="insufficient_balance">Insufficient balance!</string>
     <string name="empty_card_number">Card number cannot be empty</string>
     <string name="empty_card_name">Cardholder\'s name cannot be empty</string>
     <string name="empty_card_exp_date">Expiration date cannot be empty</string>

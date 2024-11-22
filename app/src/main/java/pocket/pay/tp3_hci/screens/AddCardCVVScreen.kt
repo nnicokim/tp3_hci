@@ -49,7 +49,6 @@ fun AddCardCVVScreen(
     val cvv by viewModel.cvv.collectAsState()
     val errorMessage by viewModel.errorTextCardCVV.collectAsState()
 
-
     Column(
         modifier = Modifier.fillMaxSize()
             .padding(16.dp),
@@ -152,9 +151,3 @@ fun AddCardCVVScreen(
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun AddCardNameScreenPreview(){
-//    AddCardNameScreen {  }
-//}

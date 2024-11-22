@@ -83,7 +83,8 @@ fun PocketPayApp() {
             navController = navController,
             isUserLoggedIn = isUserLoggedIn,
             modifier = Modifier.padding(innerPadding),
-            onLoginSuccess = { isUserLoggedIn = true }
+            onLoginSuccess = { isUserLoggedIn = true },
+            loggedOut = { isUserLoggedIn = false }
         )
     }
 }

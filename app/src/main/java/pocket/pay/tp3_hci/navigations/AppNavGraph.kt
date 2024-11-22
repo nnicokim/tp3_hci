@@ -18,7 +18,6 @@ import pocket.pay.tp3_hci.screens.AddCardCVVScreen
 import pocket.pay.tp3_hci.screens.AddCardExpDateScreen
 import pocket.pay.tp3_hci.screens.AddCardNameScreen
 import pocket.pay.tp3_hci.screens.AddCardScreen
-import pocket.pay.tp3_hci.screens.AliasCBUScreen
 import pocket.pay.tp3_hci.screens.InvestmentScreen
 import pocket.pay.tp3_hci.screens.NewPaymentScreen
 import pocket.pay.tp3_hci.screens.Profile
@@ -29,7 +28,8 @@ fun AppNavGraph(
     navController: NavHostController,
     isUserLoggedIn: Boolean,
     modifier: Modifier = Modifier,
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: () -> Unit,
+    loggedOut: () -> Unit
 ) {
     val startDestination = if (isUserLoggedIn) AppDestinations.HOME.route else "landing"
 
@@ -103,15 +103,9 @@ fun AppNavGraph(
         }
 
         composable(route = "profile") {
-            Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) })
-        }
-
-        composable(route = "profile") {
-            Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) })
-        }
-
-        composable(route = "aliascbu"){
-            AliasCBUScreen(goBackToHome = {navController.navigate(AppDestinations.HOME.route)})
+            Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) },
+                goToLogin = { navController.navigate("login") },
+                loggedOut = loggedOut)
         }
 
     }
