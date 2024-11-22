@@ -11,6 +11,10 @@
     <string name="signin">Sign in</string>
     <string name="signin_create">Sign in or create an account</string>
     <string name="register">Register</string>
+    <string name="go_to_login">Go to login</string>
+    <string name="create_my_account">Create my account</string>
+    <string name="account_question">Already have an account?</string>
+    <string name="register_text">Please fill out the information to create an account</string>
     <string name="logout">Logout</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -41,9 +45,7 @@
     <string name="expand">Expand</string>
     <string name="colapse">Colapse</string>
     <string name="recent_payments">Recent Payments</string>
-
-
-
+    <string name="error_login">Cannot login. Try again</string>
 
 
 </resources>

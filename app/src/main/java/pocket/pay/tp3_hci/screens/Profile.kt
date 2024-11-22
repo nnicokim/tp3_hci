@@ -24,20 +24,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import pocket.pay.tp3_hci.R
-import androidx.compose.material3.*
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.ui.theme.Purple
-import kotlin.Int
+import pocket.pay.tp3_hci.viewmodel.ProfileViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Profile(goBackToHome : () -> Unit) {
+fun Profile(goBackToHome: () -> Unit, viewModel: ProfileViewModel = viewModel()) {
+
+    val userName = viewModel.userName
+    val userEmail = viewModel.userEmail
+    val userPhone = viewModel.userPhone
+
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("  Profile") },
+            TopAppBar(
+                title = { Text("  Profile") },
                 navigationIcon = {
-                    Button(onClick = { goBackToHome() },
+                    Button(
+                        onClick = { goBackToHome() },
                         modifier = Modifier
                             .size(45.dp)
                             .clip(CircleShape),
@@ -53,27 +62,62 @@ fun Profile(goBackToHome : () -> Unit) {
                             modifier = Modifier.size(25.dp)
                         )
                     }
-                })
+                }
+            )
         }
     ) { paddingValues ->
-        ProfileScreen(modifier = Modifier.padding(paddingValues))
+        ProfileScreen(
+            modifier = Modifier.padding(paddingValues),
+            userName = userName,
+            userEmail = userEmail,
+            userPhone = userPhone
+        )
     }
 }
 
 @Composable
-fun ProfileScreen(modifier: Modifier) {
+fun ProfileScreen(
+    modifier: Modifier,
+    userName: String,
+    userEmail: String,
+    userPhone: String
+) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(25.dp))
+
         Text(
             text = stringResource(id = R.string.user_profile),
-            modifier = Modifier.padding(20.dp)
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold
         )
 
-        Button (onClick = { /*TODO*/ }, // TODO: LOGOUT
+        Spacer(modifier = Modifier.height(25.dp))
+
+        Text(
+            text = "Name: $userName",
+            fontSize = 20.sp,
+            modifier = Modifier.padding(8.dp)
+        )
+        Text(
+            text = "Email: $userEmail",
+            fontSize = 20.sp,
+            modifier = Modifier.padding(8.dp)
+        )
+        Text(
+            text = "Phone: $userPhone",
+            fontSize = 20.sp,
+            modifier = Modifier.padding(8.dp)
+        )
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        // Botón de logout (para futuras funcionalidades)
+        Button(
+            onClick = { /* TODO: Implementar logout */ },
             modifier = Modifier.padding(20.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Purple,
@@ -82,6 +126,5 @@ fun ProfileScreen(modifier: Modifier) {
         ) {
             Text(text = stringResource(id = R.string.logout))
         }
-
     }
 }
