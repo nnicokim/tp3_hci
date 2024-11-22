@@ -1,6 +1,5 @@
 package pocket.pay.tp3_hci.screens
 
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,22 +9,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,28 +35,38 @@ import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.HomeViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.ui.res.painterResource
+
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap : () -> Unit) {
+fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
     val balance by viewModel.balance.collectAsState()
+    val alias by viewModel.alias.collectAsState()
+    val cbu by viewModel.cbu.collectAsState()
     val recentTransactions by viewModel.recentTransactions.collectAsState()
+
+    var showDepositDialog by remember { mutableStateOf(false) }
+    var showWithdrawalDialog by remember { mutableStateOf(false) }
+    var showAliasDialog by remember { mutableStateOf(false) }
+    var inputAmount by remember { mutableStateOf("") }
+    var withdrawalError by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.fillMaxSize().padding(8.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Spacer(modifier = Modifier.height(80.dp))
 
-        Card (
-            modifier = Modifier.padding(8.dp),
+        Card(
+            modifier = Modifier.padding(10.dp),
             shape = RoundedCornerShape(40.dp),
             colors = CardDefaults.cardColors(
-                containerColor = Purple, // Background color
-                contentColor = Color.White // Content color
+                containerColor = Purple,
+                contentColor = Color.White
             )
-        ){
+        ) {
             Text(
                 text = stringResource(id = R.string.balance),
                 fontSize = 25.sp,
@@ -77,7 +86,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap : () -> Unit) {
 
         Row {
             Button(
-                onClick = {},
+                onClick = { showDepositDialog = true },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
@@ -107,8 +116,9 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap : () -> Unit) {
                     )
                 }
             }
+
             Button(
-                onClick = {},
+                onClick = { showAliasDialog = true },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
@@ -138,8 +148,9 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap : () -> Unit) {
                     )
                 }
             }
+
             Button(
-                onClick = {},
+                onClick = { showWithdrawalDialog = true },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
@@ -171,25 +182,38 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap : () -> Unit) {
             }
         }
 
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Card {
-            Column {
-                Text(
-                    text = stringResource(id = R.string.recent_transactions),
-                    fontSize = 20.sp,
-                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                    modifier = Modifier.padding(16.dp)
-                )
-                recentTransactions.takeLast(2).forEach { // Solo mostramos las ultimas 2 transacciones
-                    Text(
-                        text = it,
-                        modifier = Modifier.padding(8.dp),
-                        fontSize = 16.sp
-                    )
+        if (showDepositDialog) {
+            AlertDialog(
+                onDismissRequest = { showDepositDialog = false },
+                title = { Text(text = stringResource(id = R.string.deposit)) },
+                text = {
+                    Column {
+                        Text(text = "Enter amount to deposit:")
+                        TextField(
+                            value = inputAmount,
+                            onValueChange = { inputAmount = it },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            viewModel.addDeposit(inputAmount.toFloat())
+                            showDepositDialog = false
+                            inputAmount = ""
+                        }
+                    ) {
+                        Text(text = "Confirm")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = { showDepositDialog = false }) {
+                        Text(text = "Cancel")
+                    }
                 }
-            }
+            )
         }
 
         Spacer(modifier = Modifier.height(25.dp))
@@ -215,11 +239,88 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap : () -> Unit) {
                 fontSize = 19.sp)
         }
 
-        Spacer(
-            modifier = Modifier.height(45.dp)
-        )
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Card {
+            Column {
+                Text(
+                    text = stringResource(id = R.string.recent_transactions),
+                    fontSize = 20.sp,
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                    modifier = Modifier.padding(16.dp)
+                )
+                recentTransactions.takeLast(2).forEach { // Solo mostramos las ultimas 2 transacciones
+                    Text(
+                        text = it,
+                        modifier = Modifier.padding(8.dp),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+        }
+
+
+        if (showWithdrawalDialog) {
+            AlertDialog(
+                onDismissRequest = { showWithdrawalDialog = false },
+                title = { Text(text = stringResource(id = R.string.withdrawal)) },
+                text = {
+                    Column {
+                        Text(text = "Enter amount to withdraw:")
+                        TextField(
+                            value = inputAmount,
+                            onValueChange = { inputAmount = it },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        if (withdrawalError) {
+                            Text(
+                                text = "Insufficient balance!",
+                                color = Color.Red,
+                                modifier = Modifier.padding(top = 8.dp)
+                            )
+                        }
+                    }
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            val success = viewModel.withdraw(inputAmount.toFloat())
+                            if (success) {
+                                showWithdrawalDialog = false
+                                inputAmount = ""
+                                withdrawalError = false
+                            } else {
+                                withdrawalError = true
+                            }
+                        }
+                    ) {
+                        Text(text = "Confirm")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = { showWithdrawalDialog = false }) {
+                        Text(text = "Cancel")
+                    }
+                }
+            )
+        }
+
+        if (showAliasDialog) {
+            AlertDialog(
+                onDismissRequest = { showAliasDialog = false },
+                title = { Text(text = "Alias and CBU") },
+                text = { Text(text = "Alias: $alias\nCBU: $cbu") },
+                confirmButton = {
+                    Button(onClick = { showAliasDialog = false }) {
+                        Text(text = "Close")
+                    }
+                }
+            )
+        }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

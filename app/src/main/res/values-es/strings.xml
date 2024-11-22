@@ -44,6 +44,16 @@
     <string name="add_card_cvv">CVV</string>
     <string name="continue_string">Continuar</string>
     <string name="save_card">Guardar tarjeta</string>
+
+    <string name="empty_card_number">El numero de la tarjeta no puede estar vacio</string>
+    <string name="empty_card_name">El nombre del titular no puede estar vacio</string>
+    <string name="empty_card_exp_date">La fecha de vencimiento no puede estar vacio</string>
+    <string name="empty_card_cvv">El codigo CVV no puede estar vacio</string>
+
+    <string name="invalid_card_number">Numero invalido. Debe contener 16 digitos</string>
+    <string name="invalid_card_exp_date">Fecha de vencimiento invalido. El formato es MM/AA</string>
+    <string name="invalid_card_cvv">Codigo cvv invalido. Debe contener 3 digitos</string>
+
     <string name="expand">Expandir</string>
     <string name="colapse">Colapsar</string>
     <string name="recent_payments">Pagos Recientes</string>
