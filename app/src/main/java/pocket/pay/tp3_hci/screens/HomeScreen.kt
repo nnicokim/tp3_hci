@@ -209,7 +209,8 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap : () -> Unit) {
             colors = ButtonDefaults.buttonColors(
                 containerColor = Purple,
                 contentColor = Color.White
-            )
+            ),
+            shape = RoundedCornerShape(15.dp)
         ) {
             Text(text = stringResource(id = R.string.see_map),
                 fontSize = 19.sp)

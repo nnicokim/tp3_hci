@@ -20,6 +20,7 @@ import pocket.pay.tp3_hci.screens.AddCardNameScreen
 import pocket.pay.tp3_hci.screens.AddCardScreen
 import pocket.pay.tp3_hci.screens.AliasCBUScreen
 import pocket.pay.tp3_hci.screens.InvestmentScreen
+import pocket.pay.tp3_hci.screens.NewPaymentScreen
 import pocket.pay.tp3_hci.screens.Profile
 import pocket.pay.tp3_hci.viewmodel.InvestmentViewModel
 
@@ -42,7 +43,7 @@ fun AppNavGraph(
             HomeScreen(goToMap = { navController.navigate("map") })
         }
         composable(route = AppDestinations.PAYMENTS.route) {
-            PaymentsScreen()
+            PaymentsScreen(goToNewPayment = {navController.navigate("newpayment")})
         }
         composable(route = AppDestinations.CARDS.route) {
             CardsScreen(goToCreateCard = { navController.navigate("addcard") })
@@ -92,6 +93,12 @@ fun AppNavGraph(
         composable(route = "addcardcvv"){
             AddCardCVVScreen(
                 goBackToCards = { navController.navigate(AppDestinations.CARDS.route) }
+            )
+        }
+
+        composable(route = "newpayment"){
+            NewPaymentScreen(
+                goBackToPayment = { navController.navigate(AppDestinations.PAYMENTS.route) }
             )
         }
 

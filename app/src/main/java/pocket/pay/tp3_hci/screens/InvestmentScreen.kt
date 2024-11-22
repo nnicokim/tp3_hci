@@ -1,6 +1,7 @@
 package pocket.pay.tp3_hci.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -55,6 +56,7 @@ fun InvestmentScreen(viewModel: InvestmentViewModel = viewModel()) {
             onClick = { viewModel.showAddFundDialog() },
             modifier = Modifier.wrapContentWidth()
                 .padding(horizontal = 9.dp),
+            shape = RoundedCornerShape(15.dp)
         ) {
             Text(text = stringResource(id = R.string.add_fund),
                 fontSize = 17.sp)
@@ -66,6 +68,7 @@ fun InvestmentScreen(viewModel: InvestmentViewModel = viewModel()) {
             onClick = { viewModel.showWithdrawDialog() },
             modifier = Modifier.wrapContentWidth()
                 .padding(horizontal = 9.dp),
+            shape = RoundedCornerShape(15.dp)
         ) {
             Text(text = stringResource(id = R.string.withdrawal),
                 fontSize = 17.sp)

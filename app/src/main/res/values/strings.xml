@@ -56,6 +56,11 @@
     <string name="expand">Expand</string>
     <string name="colapse">Colapse</string>
     <string name="recent_payments">Recent Payments</string>
+    <string name="new_payment">New payment</string>
+
+    <string name="company_name">Company name</string>
+    <string name="pay">Pay</string>
+
     <string name="error_login">Cannot login. Try again</string>
     <string name="your_aliascbu">Your Alias/CBU</string>
     <string name="go_back_to_home">Go back to Home</string>

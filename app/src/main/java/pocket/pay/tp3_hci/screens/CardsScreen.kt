@@ -171,7 +171,8 @@ fun CardsScreen(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Purple,
                 contentColor = Color.White
-            )
+            ),
+            shape = RoundedCornerShape(15.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.add_card),
