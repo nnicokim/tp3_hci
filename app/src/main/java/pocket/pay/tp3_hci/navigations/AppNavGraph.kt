@@ -15,6 +15,7 @@ import pocket.pay.tp3_hci.screens.PaymentsScreen
 import pocket.pay.tp3_hci.screens.RegisterScreen
 import androidx.compose.ui.Modifier
 import pocket.pay.tp3_hci.screens.AddCardScreen
+import pocket.pay.tp3_hci.screens.AliasCBUScreen
 import pocket.pay.tp3_hci.screens.InvestmentScreen
 import pocket.pay.tp3_hci.screens.Profile
 import pocket.pay.tp3_hci.viewmodel.InvestmentViewModel
@@ -73,6 +74,15 @@ fun AppNavGraph(
         composable(route = "profile") {
             Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) })
         }
+
+        composable(route = "profile") {
+            Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) })
+        }
+
+        composable(route = "aliascbu"){
+            AliasCBUScreen(goBackToHome = {navController.navigate(AppDestinations.HOME.route)})
+        }
+
     }
 }
 

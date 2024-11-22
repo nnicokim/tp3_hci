@@ -41,6 +41,7 @@
     <string name="colapse">Colapse</string>
     <string name="recent_payments">Recent Payments</string>
     <string name="error_login">Cannot login. Try again</string>
-
+    <string name="your_aliascbu">Your Alias/CBU</string>
+    <string name="go_back_to_home">Go back to Home</string>
 
 </resources>
