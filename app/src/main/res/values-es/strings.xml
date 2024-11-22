@@ -37,6 +37,11 @@
     <string name="cards_title">Tus tarjetas</string>
     <string name="no_cards">No hay tarjetas agregadas</string>
     <string name="add_card">Agregar tarjeta</string>
+    <string name="add_card_number">Numero de tarjeta</string>
+    <string name="add_card_name">Nombre del titular</string>
+    <string name="add_card_exp_date">Fecha de vencimiento</string>
+    <string name="add_card_cvv">CVV</string>
+    <string name="continue_string">Continuar</string>
     <string name="save_card">Guardar tarjeta</string>
     <string name="expand">Expandir</string>
     <string name="colapse">Colapsar</string>

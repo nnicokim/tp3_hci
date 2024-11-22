@@ -36,6 +36,11 @@
     <string name="cards_title">Your cards</string>
     <string name="no_cards">No cards added yet</string>
     <string name="add_card">Add new card</string>
+    <string name="add_card_number">Card number</string>
+    <string name="add_card_name">Cardholder\'s name</string>
+    <string name="add_card_exp_date">Expiration date</string>
+    <string name="add_card_cvv">CVV</string>
+    <string name="continue_string">Continue</string>
     <string name="save_card">Save card</string>
     <string name="expand">Expand</string>
     <string name="colapse">Colapse</string>
