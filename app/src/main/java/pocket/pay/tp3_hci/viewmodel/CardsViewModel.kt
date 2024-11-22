@@ -1,5 +1,6 @@
 package pocket.pay.tp3_hci.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
@@ -18,8 +19,9 @@ data class Card (
 
 class CardsViewModel : ViewModel() {
 
-    private val _cards = mutableStateListOf<Card>()
-    val cards: List<Card> = _cards
+    private val _cards = MutableStateFlow<List<Card>>(emptyList())
+    val cards: StateFlow<List<Card>> = _cards
+
 
     private val _cardholderName = MutableStateFlow("")
     val cardholderName: StateFlow<String> = _cardholderName
@@ -44,28 +46,6 @@ class CardsViewModel : ViewModel() {
 
     private val _errorTextCardCVV = MutableStateFlow("")
     val errorTextCardCVV = _errorTextCardCVV.asStateFlow()
-
-    init {
-        // Carga tarjetas iniciales. TODO: ver como es esto con la API
-        _cards.addAll(
-            listOf(
-                Card(
-                    cardholderName = "Hwa Pyoung Kim",
-                    cardNumber = "**** **** **** 4952",
-                    expiryDate = "06/25",
-                    cvv = 123,
-                    backgroundColor = 0XFFFEE12B
-                ),
-                Card(
-                    cardholderName = "Nicolas Kim",
-                    cardNumber = "**** **** **** 5915",
-                    expiryDate = "09/25",
-                    cvv = 254,
-                    backgroundColor = 0XFF000000
-                )
-            )
-        )
-    }
 
     private fun isValidNumber(number: String): Boolean{
         val regex = Regex("^\\d{16}$")
@@ -136,19 +116,43 @@ class CardsViewModel : ViewModel() {
         _cvv.value = newCVV
     }
 
+    fun isCardDataValid(): Boolean {
+        return _cardholderName.value.isNotBlank() &&
+                _cardNumber.value.isNotBlank() &&
+                _expiryDate.value.isNotBlank() &&
+                _cvv.value.isNotBlank() && _cvv.value.toIntOrNull() != null
+    }
+
     fun addCard() {
-        _cards.add(
-            Card(
+        if (isCardDataValid()) {
+            val newCard = Card(
                 cardholderName = _cardholderName.value,
                 cardNumber = _cardNumber.value,
                 expiryDate = _expiryDate.value,
                 cvv = _cvv.value.toInt(),
                 backgroundColor = 0xFFF28418
             )
-        )
+            Log.d("CardsViewModel", "Adding card: $newCard")
+            _cards.value = _cards.value + newCard
+
+            resetCardData()
+        } else {
+            Log.d("CardsViewModel", "Invalid card data: Name=${_cardholderName.value}, Number=${_cardNumber.value}, Expiry=${_expiryDate.value}, CVV=${_cvv.value}")
+        }
     }
 
-    fun removeCard(card: Card) {
-        _cards.remove(card)
+    private fun resetCardData() {
+        _cardholderName.value = ""
+        _cardNumber.value = ""
+        _expiryDate.value = ""
+        _cvv.value = ""
     }
+
+
+    fun removeCard(card: Card) {
+        _cards.value = _cards.value.filter { it != card }
+        Log.d("CardsViewModel", "Card removed: $card. Remaining cards: ${_cards.value}")
+    }
+
 }
+

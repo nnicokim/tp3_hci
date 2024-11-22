@@ -18,7 +18,6 @@ import pocket.pay.tp3_hci.screens.AddCardCVVScreen
 import pocket.pay.tp3_hci.screens.AddCardExpDateScreen
 import pocket.pay.tp3_hci.screens.AddCardNameScreen
 import pocket.pay.tp3_hci.screens.AddCardScreen
-import pocket.pay.tp3_hci.screens.AliasCBUScreen
 import pocket.pay.tp3_hci.screens.InvestmentScreen
 import pocket.pay.tp3_hci.screens.Profile
 import pocket.pay.tp3_hci.viewmodel.InvestmentViewModel
@@ -99,9 +98,6 @@ fun AppNavGraph(
             Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) },
                 goToLogin = { navController.navigate("login") },
                 loggedOut = loggedOut)
-        }
-        composable(route = "aliascbu"){
-            AliasCBUScreen(goBackToHome = {navController.navigate(AppDestinations.HOME.route)})
         }
 
     }

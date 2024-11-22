@@ -27,6 +27,7 @@
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="error">Error</string>
+    <string name="close">Cerrar</string>
     <string name="estimated_profit">Porcentaje de ganancia mensual estimada: </string>
     <string name="add_fund">Añadir fondo</string>
     <string name="withdrawal"> Retirar</string>
@@ -34,6 +35,7 @@
     <string name="enter_invest">Ingrese el monto a invertir: </string>
     <string name="enter_withdraw">Ingrese el monto a retirar: </string>
     <string name="enter_add">Ingrese el monto a ingresar: </string>
+    <string name="insufficient_balance">Saldo insuficiente!</string>
     <string name="cards_title">Tus tarjetas</string>
     <string name="no_cards">No hay tarjetas agregadas</string>
     <string name="add_card">Agregar tarjeta</string>

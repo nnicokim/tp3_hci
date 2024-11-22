@@ -188,7 +188,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                 title = { Text(text = stringResource(id = R.string.deposit)) },
                 text = {
                     Column {
-                        Text(text = "Enter amount to deposit:")
+                        Text(text = stringResource(id = R.string.enter_add))
                         TextField(
                             value = inputAmount,
                             onValueChange = { inputAmount = it },
@@ -205,12 +205,12 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                             inputAmount = ""
                         }
                     ) {
-                        Text(text = "Confirm")
+                        Text(text = stringResource(id = R.string.accept))
                     }
                 },
                 dismissButton = {
                     Button(onClick = { showDepositDialog = false }) {
-                        Text(text = "Cancel")
+                        Text(text = stringResource(id = R.string.cancel))
                     }
                 }
             )
@@ -266,7 +266,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                 title = { Text(text = stringResource(id = R.string.withdrawal)) },
                 text = {
                     Column {
-                        Text(text = "Enter amount to withdraw:")
+                        Text(text = stringResource(id = R.string.enter_withdraw))
                         TextField(
                             value = inputAmount,
                             onValueChange = { inputAmount = it },
@@ -275,7 +275,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                         )
                         if (withdrawalError) {
                             Text(
-                                text = "Insufficient balance!",
+                                text = stringResource(id = R.string.insufficient_balance),
                                 color = Color.Red,
                                 modifier = Modifier.padding(top = 8.dp)
                             )
@@ -295,12 +295,12 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                             }
                         }
                     ) {
-                        Text(text = "Confirm")
+                        Text(text = stringResource(id = R.string.accept))
                     }
                 },
                 dismissButton = {
                     Button(onClick = { showWithdrawalDialog = false }) {
-                        Text(text = "Cancel")
+                        Text(text = stringResource(id = R.string.cancel))
                     }
                 }
             )
@@ -313,7 +313,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                 text = { Text(text = "Alias: $alias\nCBU: $cbu") },
                 confirmButton = {
                     Button(onClick = { showAliasDialog = false }) {
-                        Text(text = "Close")
+                        Text(text = stringResource(id = R.string.close))
                     }
                 }
             )

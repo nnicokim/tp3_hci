@@ -50,7 +50,6 @@ fun AddCardScreen(
     val number by viewModel.cardNumber.collectAsState()
     val errorMessage by viewModel.errorTextCardNumber.collectAsState()
 
-
     Column(
         modifier = Modifier.fillMaxSize()
             .padding(16.dp),

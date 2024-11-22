@@ -153,9 +153,3 @@ fun AddCardExpDateScreen(
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun AddCardNameScreenPreview(){
-//    AddCardNameScreen {  }
-//}
