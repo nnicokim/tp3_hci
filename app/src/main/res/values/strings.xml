@@ -36,6 +36,7 @@
     <string name="cards_title">Your cards</string>
     <string name="no_cards">No cards added yet</string>
     <string name="add_card">Add new card</string>
+    <string name="delete_card">Delete card</string>
     <string name="add_card_number">Card number</string>
     <string name="add_card_name">Cardholder\'s name</string>
     <string name="add_card_exp_date">Expiration date</string>
@@ -48,5 +49,6 @@
     <string name="error_login">Cannot login. Try again</string>
     <string name="your_aliascbu">Your Alias/CBU</string>
     <string name="go_back_to_home">Go back to Home</string>
+
 
 </resources>

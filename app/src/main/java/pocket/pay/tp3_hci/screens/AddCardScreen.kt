@@ -69,13 +69,12 @@ fun AddCardScreen(goBackToCards: () -> Unit, goCardNameStep: () -> Unit) {
         Spacer(modifier = Modifier.height(145.dp))
 
 
-
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
             label = { Text(stringResource(id = R.string.add_card_number)) },
             modifier = Modifier.fillMaxWidth().
-                height(45.dp),
+                height(65.dp),
             shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             textStyle = TextStyle(

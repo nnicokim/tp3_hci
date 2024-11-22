@@ -37,18 +37,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.R
-
+import pocket.pay.tp3_hci.viewmodel.CardsViewModel
 
 @Composable
-fun CardsScreen(goToCreateCard : () -> Unit) {
+fun CardsScreen(
+    goToCreateCard: () -> Unit,
+    viewModel: CardsViewModel = viewModel()
+) {
+
+    val cards = viewModel.cards
 
     Column(
         modifier = Modifier.fillMaxSize().padding(5.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
-    ){
+    ) {
         Spacer(modifier = Modifier.height(80.dp))
 
         Text(
@@ -67,173 +73,94 @@ fun CardsScreen(goToCreateCard : () -> Unit) {
     ) {
         Spacer(modifier = Modifier.height(150.dp))
 
-        Box(
-            modifier = Modifier.width(320.dp)
-                .height(100.dp)
-                .background(
-                    color = Color(0XFFFEE12B),
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .padding(16.dp)
-        ){
-            Row {
-                Column (
+        // Mostramos las tarjetas dinamicamente
+        if (cards.isNotEmpty()) {
+            cards.forEach { card ->
+                Box(
                     modifier = Modifier
-                        .width(160.dp)
-                        .height(110.dp)
-                ) {
-                    Text(
-                        text = "Hwa Pyoung Kim",
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Text(
-                        text = "**** **** **** 4952",
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-
-
-                }
-                Column (
-                    modifier = Modifier
-                        .width(160.dp)
+                        .width(320.dp)
                         .height(100.dp)
-                ){
+                        .background(
+                            color = Color(card.backgroundColor),
+                            shape = RoundedCornerShape(16.dp)
+                        )
+                        .padding(16.dp)
+                ) {
+                    Row {
+                        Column(
+                            modifier = Modifier
+                                .width(160.dp)
+                                .height(110.dp)
+                        ) {
+                            Text(
+                                text = card.cardholderName,
+                                color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold
+                            )
 
-                    var expanded by remember { mutableStateOf(false) }
-                    Box(
-                        modifier = Modifier.align(Alignment.End)
-                    ) {
-                        IconButton(onClick = { expanded = true }) {
-                            Icon(
-                                imageVector = Icons.Default.MoreVert,
-                                contentDescription = "Menu",
-                                tint = Color.Black
+                            Text(
+                                text = card.cardNumber,
+                                color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold
                             )
                         }
-
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false }
+                        Column(
+                            modifier = Modifier
+                                .width(160.dp)
+                                .height(100.dp)
                         ) {
-                            DropdownMenuItem(
-                                text = { Text("Delete Card") },
-                                onClick = {
-                                    expanded = false
+                            var expanded by remember { mutableStateOf(false) }
+                            Box(
+                                modifier = Modifier.align(Alignment.End)
+                            ) {
+                                IconButton(onClick = { expanded = true }) {
+                                    Icon(
+                                        imageVector = Icons.Default.MoreVert,
+                                        contentDescription = "Menu",
+                                        tint = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black
+                                    )
                                 }
+
+                                DropdownMenu(
+                                    expanded = expanded,
+                                    onDismissRequest = { expanded = false }
+                                ) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(id = R.string.delete_card)) },
+                                        onClick = {
+                                            expanded = false
+                                            viewModel.removeCard(card)
+                                        }
+                                    )
+                                }
+                            }
+
+                            Text(
+                                text = card.expiryDate,
+                                color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.End,
+                                modifier = Modifier
+                                    .align(Alignment.End)
                             )
                         }
                     }
-
-                    Text(
-                        text = "06/25",
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.End,
-                        modifier = Modifier
-                            .align(Alignment.End)
-                    )
                 }
-
-
+                Spacer(modifier = Modifier.height(15.dp))
             }
+        } else {
+            Spacer(modifier = Modifier.height(50.dp))
+            Text(
+                text = stringResource(id = R.string.no_cards),
+                fontSize = 20.sp,
+                modifier = Modifier.padding(16.dp)
+            )
         }
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        Box(
-            modifier = Modifier.width(320.dp)
-                .height(100.dp)
-                .background(
-                    color = Color(0XFF000000),
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .padding(16.dp)
-        ){
-            Row {
-                Column (
-                    modifier = Modifier
-                        .width(160.dp)
-                        .height(110.dp)
-                ) {
-                    Text(
-                        text = "Nicolas Kim",
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Text(
-                        text = "**** **** **** 5915",
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-
-
-                }
-                Column (
-                    modifier = Modifier
-                        .width(160.dp)
-                        .height(100.dp)
-                ){
-
-                    var expanded by remember { mutableStateOf(false) }
-                    Box(
-                        modifier = Modifier.align(Alignment.End)
-                    ) {
-                        IconButton(onClick = { expanded = true }) {
-                            Icon(
-                                imageVector = Icons.Default.MoreVert,
-                                contentDescription = "Menu",
-                                tint = Color.White
-                            )
-                        }
-
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false }
-                        ) {
-                            DropdownMenuItem(
-                                text = { Text("Delete Card") },
-                                onClick = {
-                                    expanded = false
-                                }
-                            )
-                        }
-                    }
-
-                    Text(
-                        text = "09/25",
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.End,
-                        modifier = Modifier
-                            .align(Alignment.End)
-                    )
-                }
-
-
-            }
-        }
-
-        Spacer(modifier = Modifier.height(50.dp))
-
-        // Agregar el condicional si NO hay tarjetas
-        Text(
-            text = stringResource(id = R.string.no_cards),
-            fontSize = 20.sp,
-            modifier = Modifier.padding(16.dp)
-        )
 
         Spacer(modifier = Modifier.height(40.dp))
-
 
         Button(
             onClick = {
@@ -246,14 +173,10 @@ fun CardsScreen(goToCreateCard : () -> Unit) {
                 contentColor = Color.White
             )
         ) {
-            Text(text = stringResource(id = R.string.add_card),
-                fontSize = 19.sp)
+            Text(
+                text = stringResource(id = R.string.add_card),
+                fontSize = 19.sp
+            )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CardsScreenPreview(){
-    CardsScreen {  }
 }

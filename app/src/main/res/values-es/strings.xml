@@ -37,6 +37,7 @@
     <string name="cards_title">Tus tarjetas</string>
     <string name="no_cards">No hay tarjetas agregadas</string>
     <string name="add_card">Agregar tarjeta</string>
+    <string name="delete_card">Eliminar tarjeta</string>
     <string name="add_card_number">Numero de tarjeta</string>
     <string name="add_card_name">Nombre del titular</string>
     <string name="add_card_exp_date">Fecha de vencimiento</string>

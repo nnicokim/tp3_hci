@@ -73,7 +73,7 @@ fun AddCardCVVScreen(goBackToCards: () -> Unit) {
             onValueChange = { cvv = it },
             label = { Text(stringResource(id = R.string.add_card_cvv)) },
             modifier = Modifier.fillMaxWidth().
-                height(45.dp),
+                height(65.dp),
             shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             textStyle = TextStyle(

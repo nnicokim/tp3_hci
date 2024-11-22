@@ -69,13 +69,12 @@ fun AddCardNameScreen(goBackToCards: () -> Unit, goCardExpDateStep: () -> Unit) 
         Spacer(modifier = Modifier.height(145.dp))
 
 
-
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
             label = { Text("Cardholder's name:") },
             modifier = Modifier.fillMaxWidth().
-                height(45.dp),
+                height(65.dp),
             shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             textStyle = TextStyle(

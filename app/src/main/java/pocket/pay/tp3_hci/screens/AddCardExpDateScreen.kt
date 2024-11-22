@@ -69,13 +69,12 @@ fun AddCardExpDateScreen(goBackToCards: () -> Unit, goCardCVVStep:() -> Unit) {
         Spacer(modifier = Modifier.height(145.dp))
 
 
-
         OutlinedTextField(
             value = date,
             onValueChange = { date = it },
             label = { Text(stringResource(id = R.string.add_card_exp_date)) },
             modifier = Modifier.fillMaxWidth().
-                height(45.dp),
+                height(65.dp),
             shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             textStyle = TextStyle(
