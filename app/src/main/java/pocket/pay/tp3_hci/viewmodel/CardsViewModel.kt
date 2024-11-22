@@ -133,7 +133,7 @@ class CardsViewModel : ViewModel() {
                 backgroundColor = 0xFFF28418
             )
             Log.d("CardsViewModel", "Adding card: $newCard")
-            _cards.value = _cards.value + newCard
+            _cards.value += newCard
 
             resetCardData()
         } else {

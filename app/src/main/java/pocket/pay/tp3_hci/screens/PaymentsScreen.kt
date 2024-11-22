@@ -68,7 +68,7 @@ fun PaymentsScreen(
 
             Button(
                 onClick = {
-
+                    goToNewPayment()
                 },
                 modifier = Modifier.wrapContentWidth(),
                 colors = ButtonDefaults.buttonColors(

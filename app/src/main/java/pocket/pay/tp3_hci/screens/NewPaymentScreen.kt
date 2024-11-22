@@ -1,5 +1,6 @@
 package pocket.pay.tp3_hci.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,17 +32,21 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.ui.theme.Purple
+import pocket.pay.tp3_hci.viewmodel.HomeViewModel
 import pocket.pay.tp3_hci.viewmodel.PaymentsViewModel
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun NewPaymentScreen(
     goBackToPayment: () -> Unit,
-    viewModel: PaymentsViewModel = viewModel()
+    viewModel: PaymentsViewModel = viewModel(),
+    homeViewModel: HomeViewModel = viewModel()
 ) {
     val companyName by viewModel.companyName.collectAsState()
     val errorMessageCompanyName by viewModel.errorTextCompanyName.collectAsState()
@@ -46,9 +54,8 @@ fun NewPaymentScreen(
     val errorMessagePaymentAmount by viewModel.errorTextPaymentAmount.collectAsState()
     val paymentSource by viewModel.paymentSource.collectAsState()
     val errorMessagePaymentSource by viewModel.errorTextPaymentSource.collectAsState()
-    val date by viewModel.date.collectAsState()
-    val errorTextDate by viewModel.errorTextDate.collectAsState()
 
+    val amountBalance = homeViewModel.balance.value
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -57,7 +64,7 @@ fun NewPaymentScreen(
         horizontalAlignment = Alignment.Start
     ){
 
-        Spacer(modifier = Modifier.height(80.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
         Text(
             text = stringResource(id = R.string.new_payment),
@@ -84,6 +91,30 @@ fun NewPaymentScreen(
             modifier = Modifier.fillMaxWidth().
             height(65.dp),
             shape = RoundedCornerShape(16.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            textStyle = TextStyle(
+                color = Color.Black,
+                fontSize = 16.sp
+            )
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        if (errorMessageCompanyName == "empty"){
+            Text(
+                text = stringResource(R.string.empty_company_name),
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+
+        OutlinedTextField(
+            value = paymentAmount,
+            onValueChange = { viewModel.updatePaymentAmount(it) },
+            label = { Text(stringResource(id = R.string.payment_amount)) },
+            modifier = Modifier.fillMaxWidth().
+            height(65.dp),
+            shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             textStyle = TextStyle(
                 color = Color.Black,
@@ -93,14 +124,51 @@ fun NewPaymentScreen(
 
         Spacer(modifier = Modifier.height(5.dp))
 
-            if (errorMessageCompanyName == "empty"){
+
+        if (errorMessagePaymentAmount == "invalid"){
+            Text(
+                text = stringResource(R.string.invalid_payment_amount),
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+
+        Text(
+            text = "$amountBalance",
+            color = Color.Red,
+            style = MaterialTheme.typography.bodySmall,
+        )
+
+        OutlinedTextField(
+            value = paymentSource,
+            onValueChange = { viewModel.updatePaymentSource(it) },
+            label = { Text(stringResource(id = R.string.payment_source)) },
+            modifier = Modifier.fillMaxWidth().
+            height(65.dp),
+            shape = RoundedCornerShape(16.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            textStyle = TextStyle(
+                color = Color.Black,
+                fontSize = 16.sp
+            )
+        )
+
+        if (errorMessagePaymentSource.isNotEmpty()) {
+            if (errorMessagePaymentSource == "empty"){
                 Text(
-                    text = stringResource(R.string.empty_card_number),
+                    text = stringResource(R.string.empty_payment_source),
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            } else {
+                Text(
+                    text = stringResource(R.string.invalid_payment_source),
                     color = Color.Red,
                     style = MaterialTheme.typography.bodySmall,
                 )
             }
 
+        }
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -125,9 +193,12 @@ fun NewPaymentScreen(
 
             Button(
                 onClick = {
-                    viewModel.validateCompanyName(onValidCompanyName = {
-                        goBackToPayment()
-                    })
+                    viewModel.validatePayment(
+                        onValidPayment = {
+                            goBackToPayment()
+                        },
+                        homeViewModel = homeViewModel
+                    )
                 },
                 modifier = Modifier.wrapContentWidth()
                     .padding(horizontal = 9.dp),
@@ -144,3 +215,9 @@ fun NewPaymentScreen(
         }
     }
 }
+
+//@Preview(showBackground = true)
+//@Composable
+//fun NewPaymentPreview(){
+//    NewPaymentScreen { }
+//}

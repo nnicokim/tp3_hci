@@ -60,8 +60,15 @@
     <string name="new_payment">New payment</string>
 
     <string name="company_name">Company name</string>
-    <string name="pay">Pay</string>
+    <string name="payment_amount">Payment amount</string>
+    <string name="payment_source">Payment method</string>
 
+    <string name="empty_company_name">Company name cannot be empty</string>
+    <string name="invalid_payment_amount">Please enter a valid amount</string>
+    <string name="empty_payment_source">Please select a payment source</string>
+    <string name="invalid_payment_source">Invalid payment source</string>
+
+    <string name="pay">Pay</string>
     <string name="error_login">Cannot login. Try again</string>
     <string name="your_aliascbu">Your Alias/CBU</string>
     <string name="go_back_to_home">Go back to Home</string>

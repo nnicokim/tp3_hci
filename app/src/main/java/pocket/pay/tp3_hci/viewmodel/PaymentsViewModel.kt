@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 data class Payment(
     val companyName: String,
-    val paymentAmount: Long,
+    val paymentAmount: String,
     val paymentSource: String,
     val date: String
 )
@@ -22,8 +22,8 @@ class PaymentsViewModel : ViewModel() {
     private val _companyName = MutableStateFlow("")
     val companyName: StateFlow<String> = _companyName
 
-    private val _paymentAmount = MutableStateFlow(0f)
-    val paymentAmount: StateFlow<Float> = _paymentAmount
+    private val _paymentAmount = MutableStateFlow("")
+    val paymentAmount: StateFlow<String> = _paymentAmount
 
     private val _paymentSource = MutableStateFlow("")
     val paymentSource: StateFlow<String> = _paymentSource
@@ -43,38 +43,45 @@ class PaymentsViewModel : ViewModel() {
     private val _errorTextDate = MutableStateFlow("")
     val errorTextDate = _errorTextDate.asStateFlow()
 
-    //Validation Functions
-    fun validateCompanyName(onValidCompanyName: () -> Unit){
-        if(_companyName.value.isBlank()){
+    private fun isValidPaymentSource(source: String): Boolean{
+        return true
+    }
+
+    fun validatePayment(
+        homeViewModel: HomeViewModel,
+        onValidPayment: () -> Unit
+    ) {
+        var isValid = true
+
+        if (_companyName.value.isBlank()) {
             _errorTextCompanyName.value = "empty"
+            isValid = false
         } else {
-            onValidCompanyName()
+            _errorTextCompanyName.value = ""
         }
-    }
 
-    private fun isValidPaymentAmount(amount: Float){
-
-    }
-
-    fun validatePaymentAmount(onValidPaymentAmount: () -> Unit){
-        if(!isValidPaymentAmount(_paymentAmount.value)){
+        val amount = _paymentAmount.value.toFloatOrNull()
+        if (amount == null || amount <= 0 || homeViewModel.balance.value < amount) {
             _errorTextPaymentAmount.value = "invalid"
+            isValid = false
         } else {
-            onValidPaymentAmount()
+            _errorTextPaymentAmount.value = ""
         }
-    }
 
-    private fun isValidPaymentSource(source: String){
 
-    }
-
-    fun validatePaymentSource(onValidExpDate: () -> Unit){
-        if(_paymentSource.value.isBlank()){
+        if (_paymentSource.value.isBlank()) {
             _errorTextPaymentSource.value = "empty"
-        } else if (!isValidPaymentSource(_paymentSource.value)){
+            isValid = false
+        } else if (!isValidPaymentSource(_paymentSource.value)) {
             _errorTextPaymentSource.value = "invalid"
+            isValid = false
         } else {
-            onValidExpDate()
+            _errorTextPaymentSource.value = ""
+        }
+
+        if (isValid) {
+            addPayment()
+            onValidPayment()
         }
     }
 
@@ -83,10 +90,19 @@ class PaymentsViewModel : ViewModel() {
     fun updateCompanyName(newCompanyName: String) {
         _companyName.value = newCompanyName
     }
-    fun updatePaymentAmount(newPaymentAmount: Float) {
+    fun updatePaymentAmount(newPaymentAmount: String) {
         _paymentAmount.value = newPaymentAmount
     }
     fun updatePaymentSource(newPaymentSource: String) {
         _paymentSource.value = newPaymentSource
+    }
+    private fun addPayment(){
+        val newPayment = Payment(
+            companyName = _companyName.value,
+            paymentAmount = _paymentAmount.value,
+            paymentSource = _paymentSource.value,
+            date = _date.value
+        )
+            _payments.add(newPayment)
     }
 }
