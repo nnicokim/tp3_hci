@@ -28,7 +28,8 @@ fun AppNavGraph(
     navController: NavHostController,
     isUserLoggedIn: Boolean,
     modifier: Modifier = Modifier,
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: () -> Unit,
+    loggedOut: () -> Unit
 ) {
     val startDestination = if (isUserLoggedIn) AppDestinations.HOME.route else "landing"
 
@@ -94,15 +95,11 @@ fun AppNavGraph(
                 goBackToCards = { navController.navigate(AppDestinations.CARDS.route) }
             )
         }
-
         composable(route = "profile") {
-            Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) })
+            Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) },
+                goToLogin = { navController.navigate("login") },
+                loggedOut = loggedOut)
         }
-
-        composable(route = "profile") {
-            Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) })
-        }
-
         composable(route = "aliascbu"){
             AliasCBUScreen(goBackToHome = {navController.navigate(AppDestinations.HOME.route)})
         }

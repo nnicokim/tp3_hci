@@ -1,7 +1,5 @@
 package pocket.pay.tp3_hci.viewmodel
 
-import android.annotation.SuppressLint
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
@@ -10,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import pocket.pay.tp3_hci.R
 
-data class Card(
+data class Card (
     val cardholderName: String,
     val cardNumber: String,
     val expiryDate: String,

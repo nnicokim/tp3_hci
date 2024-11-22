@@ -34,7 +34,8 @@ import pocket.pay.tp3_hci.viewmodel.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Profile(goBackToHome: () -> Unit, viewModel: ProfileViewModel = viewModel()) {
+fun Profile(goBackToHome: () -> Unit, goToLogin: () -> Unit,  viewModel: ProfileViewModel = viewModel(),
+            loggedOut: () -> Unit) {
 
     val userName = viewModel.userName
     val userEmail = viewModel.userEmail
@@ -70,7 +71,9 @@ fun Profile(goBackToHome: () -> Unit, viewModel: ProfileViewModel = viewModel())
             modifier = Modifier.padding(paddingValues),
             userName = userName,
             userEmail = userEmail,
-            userPhone = userPhone
+            userPhone = userPhone,
+            goToLogin = goToLogin,
+            loggedOut = loggedOut
         )
     }
 }
@@ -80,7 +83,9 @@ fun ProfileScreen(
     modifier: Modifier,
     userName: String,
     userEmail: String,
-    userPhone: String
+    userPhone: String,
+    goToLogin: () -> Unit,
+    loggedOut: () -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -115,9 +120,9 @@ fun ProfileScreen(
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        // Botón de logout (para futuras funcionalidades)
         Button(
-            onClick = { /* TODO: Implementar logout */ },
+            onClick = { goToLogin();
+                      loggedOut}, // TODO: Implementar logout
             modifier = Modifier.padding(20.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Purple,
