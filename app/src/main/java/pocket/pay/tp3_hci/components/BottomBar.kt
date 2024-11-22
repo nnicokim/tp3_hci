@@ -21,8 +21,7 @@ fun BottomBar(
     currentRoute: String?,
     onNavigateToRoute: (String) -> Unit,
     contentColor: Color = Color(0xFFFFFFFF),
-    containerColor: Color = Color(0xFF7382E5),
-    selectedItemBackgroundColor: Color = Color(0XFF8F9BEA)
+    containerColor: Color = Color(0xFF7382E5)
 ) {
     val items = listOf(
         AppDestinations.HOME,

@@ -12,6 +12,10 @@
     <string name="signin_create">Iniciar sesión o crear una cuenta</string>
     <string name="signin">Iniciar sesión</string>
     <string name="register">Registrarse</string>
+    <string name="go_to_login">Ir al login</string>
+    <string name="create_my_account">Crear mi cuenta</string>
+    <string name="account_question">Ya tiene una cuenta?</string>
+    <string name="register_text">Por favor, llene los datos para crear una cuenta</string>
     <string name="logout">Cerrar sesión</string>
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
@@ -33,7 +37,18 @@
     <string name="cards_title">Tus tarjetas</string>
     <string name="no_cards">No hay tarjetas agregadas</string>
     <string name="add_card">Agregar tarjeta</string>
+    <string name="delete_card">Eliminar tarjeta</string>
+    <string name="add_card_number">Numero de tarjeta</string>
+    <string name="add_card_name">Nombre del titular</string>
+    <string name="add_card_exp_date">Fecha de vencimiento</string>
+    <string name="add_card_cvv">CVV</string>
+    <string name="continue_string">Continuar</string>
     <string name="save_card">Guardar tarjeta</string>
-
+    <string name="expand">Expandir</string>
+    <string name="colapse">Colapsar</string>
+    <string name="recent_payments">Pagos Recientes</string>
+    <string name="error_login">No se puede iniciar sesión. Intente nuevamente</string>
+    <string name="your_aliascbu">Tu Alias/CBU</string>
+    <string name="go_back_to_home">Volver a Home</string>
 
 </resources>

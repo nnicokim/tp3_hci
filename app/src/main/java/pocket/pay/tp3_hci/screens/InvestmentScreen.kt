@@ -20,6 +20,7 @@ import pocket.pay.tp3_hci.viewmodel.InvestmentViewModel
 
 @Composable
 fun InvestmentScreen(viewModel: InvestmentViewModel = viewModel()) {
+
     val investmentAmount by viewModel.investmentAmount.collectAsState()
     val errorText by viewModel.errorText.collectAsState()
     val isAddFundDialogVisible by viewModel.isAddFundDialogVisible.collectAsState()

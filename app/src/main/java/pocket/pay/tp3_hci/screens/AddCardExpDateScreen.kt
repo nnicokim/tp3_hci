@@ -38,8 +38,8 @@ import kotlin.math.round
 
 
 @Composable
-fun AddCardScreen(goBackToCards: () -> Unit, goCardNameStep: () -> Unit) {
-    var email by remember { mutableStateOf("") }
+fun AddCardExpDateScreen(goBackToCards: () -> Unit, goCardCVVStep:() -> Unit) {
+    var date by remember { mutableStateOf("") }
 
 
     Column(
@@ -70,13 +70,13 @@ fun AddCardScreen(goBackToCards: () -> Unit, goCardNameStep: () -> Unit) {
 
 
         OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text(stringResource(id = R.string.add_card_number)) },
+            value = date,
+            onValueChange = { date = it },
+            label = { Text(stringResource(id = R.string.add_card_exp_date)) },
             modifier = Modifier.fillMaxWidth().
                 height(65.dp),
             shape = RoundedCornerShape(16.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             textStyle = TextStyle(
                 color = Color.Black,
                 fontSize = 16.sp
@@ -107,7 +107,7 @@ fun AddCardScreen(goBackToCards: () -> Unit, goCardNameStep: () -> Unit) {
             Button(
                 onClick = {
                     // Falta implementar el agregado de la tarjeta
-                    goCardNameStep()
+                    goCardCVVStep()
                 },
                 modifier = Modifier.wrapContentWidth()
                     .padding(horizontal = 9.dp),
@@ -127,6 +127,6 @@ fun AddCardScreen(goBackToCards: () -> Unit, goCardNameStep: () -> Unit) {
 
 //@Preview(showBackground = true)
 //@Composable
-//fun AddCardScreenPreview(){
-//    AddCardScreen {  }
+//fun AddCardNameScreenPreview(){
+//    AddCardNameScreen {  }
 //}
