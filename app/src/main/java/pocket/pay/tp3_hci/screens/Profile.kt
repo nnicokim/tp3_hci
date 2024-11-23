@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.ProfileViewModel
 
@@ -133,3 +134,9 @@ fun ProfileScreen(
         }
     }
 }
+
+//@PreviewScreenSizes
+//@Composable
+//fun ProfileScreenPreview{
+//    ProfileScreen() { }
+//}

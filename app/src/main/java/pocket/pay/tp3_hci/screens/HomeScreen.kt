@@ -1,5 +1,6 @@
 package pocket.pay.tp3_hci.screens
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,7 +38,9 @@ import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.HomeViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import pocket.pay.tp3_hci.PreviewScreenSizes
 
 
 @Composable
@@ -52,12 +56,25 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
     var inputAmount by remember { mutableStateOf("") }
     var withdrawalError by remember { mutableStateOf(false) }
 
+    var configuration = LocalConfiguration.current
+
+
+    Row {
+
+        if(configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            Spacer(modifier = Modifier.width(80.dp))
+        }
+
     Column(
         modifier = Modifier.fillMaxSize().padding(8.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(80.dp))
+        if(configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Spacer(modifier = Modifier.height(80.dp))
+        }
+
+
 
         Card(
             modifier = Modifier.padding(10.dp),
@@ -320,10 +337,11 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
             )
         }
     }
+    }
 }
 
 
-@Preview(showBackground = true)
+@PreviewScreenSizes
 @Composable
 fun HomeScreenPreview(){
     HomeScreen {  }
