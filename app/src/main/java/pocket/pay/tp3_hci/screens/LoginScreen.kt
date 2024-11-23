@@ -188,8 +188,12 @@ fun PasswordInputField(
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(onLoginSuccess = {}, onPasswordRecovery = {}, goToHome = {}, goToRegister = {},
-        viewModel = LoginViewModel())
+    LoginScreen(onLoginSuccess = {},
+        onPasswordRecovery = {},
+        goToHome = {},
+        goToRegister = {},
+        viewModel = LoginViewModel()
+    )
 }
 
 

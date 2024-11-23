@@ -204,7 +204,9 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
 @Preview(showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen(onLoginSuccess = {}, goToHome = {}, goToLogin = {})
+    RegisterScreen(onLoginSuccess = {},
+        goToHome = {},
+        goToLogin = {})
 }
 
 

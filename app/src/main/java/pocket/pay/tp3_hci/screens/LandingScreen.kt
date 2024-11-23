@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.ui.theme.Purple
 
@@ -118,8 +119,8 @@ fun LandingScreen(goToLogin : () -> Unit, goToRegister : () -> Unit) {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun LandingScreenPreview() {
-//    LandingScreen(goToLogin = {}, goToRegister = {})
-//}
+@PreviewScreenSizes
+@Composable
+fun LandingScreenPreview() {
+    LandingScreen(goToLogin = {}, goToRegister = {})
+}

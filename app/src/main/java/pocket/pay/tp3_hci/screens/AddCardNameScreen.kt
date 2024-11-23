@@ -145,8 +145,12 @@ fun AddCardNameScreen(
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun AddCardNameScreenPreview(){
-//    AddCardNameScreen {  }
-//}
+@Preview(showBackground = true)
+@Composable
+fun AddCardNameScreenPreview(){
+    AddCardNameScreen(
+        goBackToCards = {},
+        goCardExpDateStep = {},
+        viewModel =  CardsViewModel()
+    )
+}
