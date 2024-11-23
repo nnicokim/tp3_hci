@@ -14,9 +14,6 @@ import pocket.pay.tp3_hci.screens.PasswordRecoveryScreen
 import pocket.pay.tp3_hci.screens.PaymentsScreen
 import pocket.pay.tp3_hci.screens.RegisterScreen
 import androidx.compose.ui.Modifier
-import pocket.pay.tp3_hci.screens.AddCardCVVScreen
-import pocket.pay.tp3_hci.screens.AddCardExpDateScreen
-import pocket.pay.tp3_hci.screens.AddCardNameScreen
 import pocket.pay.tp3_hci.screens.AddCardScreen
 import pocket.pay.tp3_hci.screens.InvestmentScreen
 import pocket.pay.tp3_hci.screens.NewPaymentScreen
@@ -75,24 +72,6 @@ fun AppNavGraph(
         composable(route = "addcard") {
             AddCardScreen(
                 goBackToCards = { navController.navigate(AppDestinations.CARDS.route) },
-                goCardNameStep = { navController.navigate("addcardname")}
-            )
-        }
-        composable(route = "addcardname"){
-            AddCardNameScreen(
-                goBackToCards = { navController.navigate(AppDestinations.CARDS.route) },
-                goCardExpDateStep = { navController.navigate("addcardexpdate")}
-            )
-        }
-        composable(route = "addcardexpdate"){
-            AddCardExpDateScreen(
-                goBackToCards = { navController.navigate(AppDestinations.CARDS.route) },
-                goCardCVVStep = { navController.navigate("addcardcvv")}
-            )
-        }
-        composable(route = "addcardcvv"){
-            AddCardCVVScreen(
-                goBackToCards = { navController.navigate(AppDestinations.CARDS.route) }
             )
         }
 

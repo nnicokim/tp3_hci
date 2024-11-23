@@ -45,11 +45,16 @@ import kotlin.math.round
 @Composable
 fun AddCardScreen(
     goBackToCards: () -> Unit,
-    goCardNameStep: () -> Unit,
     viewModel: CardsViewModel = viewModel()
 ) {
     val number by viewModel.cardNumber.collectAsState()
-    val errorMessage by viewModel.errorTextCardNumber.collectAsState()
+    val errorMessageCardNumber by viewModel.errorTextCardNumber.collectAsState()
+    val name by viewModel.cardholderName.collectAsState()
+    val errorMessageCardName by viewModel.errorTextCardName.collectAsState()
+    val date by viewModel.expiryDate.collectAsState()
+    val errorMessageExpDate by viewModel.errorTextCardExpDate.collectAsState()
+    val cvv by viewModel.cvv.collectAsState()
+    val errorMessage by viewModel.errorTextCardCVV.collectAsState()
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -58,7 +63,7 @@ fun AddCardScreen(
         horizontalAlignment = Alignment.Start
     ){
 
-        Spacer(modifier = Modifier.height(80.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
         Text(
             text = stringResource(id = R.string.add_card),
@@ -75,7 +80,7 @@ fun AddCardScreen(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(145.dp))
+        Spacer(modifier = Modifier.height(125.dp))
 
 
         OutlinedTextField(
@@ -94,8 +99,8 @@ fun AddCardScreen(
 
         Spacer(modifier = Modifier.height(5.dp))
 
-        if (errorMessage.isNotEmpty()) {
-            if (errorMessage == "empty"){
+        if (errorMessageCardNumber.isNotEmpty()) {
+            if (errorMessageCardNumber == "empty"){
                 Text(
                     text = stringResource(R.string.empty_card_number),
                     color = Color.Red,
@@ -104,6 +109,95 @@ fun AddCardScreen(
             } else {
                 Text(
                     text = stringResource(R.string.invalid_card_number),
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+
+        }
+
+        OutlinedTextField(
+            value = name,
+            onValueChange = { viewModel.updateCardName(it) },
+            label = { Text("Cardholder's name:") },
+            modifier = Modifier.fillMaxWidth().
+            height(65.dp),
+            shape = RoundedCornerShape(16.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            textStyle = TextStyle(
+                color = Color.Black,
+                fontSize = 16.sp
+            )
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        if (errorMessageCardName.isNotEmpty()) {
+            Text(
+                text = stringResource(R.string.empty_card_name),
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+
+        OutlinedTextField(
+            value = date,
+            onValueChange = { viewModel.updateCardExpDate(it) },
+            label = { Text(stringResource(id = R.string.add_card_exp_date)) },
+            modifier = Modifier.fillMaxWidth().
+            height(65.dp),
+            shape = RoundedCornerShape(16.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            textStyle = TextStyle(
+                color = Color.Black,
+                fontSize = 16.sp
+            )
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        if (errorMessageExpDate.isNotEmpty()) {
+            if (errorMessageExpDate == "empty"){
+                Text(
+                    text = stringResource(R.string.empty_card_exp_date),
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            } else {
+                Text(
+                    text = stringResource(R.string.invalid_card_exp_date),
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+        }
+
+        OutlinedTextField(
+            value = cvv,
+            onValueChange = { viewModel.updateCardCvv(it) },
+            label = { Text(stringResource(id = R.string.add_card_cvv)) },
+            modifier = Modifier.fillMaxWidth().
+            height(65.dp),
+            shape = RoundedCornerShape(16.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            textStyle = TextStyle(
+                color = Color.Black,
+                fontSize = 16.sp
+            )
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        if (errorMessage.isNotEmpty()) {
+            if (errorMessage == "empty"){
+                Text(
+                    text = stringResource(R.string.empty_card_cvv),
+                    color = Color.Red,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            } else {
+                Text(
+                    text = stringResource(R.string.invalid_card_cvv),
                     color = Color.Red,
                     style = MaterialTheme.typography.bodySmall,
                 )
@@ -134,8 +228,8 @@ fun AddCardScreen(
 
             Button(
                 onClick = {
-                    viewModel.validateCardNumber(onValidNumber = {
-                        goCardNameStep()
+                    viewModel.isCardDataValid(onValidCard = {
+                        goBackToCards()
                     })
                 },
                 modifier = Modifier.wrapContentWidth()
@@ -159,7 +253,6 @@ fun AddCardScreen(
 fun AddCardScreenPreview(){
     AddCardScreen(
         goBackToCards = {},
-        goCardNameStep = {},
         viewModel = CardsViewModel()
     )
 }

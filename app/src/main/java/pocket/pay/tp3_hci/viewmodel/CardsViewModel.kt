@@ -19,7 +19,7 @@ data class Card (
 
 class CardsViewModel : ViewModel() {
 
-    private val _cards = MutableStateFlow<List<Card>>(emptyList())
+    private val _cards = MutableStateFlow(listOf<Card>())//MutableStateFlow<List<Card>>(emptyList())
     val cards: StateFlow<List<Card>> = _cards
 
 
@@ -52,26 +52,29 @@ class CardsViewModel : ViewModel() {
         return regex.matches(number)
     }
 
-    fun validateCardNumber(onValidNumber: () -> Unit){
+    private fun validateCardNumber() : Boolean{
         if(_cardNumber.value.isBlank()){
             _errorTextCardNumber.value = "empty"
+            return false
         } else if (!isValidNumber(_cardNumber.value)){
             _errorTextCardNumber.value = "invalid"
-        } else {
-            onValidNumber()
+            return false
         }
+        _errorTextCardNumber.value = ""
+        return true
     }
 
     fun updateCardNumber(newNumber: String) {
         _cardNumber.value = newNumber
     }
 
-    fun validateCardName(onValidName: () -> Unit){
+    fun validateCardName() : Boolean{
         if(_cardholderName.value.isBlank()){
             _errorTextCardName.value = "empty"
-        } else {
-            onValidName()
+            return false
         }
+        _errorTextCardName.value = ""
+        return true
     }
 
     fun updateCardName(newName: String) {
@@ -83,13 +86,16 @@ class CardsViewModel : ViewModel() {
         return regex.matches(expdate)
     }
 
-    fun validateCardExpDate(onValidExpDate: () -> Unit){
+    private fun validateCardExpDate() : Boolean{
         if(_expiryDate.value.isBlank()){
             _errorTextCardExpDate.value = "empty"
+            return false
         } else if (!isValidExpDate(_expiryDate.value)){
             _errorTextCardExpDate.value = "invalid"
+            return false
         } else {
-            onValidExpDate()
+            _errorTextCardExpDate.value = ""
+            return true
         }
     }
 
@@ -102,29 +108,34 @@ class CardsViewModel : ViewModel() {
         return regex.matches(cvv)
     }
 
-    fun validateCardCVV(onValidCVV: () -> Unit){
+    private fun validateCardCVV() : Boolean{
         if(_cvv.value.isBlank()){
             _errorTextCardCVV.value = "empty"
+            return false
         } else if (!isValidCVV(_cvv.value)){
             _errorTextCardCVV.value = "invalid"
-        } else {
-            onValidCVV()
+            return false
         }
+        _errorTextCardCVV.value = ""
+        return true
     }
 
     fun updateCardCvv(newCVV: String) {
         _cvv.value = newCVV
     }
 
-    fun isCardDataValid(): Boolean {
-        return _cardholderName.value.isNotBlank() &&
-                _cardNumber.value.isNotBlank() &&
-                _expiryDate.value.isNotBlank() &&
-                _cvv.value.isNotBlank() && _cvv.value.toIntOrNull() != null
+    fun isCardDataValid(onValidCard: () -> Unit) {
+        val numFlag = validateCardNumber()
+        val nameFlag = validateCardName()
+        val dateFlag = validateCardExpDate()
+        val cvv = validateCardCVV()
+        if (numFlag && nameFlag && dateFlag && cvv){
+            addCard()
+            onValidCard()
+        }
     }
 
-    fun addCard() {
-        if (isCardDataValid()) {
+    private fun addCard() {
             val newCard = Card(
                 cardholderName = _cardholderName.value,
                 cardNumber = _cardNumber.value,
@@ -132,13 +143,9 @@ class CardsViewModel : ViewModel() {
                 cvv = _cvv.value.toInt(),
                 backgroundColor = 0xFFF28418
             )
-            Log.d("CardsViewModel", "Adding card: $newCard")
-            _cards.value += newCard
-
-            resetCardData()
-        } else {
-            Log.d("CardsViewModel", "Invalid card data: Name=${_cardholderName.value}, Number=${_cardNumber.value}, Expiry=${_expiryDate.value}, CVV=${_cvv.value}")
-        }
+            _cards.value = _cards.value + newCard
+        Log.d("CardsViewModel", "New card added: $newCard. Total cards: ${_cards.value.size}")
+         //   resetCardData()
     }
 
     private fun resetCardData() {

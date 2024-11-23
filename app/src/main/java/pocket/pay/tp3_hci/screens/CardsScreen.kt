@@ -2,6 +2,7 @@ package pocket.pay.tp3_hci.screens
 
 import android.content.res.Configuration
 import android.graphics.Paint.Align
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -66,7 +67,7 @@ fun CardsScreen(
         if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Spacer(modifier = Modifier.width(80.dp))
         }
-
+        Log.d("CardScreen","Total cards: ${cards.size}")
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,
