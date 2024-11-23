@@ -12,6 +12,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.ui.theme.Purple
 
@@ -51,6 +53,16 @@ fun Header(
             )
         }
     }
+}
+
+@PreviewScreenSizes
+@Composable
+fun HeaderPreview(){
+    val mockNavController = rememberNavController() // Dummy NavController for preview
+    Header(
+        username = "John Doe",
+        navController = mockNavController
+    )
 }
 
 
