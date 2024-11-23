@@ -22,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowWidthSizeClass
 import pocket.pay.tp3_hci.components.BottomBar
 import pocket.pay.tp3_hci.components.Header
+import pocket.pay.tp3_hci.components.SideBar
 import pocket.pay.tp3_hci.navigations.AppDestinations
 import pocket.pay.tp3_hci.navigations.AppNavGraph
 import pocket.pay.tp3_hci.ui.theme.PocketPayTheme
@@ -48,8 +49,7 @@ fun PocketPayApp() {
     val configuration = LocalConfiguration.current
     val adaptiveInfo = currentWindowAdaptiveInfo()
 
-    if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT &&
-        adaptiveInfo.windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT){
+    if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
     Scaffold(
         topBar = {
             if (currentRoute in listOf(
@@ -97,7 +97,53 @@ fun PocketPayApp() {
             loggedOut = { isUserLoggedIn = false }
         )
     }
-    } else if(configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-
+    } else {
+        Scaffold(
+            bottomBar = {
+                if (currentRoute in listOf(
+                        AppDestinations.HOME.route,
+                        AppDestinations.PAYMENTS.route,
+                        AppDestinations.CARDS.route,
+                        AppDestinations.INVESTMENTS.route
+                    )
+                ) {
+                    SideBar(
+                        currentRoute = currentRoute,
+                        onNavigateToRoute = { route ->
+                            navController.navigate(route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    )
+                }
+            },
+            topBar = {
+                if (currentRoute in listOf(
+                        AppDestinations.HOME.route,
+                        AppDestinations.PAYMENTS.route,
+                        AppDestinations.CARDS.route,
+                        AppDestinations.INVESTMENTS.route
+                    )
+                ) {
+                    Header(
+                        username = "John Doe", // TODO: ver como obtener el nombre de usuario
+                        modifier = Modifier,
+                        navController = navController
+                    )
+                }
+            }
+        ) { innerPadding ->
+            AppNavGraph(
+                navController = navController,
+                isUserLoggedIn = isUserLoggedIn,
+                modifier = Modifier.padding(innerPadding),
+                onLoginSuccess = { isUserLoggedIn = true },
+                loggedOut = { isUserLoggedIn = false }
+            )
+        }
     }
 }

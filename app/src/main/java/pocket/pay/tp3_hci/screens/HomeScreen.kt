@@ -64,10 +64,6 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
 
     Row {
 
-        if(adaptiveInfo.windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT){
-            //Celus
-        }
-
         if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Spacer(modifier = Modifier.width(80.dp))
         }
@@ -78,9 +74,8 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                Spacer(modifier = Modifier.height(80.dp))
-            }
+            Spacer(modifier = Modifier.height(80.dp))
+
 
 
             Card(
