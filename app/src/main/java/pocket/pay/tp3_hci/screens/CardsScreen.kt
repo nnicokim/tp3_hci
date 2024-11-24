@@ -84,14 +84,35 @@ fun CardsScreen(
             ) {
 
                 Spacer(modifier = Modifier.height(80.dp))
+                Row {
+                    Text(
+                        text = stringResource(id = R.string.cards_title),
+                        modifier = Modifier.padding(20.dp),
+                        fontSize = 25.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Left
+                    )
 
-                Text(
-                    text = stringResource(id = R.string.cards_title),
-                    modifier = Modifier.padding(20.dp),
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Left
-                )
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Button(
+                        onClick = {
+                            goToCreateCard()
+                        },
+                        modifier = Modifier.wrapContentWidth()
+                            .padding(horizontal = 9.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Purple,
+                            contentColor = Color.White
+                        ),
+                        shape = RoundedCornerShape(15.dp)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.add_card),
+                            fontSize = 19.sp
+                        )
+                    }
+                }
             }
 
             if (adaptiveInfo.windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT){
@@ -203,25 +224,6 @@ fun CardsScreen(
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(40.dp))
-
-                    Button(
-                        onClick = {
-                            goToCreateCard()
-                        },
-                        modifier = Modifier.wrapContentWidth()
-                            .padding(horizontal = 9.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Purple,
-                            contentColor = Color.White
-                        ),
-                        shape = RoundedCornerShape(15.dp)
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.add_card),
-                            fontSize = 19.sp
-                        )
-                    }
                 }
             } else {
 
