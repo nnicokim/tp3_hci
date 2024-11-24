@@ -2,7 +2,7 @@ package pocket.pay.tp3_hci.model
 
 import java.util.Date
 
-class Payment (
+data class Payment (
     var id: Int,
     var type: String,
     var amount: Float,

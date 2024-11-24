@@ -6,7 +6,7 @@ import java.util.Locale
 import java.util.Date
 
 
-class Card(
+data class Card(
     var id: Int? = null,
     var number: String,
     var expirationDate: String,
