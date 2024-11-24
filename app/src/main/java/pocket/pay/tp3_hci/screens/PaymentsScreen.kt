@@ -62,11 +62,7 @@ fun PaymentsScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            if(configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 Spacer(modifier = Modifier.height(80.dp))
-            }
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
