@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -61,6 +62,17 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.logging.interceptor)
+
+    implementation(libs.retrofit)
+
+    implementation(libs.converter.kotlinx.serialization)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
     implementation("androidx.navigation:navigation-compose:2.7.3")
 
     implementation("com.google.android.gms:play-services-maps:18.2.0")
@@ -69,7 +81,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime:1.6.7")
     implementation("androidx.compose.foundation:foundation:1.6.7")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v287)
 
 }

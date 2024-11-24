@@ -33,11 +33,12 @@ import pocket.pay.tp3_hci.viewmodel.RegisterViewModel
 fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin : () -> Unit,
                    viewModel: RegisterViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
 
-    val name by viewModel.name.collectAsState()
+    val firstname by viewModel.firstname.collectAsState()
+    val lastname by viewModel.lastname.collectAsState()
+    val birthdate by viewModel.birthdate.collectAsState()
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
-    val confirmPassword by viewModel.confirmPassword.collectAsState()
-    val mobileNumber by viewModel.mobileNumber.collectAsState()
+    // val confirmPassword by viewModel.confirmPassword.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
 
     var isPasswordVisible by remember { mutableStateOf(false) }
@@ -82,9 +83,27 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
         Spacer(modifier = Modifier.height(25.dp))
 
         OutlinedTextField(
-            value = name,
-            onValueChange = { viewModel.updateName(it) },
-            label = { Text("Name") },
+            value = firstname,
+            onValueChange = { viewModel.updateFirstname(it) },
+            label = { Text("First name") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = lastname,
+            onValueChange = { viewModel.updateLastname(it) },
+            label = { Text("Last name") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = birthdate,
+            onValueChange = { viewModel.updateBirthdate(it) },
+            label = { Text("Birth date") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -123,40 +142,30 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
             }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = confirmPassword,
-            onValueChange = { viewModel.updateConfirmPassword(it) },
-            label = { Text("Confirm Password") },
-            modifier = Modifier.fillMaxWidth(),
-            visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                val icon = if (isPasswordVisible) {
-                    painterResource(id = R.drawable.ic_visibility_off)
-                } else {
-                    painterResource(id = R.drawable.ic_visibility)
-                }
-
-                IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                    Icon(
-                        painter = icon,
-                        contentDescription = if (isPasswordVisible) "Hide password" else "Show password",
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = mobileNumber,
-            onValueChange = { viewModel.updateMobileNumber(it) },
-            label = { Text("Mobile Number") },
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
-        )
+//        Spacer(modifier = Modifier.height(16.dp))
+//
+//        OutlinedTextField(
+//            value = confirmPassword,
+//            onValueChange = { viewModel.updateConfirmPassword(it) },
+//            label = { Text("Confirm Password") },
+//            modifier = Modifier.fillMaxWidth(),
+//            visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+//            trailingIcon = {
+//                val icon = if (isPasswordVisible) {
+//                    painterResource(id = R.drawable.ic_visibility_off)
+//                } else {
+//                    painterResource(id = R.drawable.ic_visibility)
+//                }
+//
+//                IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+//                    Icon(
+//                        painter = icon,
+//                        contentDescription = if (isPasswordVisible) "Hide password" else "Show password",
+//                        modifier = Modifier.size(24.dp)
+//                    )
+//                }
+//            }
+//        )
 
         Spacer(modifier = Modifier.height(32.dp))
 
