@@ -14,12 +14,9 @@ import pocket.pay.tp3_hci.screens.PasswordRecoveryScreen
 import pocket.pay.tp3_hci.screens.PaymentsScreen
 import pocket.pay.tp3_hci.screens.RegisterScreen
 import androidx.compose.ui.Modifier
-import pocket.pay.tp3_hci.screens.AddCardCVVScreen
-import pocket.pay.tp3_hci.screens.AddCardExpDateScreen
-import pocket.pay.tp3_hci.screens.AddCardNameScreen
 import pocket.pay.tp3_hci.screens.AddCardScreen
-import pocket.pay.tp3_hci.screens.AliasCBUScreen
 import pocket.pay.tp3_hci.screens.InvestmentScreen
+import pocket.pay.tp3_hci.screens.NewPaymentScreen
 import pocket.pay.tp3_hci.screens.Profile
 import pocket.pay.tp3_hci.viewmodel.InvestmentViewModel
 
@@ -43,7 +40,7 @@ fun AppNavGraph(
             HomeScreen(goToMap = { navController.navigate("map") })
         }
         composable(route = AppDestinations.PAYMENTS.route) {
-            PaymentsScreen()
+            PaymentsScreen(goToNewPayment = {navController.navigate("newpayment")})
         }
         composable(route = AppDestinations.CARDS.route) {
             CardsScreen(goToCreateCard = { navController.navigate("addcard") })
@@ -75,33 +72,19 @@ fun AppNavGraph(
         composable(route = "addcard") {
             AddCardScreen(
                 goBackToCards = { navController.navigate(AppDestinations.CARDS.route) },
-                goCardNameStep = { navController.navigate("addcardname")}
             )
         }
-        composable(route = "addcardname"){
-            AddCardNameScreen(
-                goBackToCards = { navController.navigate(AppDestinations.CARDS.route) },
-                goCardExpDateStep = { navController.navigate("addcardexpdate")}
+
+        composable(route = "newpayment"){
+            NewPaymentScreen(
+                goBackToPayment = { navController.navigate(AppDestinations.PAYMENTS.route) }
             )
         }
-        composable(route = "addcardexpdate"){
-            AddCardExpDateScreen(
-                goBackToCards = { navController.navigate(AppDestinations.CARDS.route) },
-                goCardCVVStep = { navController.navigate("addcardcvv")}
-            )
-        }
-        composable(route = "addcardcvv"){
-            AddCardCVVScreen(
-                goBackToCards = { navController.navigate(AppDestinations.CARDS.route) }
-            )
-        }
+
         composable(route = "profile") {
             Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) },
                 goToLogin = { navController.navigate("login") },
                 loggedOut = loggedOut)
-        }
-        composable(route = "aliascbu"){
-            AliasCBUScreen(goBackToHome = {navController.navigate(AppDestinations.HOME.route)})
         }
 
     }

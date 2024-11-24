@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -114,7 +115,7 @@ fun GoogleMapComposable(modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
+@PreviewScreenSizes
 @Composable
 fun MapScreenPreview() {
     MapScreen(goBackToHome = {})

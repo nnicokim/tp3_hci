@@ -11,10 +11,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,6 +42,9 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goTo
     val email by viewModel.email.collectAsState()
     val password by viewModel.password.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
+
+    val configuration = LocalConfiguration.current  //Orientacion
+    val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
 
     Column(
         modifier = Modifier
@@ -188,8 +193,12 @@ fun PasswordInputField(
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(onLoginSuccess = {}, onPasswordRecovery = {}, goToHome = {}, goToRegister = {},
-        viewModel = LoginViewModel())
+    LoginScreen(onLoginSuccess = {},
+        onPasswordRecovery = {},
+        goToHome = {},
+        goToRegister = {},
+        viewModel = LoginViewModel()
+    )
 }
 
 

@@ -1,20 +1,24 @@
 package pocket.pay.tp3_hci.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.viewmodel.InvestmentViewModel
 
@@ -26,73 +30,91 @@ fun InvestmentScreen(viewModel: InvestmentViewModel = viewModel()) {
     val isAddFundDialogVisible by viewModel.isAddFundDialogVisible.collectAsState()
     val isWithdrawDialogVisible by viewModel.isWithdrawDialogVisible.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(107.dp))
+    val configuration = LocalConfiguration.current  //Orientacion
+    val adaptiveInfo = currentWindowAdaptiveInfo()
 
-        Text(text = "Current Investment: $${String.format("%.2f", investmentAmount)}",
-            fontSize = 33.sp,
-            style = androidx.compose.ui.text.TextStyle(lineHeight = 40.sp))
+    Row {
 
-        Spacer(modifier = Modifier.height(33.dp))
-
-        Text(text = stringResource(id = R.string.estimated_profit),
-            fontSize = 21.sp,
-            modifier = Modifier.padding(5.dp))
-
-        Text(text = "2,5%",
-            fontSize = 23.sp,
-            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-            modifier = Modifier.padding(8.dp))
-
-        Spacer(modifier = Modifier.height(25.dp))
-
-        Button(
-            onClick = { viewModel.showAddFundDialog() },
-            modifier = Modifier.wrapContentWidth()
-                .padding(horizontal = 9.dp),
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = stringResource(id = R.string.add_fund),
-                fontSize = 17.sp)
-        }
+            Spacer(modifier = Modifier.height(107.dp))
 
-        Spacer(modifier = Modifier.height(19.dp))
-
-        Button(
-            onClick = { viewModel.showWithdrawDialog() },
-            modifier = Modifier.wrapContentWidth()
-                .padding(horizontal = 9.dp),
-        ) {
-            Text(text = stringResource(id = R.string.withdrawal),
-                fontSize = 17.sp)
-        }
-
-        if (errorText.isNotEmpty()) {
             Text(
-                text = errorText,
-                color = Color.Red,
-                modifier = Modifier.padding(top = 8.dp)
+                text = "Current Investment: $${String.format("%.2f", investmentAmount)}",
+                fontSize = 33.sp,
+                style = androidx.compose.ui.text.TextStyle(lineHeight = 40.sp)
+            )
+
+            Spacer(modifier = Modifier.height(33.dp))
+
+            Text(
+                text = stringResource(id = R.string.estimated_profit),
+                fontSize = 21.sp,
+                modifier = Modifier.padding(5.dp)
+            )
+
+            Text(
+                text = "2,5%",
+                fontSize = 23.sp,
+                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                modifier = Modifier.padding(8.dp)
+            )
+
+            Spacer(modifier = Modifier.height(25.dp))
+
+            Button(
+                onClick = { viewModel.showAddFundDialog() },
+                modifier = Modifier.wrapContentWidth()
+                    .padding(horizontal = 9.dp),
+                shape = RoundedCornerShape(15.dp)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.add_fund),
+                    fontSize = 17.sp
+                )
+            }
+
+            Spacer(modifier = Modifier.height(19.dp))
+
+            Button(
+                onClick = { viewModel.showWithdrawDialog() },
+                modifier = Modifier.wrapContentWidth()
+                    .padding(horizontal = 9.dp),
+                shape = RoundedCornerShape(15.dp)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.withdrawal),
+                    fontSize = 17.sp
+                )
+            }
+
+            if (errorText.isNotEmpty()) {
+                Text(
+                    text = errorText,
+                    color = Color.Red,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+        }
+
+        if (isAddFundDialogVisible) {
+            AddFundDialog(
+                onDismiss = { viewModel.hideDialogs() },
+                onConfirm = { amount -> viewModel.addFunds(amount) }
             )
         }
-    }
 
-    if (isAddFundDialogVisible) {
-        AddFundDialog(
-            onDismiss = { viewModel.hideDialogs() },
-            onConfirm = { amount -> viewModel.addFunds(amount) }
-        )
-    }
-
-    if (isWithdrawDialogVisible) {
-        WithdrawDialog(
-            currentBalance = investmentAmount,
-            onDismiss = { viewModel.hideDialogs() },
-            onConfirm = { amount -> viewModel.withdrawFunds(amount) }
-        )
+        if (isWithdrawDialogVisible) {
+            WithdrawDialog(
+                currentBalance = investmentAmount,
+                onDismiss = { viewModel.hideDialogs() },
+                onConfirm = { amount -> viewModel.withdrawFunds(amount) }
+            )
+        }
     }
 }
 
@@ -195,3 +217,9 @@ fun WithdrawDialog(
     )
 }
 
+
+@PreviewScreenSizes
+@Composable
+fun InvestmentScreenPreview(){
+    InvestmentScreen(InvestmentViewModel())
+}

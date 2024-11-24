@@ -1,13 +1,17 @@
 package pocket.pay.tp3_hci.screens
 
+import android.content.res.Configuration
+import android.widget.ImageView
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -16,11 +20,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import pocket.pay.tp3_hci.R
@@ -28,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.ProfileViewModel
 
@@ -40,6 +47,9 @@ fun Profile(goBackToHome: () -> Unit, goToLogin: () -> Unit,  viewModel: Profile
     val userName = viewModel.userName
     val userEmail = viewModel.userEmail
     val userPhone = viewModel.userPhone
+
+    val configuration = LocalConfiguration.current  //Orientacion
+    val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
 
     Scaffold(
         topBar = {
@@ -87,49 +97,72 @@ fun ProfileScreen(
     goToLogin: () -> Unit,
     loggedOut: () -> Unit
 ) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(25.dp))
+    val configuration = LocalConfiguration.current
+    val adaptiveInfo = currentWindowAdaptiveInfo()
 
-        Text(
-            text = stringResource(id = R.string.user_profile),
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold
-        )
+    Row {
+        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Spacer(modifier = Modifier.width(80.dp))
+        }
 
-        Spacer(modifier = Modifier.height(25.dp))
-
-        Text(
-            text = "Name: $userName",
-            fontSize = 20.sp,
-            modifier = Modifier.padding(8.dp)
-        )
-        Text(
-            text = "Email: $userEmail",
-            fontSize = 20.sp,
-            modifier = Modifier.padding(8.dp)
-        )
-        Text(
-            text = "Phone: $userPhone",
-            fontSize = 20.sp,
-            modifier = Modifier.padding(8.dp)
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Button(
-            onClick = { goToLogin();
-                      loggedOut}, // TODO: Implementar logout
-            modifier = Modifier.padding(20.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Purple,
-                contentColor = Color.White
-            )
+        Column(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = stringResource(id = R.string.logout))
+            if(configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                Spacer(modifier = Modifier.height(25.dp))
+            }
+            Text(
+                text = stringResource(id = R.string.user_profile),
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(25.dp))
+
+            Text(
+                text = "Name: $userName",
+                fontSize = 20.sp,
+                modifier = Modifier.padding(8.dp)
+            )
+            Text(
+                text = "Email: $userEmail",
+                fontSize = 20.sp,
+                modifier = Modifier.padding(8.dp)
+            )
+            Text(
+                text = "Phone: $userPhone",
+                fontSize = 20.sp,
+                modifier = Modifier.padding(8.dp)
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Button(
+                onClick = {
+                    goToLogin();
+                    loggedOut
+                }, // TODO: Implementar logout
+                modifier = Modifier.padding(20.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Purple,
+                    contentColor = Color.White
+                )
+            ) {
+                Text(text = stringResource(id = R.string.logout))
+            }
         }
     }
+}
+
+@PreviewScreenSizes
+@Composable
+fun ProfilePreview(){
+    Profile(
+        goBackToHome = {},
+        goToLogin = {},
+        viewModel = ProfileViewModel(),
+        loggedOut = {}
+    )
 }
