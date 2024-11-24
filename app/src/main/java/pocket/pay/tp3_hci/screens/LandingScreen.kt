@@ -14,10 +14,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,6 +34,9 @@ import pocket.pay.tp3_hci.ui.theme.Purple
 
 @Composable
 fun LandingScreen(goToLogin : () -> Unit, goToRegister : () -> Unit) {
+
+    val configuration = LocalConfiguration.current  //Orientacion
+    val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
 
     Column(
         modifier = Modifier
