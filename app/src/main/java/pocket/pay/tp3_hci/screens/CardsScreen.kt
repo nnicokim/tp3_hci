@@ -16,6 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -45,6 +48,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.window.core.layout.WindowHeightSizeClass
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.R
@@ -57,7 +61,7 @@ fun CardsScreen(
     goToCreateCard: () -> Unit,
     viewModel: CardsViewModel = viewModel()
 ) {
-    val cards by viewModel.cards.collectAsState()
+    val cards = viewModel.cards
     val configuration = LocalConfiguration.current
     val adaptiveInfo = currentWindowAdaptiveInfo()
 
@@ -67,7 +71,7 @@ fun CardsScreen(
         if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Spacer(modifier = Modifier.width(80.dp))
         }
-        Log.d("CardScreen","Total cards: ${cards.size}")
+
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,
@@ -90,6 +94,136 @@ fun CardsScreen(
                 )
             }
 
+            if (adaptiveInfo.windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT){
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    // Mostramos las tarjetas dinamicamente
+                    if (cards.isNotEmpty()) {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(2), // Set to 2 cards per row
+                            verticalArrangement = Arrangement.spacedBy(15.dp),
+                            horizontalArrangement = Arrangement.spacedBy(15.dp),
+                            modifier = Modifier.fillMaxSize().padding(horizontal = 10.dp)
+                        ) {
+                            items(cards){
+                                    card ->
+                                Box(
+                                    modifier = Modifier
+                                        .width(320.dp)
+                                        .height(100.dp)
+                                        .background(
+                                            color = Color(card.backgroundColor),
+                                            shape = RoundedCornerShape(16.dp)
+                                        )
+                                        .padding(16.dp)
+                                ) {
+                                    Row {
+                                        Column(
+                                            modifier = Modifier
+                                                .width(180.dp)
+                                                .height(110.dp)
+                                        ) {
+                                            Text(
+                                                text = card.cardholderName,
+                                                color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
+                                                fontSize = 20.sp,
+                                                fontWeight = FontWeight.Bold
+                                            )
+
+                                            Spacer(modifier = Modifier.height(10.dp))
+
+                                            Text(
+                                                text = card.cardNumber,
+                                                color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
+                                                fontSize = 20.sp,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
+                                        Row {
+
+                                            Spacer(modifier = Modifier.weight(1f))
+                                            Column(
+                                                modifier = Modifier
+                                                    .width(160.dp)
+                                                    .height(100.dp)
+                                            ) {
+                                                var expanded by remember { mutableStateOf(false) }
+                                                Box(
+                                                    modifier = Modifier.align(Alignment.End)
+                                                ) {
+                                                    IconButton(onClick = { expanded = true }) {
+                                                        Icon(
+                                                            imageVector = Icons.Default.MoreVert,
+                                                            contentDescription = "Menu",
+                                                            tint = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black
+                                                        )
+                                                    }
+
+                                                    DropdownMenu(
+                                                        expanded = expanded,
+                                                        onDismissRequest = { expanded = false }
+                                                    ) {
+                                                        DropdownMenuItem(
+                                                            text = { Text(stringResource(id = R.string.delete_card)) },
+                                                            onClick = {
+                                                                expanded = false
+//                                                    viewModel.removeCard(card)
+                                                            }
+                                                        )
+                                                    }
+                                                }
+
+                                                Text(
+                                                    text = card.expiryDate,
+                                                    color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
+                                                    fontSize = 16.sp,
+                                                    fontWeight = FontWeight.Bold,
+                                                    textAlign = TextAlign.End,
+                                                    modifier = Modifier
+                                                        .align(Alignment.End)
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                                Spacer(modifier = Modifier.height(15.dp))
+                            }
+                        }
+                    } else {
+                        Spacer(modifier = Modifier.height(50.dp))
+                        Text(
+                            text = stringResource(id = R.string.no_cards),
+                            fontSize = 20.sp,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(40.dp))
+
+                    Button(
+                        onClick = {
+                            goToCreateCard()
+                        },
+                        modifier = Modifier.wrapContentWidth()
+                            .padding(horizontal = 9.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Purple,
+                            contentColor = Color.White
+                        ),
+                        shape = RoundedCornerShape(15.dp)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.add_card),
+                            fontSize = 19.sp
+                        )
+                    }
+                }
+            } else {
 
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -156,7 +290,7 @@ fun CardsScreen(
                                                 text = { Text(stringResource(id = R.string.delete_card)) },
                                                 onClick = {
                                                     expanded = false
-                                                    viewModel.removeCard(card)
+//                                                    viewModel.removeCard(card)
                                                 }
                                             )
                                         }
@@ -203,6 +337,7 @@ fun CardsScreen(
                         text = stringResource(id = R.string.add_card),
                         fontSize = 19.sp
                     )
+                }
                 }
             }
 

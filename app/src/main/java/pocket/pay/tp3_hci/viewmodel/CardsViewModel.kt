@@ -19,8 +19,8 @@ data class Card (
 
 class CardsViewModel : ViewModel() {
 
-    private val _cards = MutableStateFlow(listOf<Card>())//MutableStateFlow<List<Card>>(emptyList())
-    val cards: StateFlow<List<Card>> = _cards
+    private val _cards = mutableStateListOf<Card>()//MutableStateFlow<List<Card>>(emptyList())
+    val cards: List<Card> = _cards
 
 
     private val _cardholderName = MutableStateFlow("")
@@ -143,8 +143,8 @@ class CardsViewModel : ViewModel() {
                 cvv = _cvv.value.toInt(),
                 backgroundColor = 0xFFF28418
             )
-            _cards.value = _cards.value + newCard
-        Log.d("CardsViewModel", "New card added: $newCard. Total cards: ${_cards.value.size}")
+            _cards.add(newCard)
+        Log.d("CardsViewModel", "New card added: $newCard. Total cards: ${_cards.size}")
          //   resetCardData()
     }
 
@@ -155,11 +155,33 @@ class CardsViewModel : ViewModel() {
         _cvv.value = ""
     }
 
-
-    fun removeCard(card: Card) {
-        _cards.value = _cards.value.filter { it != card }
-        Log.d("CardsViewModel", "Card removed: $card. Remaining cards: ${_cards.value}")
+    init {
+        // Carga tarjetas iniciales. TODO: ver como es esto con la API
+        _cards.addAll(
+            listOf(
+                Card(
+                    cardholderName = "Hwa Pyoung Kim",
+                    cardNumber = "**** **** **** 4952",
+                    expiryDate = "06/25",
+                    cvv= 123,
+                    backgroundColor = 0XFFFEE12B
+                ),
+                Card(
+                    cardholderName = "Nicolas Kim",
+                    cardNumber = "**** **** **** 5915",
+                    expiryDate = "09/25",
+                    cvv = 123,
+                    backgroundColor = 0XFF000000
+                )
+            )
+        )
     }
+
+
+//    fun removeCard(card: Card) {
+//        _cards.value = _cards.value.filter { it != card }
+//        Log.d("CardsViewModel", "Card removed: $card. Remaining cards: ${_cards.value}")
+//    }
 
 }
 

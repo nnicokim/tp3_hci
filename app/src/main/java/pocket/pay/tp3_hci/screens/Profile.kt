@@ -48,6 +48,9 @@ fun Profile(goBackToHome: () -> Unit, goToLogin: () -> Unit,  viewModel: Profile
     val userEmail = viewModel.userEmail
     val userPhone = viewModel.userPhone
 
+    val configuration = LocalConfiguration.current  //Orientacion
+    val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
+
     Scaffold(
         topBar = {
             TopAppBar(

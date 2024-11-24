@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,6 +43,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowWidthSizeClass
 import pocket.pay.tp3_hci.PreviewScreenSizes
 
@@ -76,127 +78,191 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
 
             if(configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
 
-                if(adaptiveInfo.windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT){
-                    Card(
-                        modifier = Modifier.padding(10.dp),
-                        shape = RoundedCornerShape(40.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Purple,
-                            contentColor = Color.White
-                        )
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.balance),
-                            fontSize = 25.sp,
-                            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                            modifier = Modifier.padding(10.dp).padding(start = 15.dp)
-                        )
-                        Text(
-                            text = "$${String.format("%.2f", balance)}",
-                            fontSize = 45.sp,
-                            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth().padding(bottom = 7.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(27.dp))
-
+                if(adaptiveInfo.windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT){
                     Row {
-                        Button(
-                            onClick = { showDepositDialog = true },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.White,
-                                contentColor = Color.Black
-                            ),
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .padding(horizontal = 10.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 8.dp,
-                                pressedElevation = 2.dp,
-                            )
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
+                        Column (
+                            modifier = Modifier.width(400.dp)
+                        ){
+                            Card(
+                                modifier = Modifier.padding(10.dp),
+                                shape = RoundedCornerShape(40.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Purple,
+                                    contentColor = Color.White
+                                )
                             ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.dollar_sign_icon),
-                                    contentDescription = "Deposit",
-                                    modifier = Modifier.size(24.dp)
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
                                 Text(
-                                    text = stringResource(id = R.string.deposit),
-                                    fontSize = 12.sp
+                                    text = stringResource(id = R.string.balance),
+                                    fontSize = 25.sp,
+                                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                    modifier = Modifier.padding(10.dp).align(Alignment.CenterHorizontally)
                                 )
+                                Text(
+                                    text = "$${String.format("%.2f", balance)}",
+                                    fontSize = 45.sp,
+                                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.fillMaxWidth().padding(bottom = 7.dp)
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(27.dp))
+
+                            Row (
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ){
+                                Button(
+                                    onClick = { showDepositDialog = true },
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color.White,
+                                        contentColor = Color.Black
+                                    ),
+                                    modifier = Modifier
+                                        .size(width = 130.dp, height = 100.dp)
+                                        .padding(horizontal = 10.dp),
+                                    shape = RoundedCornerShape(10.dp),
+                                    elevation = ButtonDefaults.buttonElevation(
+                                        defaultElevation = 8.dp,
+                                        pressedElevation = 2.dp,
+                                    )
+                                ) {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.Center
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.dollar_sign_icon),
+                                            contentDescription = "Deposit",
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Text(
+                                            text = stringResource(id = R.string.deposit),
+                                            fontSize = 12.sp
+                                        )
+                                    }
+                                }
+
+                                Button(
+                                    onClick = { showAliasDialog = true },
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color.White,
+                                        contentColor = Color.Black
+                                    ),
+                                    modifier = Modifier
+                                        .size(width = 130.dp, height = 100.dp)
+                                        .padding(horizontal = 10.dp),
+                                    shape = RoundedCornerShape(10.dp),
+                                    elevation = ButtonDefaults.buttonElevation(
+                                        defaultElevation = 8.dp,
+                                        pressedElevation = 2.dp,
+                                    )
+                                ) {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.Center
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.bank_icon),
+                                            contentDescription = "alias",
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Text(
+                                            text = stringResource(id = R.string.alias),
+                                            fontSize = 12.sp
+                                        )
+                                    }
+                                }
+
+                                Button(
+                                    onClick = { showWithdrawalDialog = true },
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color.White,
+                                        contentColor = Color.Black
+                                    ),
+                                    modifier = Modifier
+                                        .size(width = 130.dp, height = 100.dp)
+                                        .padding(horizontal = 10.dp),
+                                    shape = RoundedCornerShape(10.dp),
+                                    elevation = ButtonDefaults.buttonElevation(
+                                        defaultElevation = 8.dp,
+                                        pressedElevation = 2.dp,
+                                    )
+                                ) {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.Center,
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.bill_arrow),
+                                            contentDescription = "withdrawal",
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Text(
+                                            text = stringResource(id = R.string.withdrawal),
+                                            fontSize = 12.sp
+                                        )
+                                    }
+                                }
                             }
                         }
-
-                        Button(
-                            onClick = { showAliasDialog = true },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.White,
-                                contentColor = Color.Black
-                            ),
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .padding(horizontal = 10.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 8.dp,
-                                pressedElevation = 2.dp,
-                            )
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
+                        Column (
+                            modifier = Modifier.fillMaxHeight()
+                                .align(Alignment.CenterVertically),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ){
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Card(
+                                modifier = Modifier.align(Alignment.CenterHorizontally)
                             ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.bank_icon),
-                                    contentDescription = "alias",
-                                    modifier = Modifier.size(24.dp)
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
+
+                                Column {
+                                    Text(
+                                        text = stringResource(id = R.string.recent_transactions),
+                                        fontSize = 20.sp,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                        modifier = Modifier.padding(16.dp)
+                                    )
+                                    recentTransactions.takeLast(2)
+                                        .forEach { // Solo mostramos las ultimas 2 transacciones
+                                            Text(
+                                                text = it,
+                                                modifier = Modifier.padding(8.dp),
+                                                fontSize = 16.sp
+                                            )
+                                        }
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.weight(1f))
+
+                            Text(
+                                text = stringResource(id = R.string.map_text),
+                                fontSize = 20.sp,
+                                modifier = Modifier.padding(16.dp)
+                            )
+
+                            Button(
+                                onClick = {
+                                    goToMap()
+                                },
+                                modifier = Modifier.wrapContentWidth()
+                                    .padding(horizontal = 9.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Purple,
+                                    contentColor = Color.White
+                                ),
+                                shape = RoundedCornerShape(15.dp)
+                            ) {
                                 Text(
-                                    text = stringResource(id = R.string.alias),
-                                    fontSize = 12.sp
+                                    text = stringResource(id = R.string.see_map),
+                                    fontSize = 19.sp
                                 )
                             }
-                        }
-
-                        Button(
-                            onClick = { showWithdrawalDialog = true },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.White,
-                                contentColor = Color.Black
-                            ),
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .padding(horizontal = 10.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 8.dp,
-                                pressedElevation = 2.dp,
-                            )
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center,
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.moneysign_icon),
-                                    contentDescription = "withdrawal",
-                                    modifier = Modifier.size(24.dp)
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    text = stringResource(id = R.string.withdrawal),
-                                    fontSize = 12.sp
-                                )
-                            }
+                            Spacer(modifier = Modifier.height(10.dp))
                         }
                     }
                 } else {
@@ -211,8 +277,9 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                         Text(
                             text = stringResource(id = R.string.balance),
                             fontSize = 25.sp,
+                            textAlign = TextAlign.Center,
                             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                            modifier = Modifier.padding(10.dp).padding(start = 15.dp)
+                            modifier = Modifier.padding(10.dp).align(Alignment.CenterHorizontally)
                         )
                         Text(
                             text = "$${String.format("%.2f", balance)}",
@@ -225,7 +292,10 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
 
                     Spacer(modifier = Modifier.height(27.dp))
 
-                    Row {
+                    Row (
+                        modifier = Modifier,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ){
                         Button(
                             onClick = { showDepositDialog = true },
                             colors = ButtonDefaults.buttonColors(
@@ -233,7 +303,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 contentColor = Color.Black
                             ),
                             modifier = Modifier
-                                .wrapContentWidth()
+                                .size(width = 250.dp, height = 200.dp)
                                 .padding(horizontal = 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             elevation = ButtonDefaults.buttonElevation(
@@ -248,12 +318,12 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.dollar_sign_icon),
                                     contentDescription = "Deposit",
-                                    modifier = Modifier.size(24.dp)
+                                    modifier = Modifier.size(80.dp)
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = stringResource(id = R.string.deposit),
-                                    fontSize = 12.sp
+                                    fontSize = 20.sp
                                 )
                             }
                         }
@@ -265,7 +335,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 contentColor = Color.Black
                             ),
                             modifier = Modifier
-                                .wrapContentWidth()
+                                .size(width = 250.dp, height = 200.dp)
                                 .padding(horizontal = 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             elevation = ButtonDefaults.buttonElevation(
@@ -280,12 +350,12 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.bank_icon),
                                     contentDescription = "alias",
-                                    modifier = Modifier.size(24.dp)
+                                    modifier = Modifier.size(80.dp)
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = stringResource(id = R.string.alias),
-                                    fontSize = 12.sp
+                                    fontSize = 20.sp
                                 )
                             }
                         }
@@ -297,7 +367,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 contentColor = Color.Black
                             ),
                             modifier = Modifier
-                                .wrapContentWidth()
+                                .size(width = 250.dp, height = 200.dp)
                                 .padding(horizontal = 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             elevation = ButtonDefaults.buttonElevation(
@@ -310,16 +380,63 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 verticalArrangement = Arrangement.Center,
                             ) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.moneysign_icon),
+                                    painter = painterResource(id = R.drawable.bill_arrow),
                                     contentDescription = "withdrawal",
-                                    modifier = Modifier.size(24.dp)
+                                    modifier = Modifier.size(80.dp)
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = stringResource(id = R.string.withdrawal),
-                                    fontSize = 12.sp
+                                    fontSize = 20.sp
                                 )
                             }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(25.dp))
+
+                    Text(
+                        text = stringResource(id = R.string.map_text),
+                        fontSize = 20.sp,
+                        modifier = Modifier.padding(16.dp)
+                    )
+
+                    Button(
+                        onClick = {
+                            goToMap()
+                        },
+                        modifier = Modifier.wrapContentWidth()
+                            .padding(horizontal = 9.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Purple,
+                            contentColor = Color.White
+                        ),
+                        shape = RoundedCornerShape(15.dp)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.see_map),
+                            fontSize = 19.sp
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(30.dp))
+
+                    Card {
+                        Column {
+                            Text(
+                                text = stringResource(id = R.string.recent_transactions),
+                                fontSize = 20.sp,
+                                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                            recentTransactions.takeLast(2)
+                                .forEach { // Solo mostramos las ultimas 2 transacciones
+                                    Text(
+                                        text = it,
+                                        modifier = Modifier.padding(8.dp),
+                                        fontSize = 16.sp
+                                    )
+                                }
                         }
                     }
                 }
@@ -435,7 +552,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 verticalArrangement = Arrangement.Center,
                             ) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.moneysign_icon),
+                                    painter = painterResource(id = R.drawable.bill_arrow),
                                     contentDescription = "withdrawal",
                                     modifier = Modifier.size(24.dp)
                                 )
@@ -473,7 +590,10 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
 
                     Spacer(modifier = Modifier.height(27.dp))
 
-                    Row {
+                    Row (
+                        modifier = Modifier,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ){
                         Button(
                             onClick = { showDepositDialog = true },
                             colors = ButtonDefaults.buttonColors(
@@ -481,7 +601,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 contentColor = Color.Black
                             ),
                             modifier = Modifier
-                                .wrapContentWidth()
+                                .size(width = 250.dp, height = 200.dp)
                                 .padding(horizontal = 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             elevation = ButtonDefaults.buttonElevation(
@@ -496,12 +616,12 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.dollar_sign_icon),
                                     contentDescription = "Deposit",
-                                    modifier = Modifier.size(24.dp)
+                                    modifier = Modifier.size(80.dp)
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = stringResource(id = R.string.deposit),
-                                    fontSize = 12.sp
+                                    fontSize = 20.sp
                                 )
                             }
                         }
@@ -513,7 +633,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 contentColor = Color.Black
                             ),
                             modifier = Modifier
-                                .wrapContentWidth()
+                                .size(width = 250.dp, height = 200.dp)
                                 .padding(horizontal = 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             elevation = ButtonDefaults.buttonElevation(
@@ -528,12 +648,12 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.bank_icon),
                                     contentDescription = "alias",
-                                    modifier = Modifier.size(24.dp)
+                                    modifier = Modifier.size(80.dp)
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = stringResource(id = R.string.alias),
-                                    fontSize = 12.sp
+                                    fontSize = 20.sp
                                 )
                             }
                         }
@@ -545,7 +665,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 contentColor = Color.Black
                             ),
                             modifier = Modifier
-                                .wrapContentWidth()
+                                .size(width = 250.dp, height = 200.dp)
                                 .padding(horizontal = 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             elevation = ButtonDefaults.buttonElevation(
@@ -558,17 +678,63 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 verticalArrangement = Arrangement.Center,
                             ) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.moneysign_icon),
+                                    painter = painterResource(id = R.drawable.bill_arrow),
                                     contentDescription = "withdrawal",
-                                    modifier = Modifier.size(24.dp)
+                                    modifier = Modifier.size(80.dp)
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = stringResource(id = R.string.withdrawal),
-                                    fontSize = 12.sp
+                                    fontSize = 20.sp
                                 )
                             }
                         }
+                    }
+                }
+                Spacer(modifier = Modifier.height(25.dp))
+
+                Text(
+                    text = stringResource(id = R.string.map_text),
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(16.dp)
+                )
+
+                Button(
+                    onClick = {
+                        goToMap()
+                    },
+                    modifier = Modifier.wrapContentWidth()
+                        .padding(horizontal = 9.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Purple,
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(15.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.see_map),
+                        fontSize = 19.sp
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                Card {
+                    Column {
+                        Text(
+                            text = stringResource(id = R.string.recent_transactions),
+                            fontSize = 20.sp,
+                            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                        recentTransactions.takeLast(2)
+                            .forEach { // Solo mostramos las ultimas 2 transacciones
+                                Text(
+                                    text = it,
+                                    modifier = Modifier.padding(8.dp),
+                                    fontSize = 16.sp
+                                )
+                            }
                     }
                 }
             }
@@ -606,54 +772,6 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                     }
                 )
             }
-
-            Spacer(modifier = Modifier.height(25.dp))
-
-            Text(
-                text = stringResource(id = R.string.map_text),
-                fontSize = 20.sp,
-                modifier = Modifier.padding(16.dp)
-            )
-
-            Button(
-                onClick = {
-                    goToMap()
-                },
-                modifier = Modifier.wrapContentWidth()
-                    .padding(horizontal = 9.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Purple,
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(15.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.see_map),
-                    fontSize = 19.sp
-                )
-            }
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Card {
-                Column {
-                    Text(
-                        text = stringResource(id = R.string.recent_transactions),
-                        fontSize = 20.sp,
-                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                    recentTransactions.takeLast(2)
-                        .forEach { // Solo mostramos las ultimas 2 transacciones
-                            Text(
-                                text = it,
-                                modifier = Modifier.padding(8.dp),
-                                fontSize = 16.sp
-                            )
-                        }
-                }
-            }
-
 
             if (showWithdrawalDialog) {
                 AlertDialog(
