@@ -14,6 +14,12 @@ class WalletRemoteDataSource(
         }
     }
 
+    suspend fun recharge(amount: Float): NetworkBalance {
+        return handleApiResponse {
+            walletApiService.recharge(amount)
+        }
+    }
+
     suspend fun getCards(): List<NetworkCard> {
         return handleApiResponse {
             walletApiService.getCards()

@@ -14,6 +14,9 @@ interface WalletApiService {
     @GET("wallet/balance")
     suspend fun getBalance(): Response<NetworkBalance>
 
+    @POST("wallet/recharge")
+    suspend fun recharge(@Body amount: Float): Response<NetworkBalance>
+
     @GET("wallet/cards")
     suspend fun getCards(): Response<List<NetworkCard>>
 
