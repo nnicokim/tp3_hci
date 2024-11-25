@@ -22,7 +22,6 @@ import pocket.pay.tp3_hci.model.PaymentType
 import pocket.pay.tp3_hci.network.model.NetworkRegister
 import pocket.pay.tp3_hci.repository.PaymentRepository
 import pocket.pay.tp3_hci.states.AccountUiState
-import java.util.Date
 
 
 class AccountViewModel(
@@ -174,14 +173,14 @@ class AccountViewModel(
 
     fun getBalance() = runOnViewModelScope(
         { walletRepository.getBalance() },
-        { state, response -> state.copy(currentBalance = response) }
+        { state, response -> state.copy(currentBalance = response.balance) }
     )
 
     fun recharge(amount: Float) = runOnViewModelScope(
         {
             walletRepository.recharge(amount)
         },
-        { state, response -> state.copy(currentBalance = response)
+        { state, response -> state.copy(currentBalance = response.balance)
         }
     )
 
