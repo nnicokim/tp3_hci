@@ -157,7 +157,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToVerify: () -> Unit,
                     email = email,
                     password = password,
                     onError = { "Error" },
-                    goToHome = { goToVerify() }
+                    goToVerify = { goToVerify() }
                 )
             },
             modifier = Modifier.fillMaxWidth(),

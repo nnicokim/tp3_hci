@@ -95,7 +95,7 @@ class AccountViewModel(
         email: String,
         password: String,
         onError: (String) -> Unit,
-        goToHome : () -> Unit
+        goToVerify : () -> Unit
     ) {
         if (firstname.isBlank()) {
             onError("First name cannot be empty")
@@ -109,7 +109,7 @@ class AccountViewModel(
             onError("Password field cannot be empty")
         } else {
             register(firstname, lastname, email, birthdate, password)
-            goToHome()
+            goToVerify()
         }
     }
 
