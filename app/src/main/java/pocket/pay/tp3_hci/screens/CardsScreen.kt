@@ -64,7 +64,6 @@ fun CardsScreen(
 
 ) {
     val uiState = viewModel.uiState
-    val cards = uiState.cards
     val configuration = LocalConfiguration.current
     val adaptiveInfo = currentWindowAdaptiveInfo()
 
@@ -128,14 +127,14 @@ fun CardsScreen(
                     Spacer(modifier = Modifier.height(10.dp))
 
                     // Mostramos las tarjetas dinamicamente
-                    if (cards != null) {
+                    if (uiState.cards != null) {
                         LazyVerticalGrid(
                             columns = GridCells.Fixed(2), // Set to 2 cards per row
                             verticalArrangement = Arrangement.spacedBy(15.dp),
                             horizontalArrangement = Arrangement.spacedBy(15.dp),
                             modifier = Modifier.fillMaxSize().padding(horizontal = 10.dp)
                         ) {
-                            items(cards){
+                            items(uiState.cards){
                                     card ->
                                 Box(
                                     modifier = Modifier
@@ -242,8 +241,8 @@ fun CardsScreen(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 // Mostramos las tarjetas dinamicamente
-                if (cards != null) {
-                        cards.forEach { card ->
+                if (uiState.cards != null) {
+                    uiState.cards.forEach { card ->
                             Box(
                                 modifier = Modifier
                                     .width(320.dp)
