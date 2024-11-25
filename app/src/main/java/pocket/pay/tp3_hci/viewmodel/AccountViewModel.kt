@@ -15,6 +15,7 @@ import pocket.pay.tp3_hci.DataSourceException
 import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.repository.WalletRepository
 import androidx.lifecycle.ViewModelProvider
+import pocket.pay.tp3_hci.model.Card
 import pocket.pay.tp3_hci.network.model.NetworkRegister
 import pocket.pay.tp3_hci.repository.PaymentRepository
 import pocket.pay.tp3_hci.states.AccountUiState
@@ -126,6 +127,18 @@ class AccountViewModel(
             walletRepository.recharge(amount)
         },
         { state, _ -> state.copy(
+            )
+        }
+    )
+
+    fun addCard(card: Card) = runOnViewModelScope(
+        {
+            walletRepository.addCard(card)
+        },
+        { state, response ->
+            state.copy(
+                currentCard = response,
+                cards = null
             )
         }
     )

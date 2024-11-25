@@ -203,16 +203,16 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                         modifier = Modifier.padding(16.dp)
                                     )
-                                    viewModel.getPayments(
-                                        refresh = true
-                                    ).takeLast(2) // TODO: ver como obtener los pagos en algun tipo de lista
-                                        .forEach { // Solo mostramos las ultimas 2 transacciones
-                                            Text(
-                                                text = it,
-                                                modifier = Modifier.padding(8.dp),
-                                                fontSize = 16.sp
-                                            )
-                                        }
+//                                    viewModel.getPayments(
+//                                        refresh = true
+//                                    ).takeLast(2) // TODO: ver como obtener los pagos en algun tipo de lista
+//                                        .forEach { // Solo mostramos las ultimas 2 transacciones
+//                                            Text(
+//                                                text = it,
+//                                                modifier = Modifier.padding(8.dp),
+//                                                fontSize = 16.sp
+//                                            )
+//                                        }
                                 }
                             }
 
@@ -408,16 +408,16 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                                 fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                 modifier = Modifier.padding(16.dp)
                             )
-                            viewModel.getPayments(
-                                refresh = true
-                            ).takeLast(2)
-                                .forEach { // Solo mostramos las ultimas 2 transacciones
-                                    Text(
-                                        text = it,
-                                        modifier = Modifier.padding(8.dp),
-                                        fontSize = 16.sp
-                                    )
-                                }
+//                            viewModel.getPayments(
+//                                refresh = true
+//                            ).takeLast(2)
+//                                .forEach { // Solo mostramos las ultimas 2 transacciones
+//                                    Text(
+//                                        text = it,
+//                                        modifier = Modifier.padding(8.dp),
+//                                        fontSize = 16.sp
+//                                    )
+//                                }
                         }
                     }
                 }
@@ -708,16 +708,16 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                             modifier = Modifier.padding(16.dp)
                         )
-                        viewModel.getPayments(
-                            refresh = true
-                        ).takeLast(2)
-                            .forEach { // Solo mostramos las ultimas 2 transacciones
-                                Text(
-                                    text = it,
-                                    modifier = Modifier.padding(8.dp),
-                                    fontSize = 16.sp
-                                )
-                            }
+//                        viewModel.getPayments(
+//                            refresh = true
+//                        ).takeLast(2)
+//                            .forEach { // Solo mostramos las ultimas 2 transacciones
+//                                Text(
+//                                    text = it,
+//                                    modifier = Modifier.padding(8.dp),
+//                                    fontSize = 16.sp
+//                                )
+//                            }
                     }
                 }
             }

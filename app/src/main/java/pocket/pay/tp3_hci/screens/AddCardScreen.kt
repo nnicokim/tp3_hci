@@ -28,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -47,7 +48,6 @@ import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.viewmodel.AccountViewModel
-import pocket.pay.tp3_hci.viewmodel.CardsViewModel
 import kotlin.math.round
 
 
@@ -57,14 +57,19 @@ fun AddCardScreen(
     //viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication)
     viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication))
 ) {
-    val number by viewModel.cardNumber.collectAsState()
-    val errorMessageCardNumber by viewModel.errorTextCardNumber.collectAsState()
-    val name by viewModel.cardholderName.collectAsState()
-    val errorMessageCardName by viewModel.errorTextCardName.collectAsState()
-    val date by viewModel.expiryDate.collectAsState()
-    val errorMessageExpDate by viewModel.errorTextCardExpDate.collectAsState()
-    val cvv by viewModel.cvv.collectAsState()
-    val errorMessage by viewModel.errorTextCardCVV.collectAsState()
+//    val number by viewModel.cardNumber.collectAsState()
+//    val errorMessageCardNumber by viewModel.errorTextCardNumber.collectAsState()
+//    val name by viewModel.cardholderName.collectAsState()
+//    val errorMessageCardName by viewModel.errorTextCardName.collectAsState()
+//    val date by viewModel.expiryDate.collectAsState()
+//    val errorMessageExpDate by viewModel.errorTextCardExpDate.collectAsState()
+//    val cvv by viewModel.cvv.collectAsState()
+//    val errorMessage by viewModel.errorTextCardCVV.collectAsState()
+
+    var number by rememberSaveable { mutableStateOf("")}
+    var name by rememberSaveable { mutableStateOf("")}
+    var date by rememberSaveable { mutableStateOf("")}
+    var cvv by rememberSaveable { mutableStateOf("")}
 
     val configuration = LocalConfiguration.current  //Orientacion
     val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
@@ -99,7 +104,7 @@ fun AddCardScreen(
 
                 OutlinedTextField(
                     value = number,
-                    onValueChange = { viewModel.updateCardNumber(it) },
+                    onValueChange = { number = it },
                     label = { Text(stringResource(id = R.string.add_card_number)) },
                     modifier = Modifier.fillMaxWidth().
                     height(65.dp).padding(5.dp),
@@ -132,7 +137,7 @@ fun AddCardScreen(
 
                 OutlinedTextField(
                     value = name,
-                    onValueChange = { viewModel.updateCardName(it) },
+                    onValueChange = { name = it },
                     label = { Text("Cardholder's name:") },
                     modifier = Modifier.fillMaxWidth().
                     height(65.dp).padding(5.dp),
@@ -166,7 +171,7 @@ fun AddCardScreen(
 
                 OutlinedTextField(
                     value = date,
-                    onValueChange = { viewModel.updateCardExpDate(it) },
+                    onValueChange = { date = it },
                     label = { Text(stringResource(id = R.string.add_card_exp_date)) },
                     modifier = Modifier.fillMaxWidth().
                     height(65.dp).padding(5.dp),
@@ -198,7 +203,7 @@ fun AddCardScreen(
 
                 OutlinedTextField(
                     value = cvv,
-                    onValueChange = { viewModel.updateCardCvv(it) },
+                    onValueChange = { cvv = it },
                     label = { Text(stringResource(id = R.string.add_card_cvv)) },
                     modifier = Modifier.fillMaxWidth().
                     height(65.dp).padding(5.dp),
@@ -307,7 +312,7 @@ fun AddCardScreen(
 
             OutlinedTextField(
                 value = number,
-                onValueChange = { viewModel.updateCardNumber(it) },
+                onValueChange = { number = it },
                 label = { Text(stringResource(id = R.string.add_card_number)) },
                 modifier = Modifier.fillMaxWidth().
                 height(65.dp),
@@ -340,7 +345,7 @@ fun AddCardScreen(
 
             OutlinedTextField(
                 value = name,
-                onValueChange = { viewModel.updateCardName(it) },
+                onValueChange = { name = it },
                 label = { Text("Cardholder's name:") },
                 modifier = Modifier.fillMaxWidth().
                 height(65.dp),
@@ -364,7 +369,7 @@ fun AddCardScreen(
 
             OutlinedTextField(
                 value = date,
-                onValueChange = { viewModel.updateCardExpDate(it) },
+                onValueChange = { date = it },
                 label = { Text(stringResource(id = R.string.add_card_exp_date)) },
                 modifier = Modifier.fillMaxWidth().
                 height(65.dp),
@@ -396,7 +401,7 @@ fun AddCardScreen(
 
             OutlinedTextField(
                 value = cvv,
-                onValueChange = { viewModel.updateCardCvv(it) },
+                onValueChange = { cvv = it },
                 label = { Text(stringResource(id = R.string.add_card_cvv)) },
                 modifier = Modifier.fillMaxWidth().
                 height(65.dp),
@@ -476,6 +481,6 @@ fun AddCardScreen(
 fun AddCardScreenPreview(){
     AddCardScreen(
         goBackToCards = {},
-        viewModel = CardsViewModel()
+        viewModel = AccountViewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication))
     )
 }
