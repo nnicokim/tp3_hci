@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,26 +24,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.navigations.AppDestinations
 import pocket.pay.tp3_hci.ui.theme.Purple
-import pocket.pay.tp3_hci.viewmodel.RegisterViewModel
+import pocket.pay.tp3_hci.viewmodel.LoginViewModel
 
 @Composable
 fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin : () -> Unit,
-                   viewModel: RegisterViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+                   viewModel: LoginViewModel = viewModel(factory = LoginViewModel.provideFactory(LocalContext.current.applicationContext
+                           as PocketPayApplication))) {
 
-    val firstname by viewModel.firstname.collectAsState()
-    val lastname by viewModel.lastname.collectAsState()
-    val birthdate by viewModel.birthdate.collectAsState()
-    val email by viewModel.email.collectAsState()
-    val password by viewModel.password.collectAsState()
-    // val confirmPassword by viewModel.confirmPassword.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
+    val uiState = viewModel.uiState
 
     var isPasswordVisible by remember { mutableStateOf(false) }
-    var isConfirmPasswordVisible by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -83,8 +80,8 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
         Spacer(modifier = Modifier.height(25.dp))
 
         OutlinedTextField(
-            value = firstname,
-            onValueChange = { viewModel.updateFirstname(it) },
+            value = uiState.firstname,
+            onValueChange = { viewModel.enterFirstname(it) },
             label = { Text("First name") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -92,8 +89,8 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = lastname,
-            onValueChange = { viewModel.updateLastname(it) },
+            value = uiState.lastname,
+            onValueChange = { viewModel.enterLastname(it) },
             label = { Text("Last name") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -101,8 +98,8 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = birthdate,
-            onValueChange = { viewModel.updateBirthdate(it) },
+            value = uiState.birthdate,
+            onValueChange = { viewModel.enterBirthdate(it) },
             label = { Text("Birth date") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -110,7 +107,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = email,
+            value = uiState.email,
             onValueChange = { viewModel.updateEmail(it) },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
@@ -120,7 +117,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = password,
+            value = uiState.password,
             onValueChange = { viewModel.updatePassword(it) },
             label = { Text("Password") },
             modifier = Modifier.fillMaxWidth(),
@@ -142,42 +139,11 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit, goToLogin :
             }
         )
 
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-//        OutlinedTextField(
-//            value = confirmPassword,
-//            onValueChange = { viewModel.updateConfirmPassword(it) },
-//            label = { Text("Confirm Password") },
-//            modifier = Modifier.fillMaxWidth(),
-//            visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-//            trailingIcon = {
-//                val icon = if (isPasswordVisible) {
-//                    painterResource(id = R.drawable.ic_visibility_off)
-//                } else {
-//                    painterResource(id = R.drawable.ic_visibility)
-//                }
-//
-//                IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-//                    Icon(
-//                        painter = icon,
-//                        contentDescription = if (isPasswordVisible) "Hide password" else "Show password",
-//                        modifier = Modifier.size(24.dp)
-//                    )
-//                }
-//            }
-//        )
-
         Spacer(modifier = Modifier.height(32.dp))
 
         Button(
             onClick = {
-                viewModel.validateAndRegister(
-                    onLoginSuccess = {
-                        onLoginSuccess()
-                        goToHome()
-                    },
-                    onError = { "Error" }
-                )
+                viewModel.validateAndRegister(goToHome)
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Purple, contentColor = Color.White)

@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import pocket.pay.tp3_hci.R
@@ -34,22 +35,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.ui.theme.Purple
+import pocket.pay.tp3_hci.viewmodel.LoginViewModel
 import pocket.pay.tp3_hci.viewmodel.ProfileViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Profile(goBackToHome: () -> Unit, goToLogin: () -> Unit,  viewModel: ProfileViewModel = viewModel(),
+fun Profile(goBackToHome: () -> Unit, goToLogin: () -> Unit, viewModel: LoginViewModel = viewModel(factory = LoginViewModel.provideFactory(LocalContext.current.applicationContext
+        as PocketPayApplication)),
             loggedOut: () -> Unit) {
 
-    val userName = viewModel.userName
-    val userEmail = viewModel.userEmail
-    val userPhone = viewModel.userPhone
+    val uiState = viewModel.uiState
 
-    val configuration = LocalConfiguration.current  //Orientacion
-    val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
+    val firstname = uiState.firstname
+    val lastname = uiState.lastname
+    val userEmail = uiState.email
+
+    val configuration = LocalConfiguration.current  // Orientacion
+    val adaptiveInfo = currentWindowAdaptiveInfo()  // Tamaño de la pantalla
 
     Scaffold(
         topBar = {
@@ -79,11 +85,12 @@ fun Profile(goBackToHome: () -> Unit, goToLogin: () -> Unit,  viewModel: Profile
     ) { paddingValues ->
         ProfileScreen(
             modifier = Modifier.padding(paddingValues),
-            userName = userName,
+            firstname = firstname,
+            lastname = lastname,
             userEmail = userEmail,
-            userPhone = userPhone,
             goToLogin = goToLogin,
-            loggedOut = loggedOut
+            loggedOut = loggedOut,
+            viewModel = viewModel
         )
     }
 }
@@ -91,11 +98,12 @@ fun Profile(goBackToHome: () -> Unit, goToLogin: () -> Unit,  viewModel: Profile
 @Composable
 fun ProfileScreen(
     modifier: Modifier,
-    userName: String,
+    firstname: String,
+    lastname: String,
     userEmail: String,
-    userPhone: String,
     goToLogin: () -> Unit,
-    loggedOut: () -> Unit
+    loggedOut: () -> Unit,
+    viewModel: LoginViewModel
 ) {
     val configuration = LocalConfiguration.current
     val adaptiveInfo = currentWindowAdaptiveInfo()
@@ -122,17 +130,19 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(25.dp))
 
             Text(
-                text = "Name: $userName",
+                text = "First name: $firstname",
                 fontSize = 20.sp,
                 modifier = Modifier.padding(8.dp)
             )
+
+            Text(
+                text = "Last name: $lastname",
+                fontSize = 20.sp,
+                modifier = Modifier.padding(8.dp)
+            )
+
             Text(
                 text = "Email: $userEmail",
-                fontSize = 20.sp,
-                modifier = Modifier.padding(8.dp)
-            )
-            Text(
-                text = "Phone: $userPhone",
                 fontSize = 20.sp,
                 modifier = Modifier.padding(8.dp)
             )
@@ -141,9 +151,9 @@ fun ProfileScreen(
 
             Button(
                 onClick = {
-                    goToLogin();
-                    loggedOut
-                }, // TODO: Implementar logout
+                    viewModel.logout()
+                    goToLogin()
+                },
                 modifier = Modifier.padding(20.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Purple,
@@ -156,13 +166,13 @@ fun ProfileScreen(
     }
 }
 
-@PreviewScreenSizes
-@Composable
-fun ProfilePreview(){
-    Profile(
-        goBackToHome = {},
-        goToLogin = {},
-        viewModel = ProfileViewModel(),
-        loggedOut = {}
-    )
-}
+//@PreviewScreenSizes
+//@Composable
+//fun ProfilePreview(){
+//    Profile(
+//        goBackToHome = {},
+//        goToLogin = {},
+//        viewModel = ProfileViewModel(),
+//        loggedOut = {}
+//    )
+//}

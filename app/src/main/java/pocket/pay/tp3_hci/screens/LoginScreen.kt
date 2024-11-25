@@ -7,7 +7,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -17,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,23 +28,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
+import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.R
-import pocket.pay.tp3_hci.navigations.AppDestinations
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.LoginViewModel
 
 @Composable
-fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goToHome: () -> Unit,
+fun LoginScreen(onPasswordRecovery: () -> Unit, goToHome: () -> Unit,
                 goToRegister: () -> Unit,
-                viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+                viewModel: LoginViewModel = viewModel(factory = LoginViewModel.provideFactory(LocalContext.current.applicationContext
+                as PocketPayApplication)))
+{
+    val uiState = viewModel.uiState
 
-    val email by viewModel.email.collectAsState()
-    val password by viewModel.password.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
-
-    val configuration = LocalConfiguration.current  //Orientacion
-    val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
+    val configuration = LocalConfiguration.current  // Orientacion
+    val adaptiveInfo = currentWindowAdaptiveInfo()  // Tamaño de la pantalla
 
     Column(
         modifier = Modifier
@@ -78,7 +77,9 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goTo
                 fontWeight = FontWeight.Bold
             )
         }
+
         Spacer(modifier = Modifier.height(20.dp))
+
         Text(
             text = "Your entire wallet in your pocket",
             color = Color.Gray,
@@ -89,40 +90,47 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goTo
         Spacer(modifier = Modifier.height(30.dp))
 
         OutlinedTextField(
-            value = email,
+            value = uiState.email,
             onValueChange = { viewModel.updateEmail(it) },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
 
+        uiState.emailError?.let {
+            Text(
+                text = it,
+                color = Color.Red,
+                fontSize = 12.sp,
+                modifier = Modifier.padding(start = 8.dp, top = 4.dp)
+            )
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
 
         PasswordInputField(
-            password = password,
-            onPasswordChange = { viewModel.updatePassword(it) }
+            password = uiState.password,
+            onPasswordChange = { viewModel.updatePassword(it)}
         )
+
+        uiState.passwordError?.let {
+            Text(
+                text = it,
+                color = Color.Red,
+                fontSize = 12.sp,
+                modifier = Modifier.padding(start = 8.dp, top = 4.dp)
+            )
+        }
 
         Spacer(modifier = Modifier.height(27.dp))
 
         Button(
             onClick = {
-                viewModel.validateAndLogin(onLoginSuccess = {
-                    onLoginSuccess()
-                    goToHome()
-                })
+                viewModel.validateAndLogin(goToHome)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Login", fontSize = 17.sp)
-        }
-
-        if (errorMessage.isNotEmpty()) {
-            Text(
-                text = errorMessage,
-                color = Color.Red,
-                style = MaterialTheme.typography.bodySmall,
-            )
         }
 
 
@@ -153,7 +161,6 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goTo
         }
     }
 }
-
 
 
 @Composable
@@ -189,16 +196,6 @@ fun PasswordInputField(
     )
 }
 
-@PreviewScreenSizes
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    LoginScreen(onLoginSuccess = {},
-        onPasswordRecovery = {},
-        goToHome = {},
-        goToRegister = {},
-        viewModel = LoginViewModel()
-    )
-}
+
 
 

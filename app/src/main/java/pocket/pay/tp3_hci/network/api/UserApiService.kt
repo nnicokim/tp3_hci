@@ -1,5 +1,6 @@
 package pocket.pay.tp3_hci.network.api
 
+import pocket.pay.tp3_hci.network.model.NetworkCode
 import pocket.pay.tp3_hci.network.model.NetworkCredentials
 import pocket.pay.tp3_hci.network.model.NetworkRegister
 import pocket.pay.tp3_hci.network.model.NetworkToken
@@ -15,6 +16,9 @@ interface UserApiService {
 
     @POST("user")
     suspend fun register(@Body user: NetworkRegister): Response<NetworkUser>
+
+    @POST("user/verify")
+    suspend fun verify(@Body token: NetworkCode): Response<NetworkUser>
 
     @POST("user/logout")
     suspend fun logout(): Response<Unit>
