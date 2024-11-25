@@ -103,7 +103,7 @@ class AccountViewModel(
     }
 
     fun getCurrentUser() = runOnViewModelScope(
-        { userRepository.getCurrentUser(_uiState.value.currentUser == null) },
+        { userRepository.getCurrentUser(uiState.currentUser == null) },
         { state, response -> state.copy(currentUser = response) }
     )
 
