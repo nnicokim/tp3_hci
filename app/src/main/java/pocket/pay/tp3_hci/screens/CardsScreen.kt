@@ -63,7 +63,8 @@ fun CardsScreen(
     viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication))
 
 ) {
-    val cards = viewModel.cards
+    val uiState = viewModel.uiState
+    val cards = uiState.cards
     val configuration = LocalConfiguration.current
     val adaptiveInfo = currentWindowAdaptiveInfo()
 
@@ -127,7 +128,7 @@ fun CardsScreen(
                     Spacer(modifier = Modifier.height(10.dp))
 
                     // Mostramos las tarjetas dinamicamente
-                    if (cards.isNotEmpty()) {
+                    if (cards != null) {
                         LazyVerticalGrid(
                             columns = GridCells.Fixed(2), // Set to 2 cards per row
                             verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -141,7 +142,7 @@ fun CardsScreen(
                                         .width(320.dp)
                                         .height(100.dp)
                                         .background(
-                                            color = Color(card.backgroundColor),
+                                            color = Color(0XFFCC9900),
                                             shape = RoundedCornerShape(16.dp)
                                         )
                                         .padding(16.dp)
@@ -153,8 +154,8 @@ fun CardsScreen(
                                                 .height(110.dp)
                                         ) {
                                             Text(
-                                                text = card.cardholderName,
-                                                color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
+                                                text = card.fullName,
+                                                color = Color(0XFFCC9900),
                                                 fontSize = 20.sp,
                                                 fontWeight = FontWeight.Bold
                                             )
@@ -162,8 +163,8 @@ fun CardsScreen(
                                             Spacer(modifier = Modifier.height(10.dp))
 
                                             Text(
-                                                text = card.cardNumber,
-                                                color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
+                                                text = card.number,
+                                                color = Color(0XFFCC9900),
                                                 fontSize = 20.sp,
                                                 fontWeight = FontWeight.Bold
                                             )
@@ -184,7 +185,7 @@ fun CardsScreen(
                                                         Icon(
                                                             imageVector = Icons.Default.MoreVert,
                                                             contentDescription = "Menu",
-                                                            tint = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black
+                                                            tint = Color(0XFFCC9900)
                                                         )
                                                     }
 
@@ -203,8 +204,8 @@ fun CardsScreen(
                                                 }
 
                                                 Text(
-                                                    text = card.expiryDate,
-                                                    color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
+                                                    text = card.expirationDate,
+                                                    color = Color(0XFFCC9900),
                                                     fontSize = 16.sp,
                                                     fontWeight = FontWeight.Bold,
                                                     textAlign = TextAlign.End,
@@ -241,90 +242,91 @@ fun CardsScreen(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 // Mostramos las tarjetas dinamicamente
-                if (cards.isNotEmpty()) {
-                    cards.forEach { card ->
-                        Box(
-                            modifier = Modifier
-                                .width(320.dp)
-                                .height(100.dp)
-                                .background(
-                                    color = Color(card.backgroundColor),
-                                    shape = RoundedCornerShape(16.dp)
-                                )
-                                .padding(16.dp)
-                        ) {
-                            Row {
-                                Column(
-                                    modifier = Modifier
-                                        .width(160.dp)
-                                        .height(110.dp)
-                                ) {
-                                    Text(
-                                        text = card.cardholderName,
-                                        color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
-                                        fontSize = 16.sp,
-                                        fontWeight = FontWeight.Bold
+                if (cards != null) {
+                        cards.forEach { card ->
+                            Box(
+                                modifier = Modifier
+                                    .width(320.dp)
+                                    .height(100.dp)
+                                    .background(
+                                        color = Color(0XFFCC9900),
+                                        shape = RoundedCornerShape(16.dp)
                                     )
-
-                                    Text(
-                                        text = card.cardNumber,
-                                        color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
-                                        fontSize = 16.sp,
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                }
-                                Column(
-                                    modifier = Modifier
-                                        .width(160.dp)
-                                        .height(100.dp)
-                                ) {
-                                    var expanded by remember { mutableStateOf(false) }
-                                    Box(
-                                        modifier = Modifier.align(Alignment.End)
-                                    ) {
-                                        IconButton(onClick = { expanded = true }) {
-                                            Icon(
-                                                imageVector = Icons.Default.MoreVert,
-                                                contentDescription = "Menu",
-                                                tint = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black
-                                            )
-                                        }
-
-                                        DropdownMenu(
-                                            expanded = expanded,
-                                            onDismissRequest = { expanded = false }
-                                        ) {
-                                            DropdownMenuItem(
-                                                text = { Text(stringResource(id = R.string.delete_card)) },
-                                                onClick = {
-                                                    expanded = false
-//                                                    viewModel.removeCard(card)
-                                                }
-                                            )
-                                        }
-                                    }
-
-                                    Text(
-                                        text = card.expiryDate,
-                                        color = if (card.backgroundColor == 0XFF000000) Color.White else Color.Black,
-                                        fontSize = 16.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        textAlign = TextAlign.End,
+                                    .padding(16.dp)
+                            ) {
+                                Row {
+                                    Column(
                                         modifier = Modifier
-                                            .align(Alignment.End)
-                                    )
+                                            .width(160.dp)
+                                            .height(110.dp)
+                                    ) {
+                                        Text(
+                                            text = card.fullName,
+                                            color = Color(0XFFCC9900),
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
+
+                                        Text(
+                                            text = card.number,
+                                            color = Color(0XFFCC9900),
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .width(160.dp)
+                                            .height(100.dp)
+                                    ) {
+                                        var expanded by remember { mutableStateOf(false) }
+                                        Box(
+                                            modifier = Modifier.align(Alignment.End)
+                                        ) {
+                                            IconButton(onClick = { expanded = true }) {
+                                                Icon(
+                                                    imageVector = Icons.Default.MoreVert,
+                                                    contentDescription = "Menu",
+                                                    tint = Color(0XFFCC9900),
+                                                )
+                                            }
+
+                                            DropdownMenu(
+                                                expanded = expanded,
+                                                onDismissRequest = { expanded = false }
+                                            ) {
+                                                DropdownMenuItem(
+                                                    text = { Text(stringResource(id = R.string.delete_card)) },
+                                                    onClick = {
+                                                        expanded = false
+            //                                                    viewModel.removeCard(card)
+                                                    }
+                                                )
+                                            }
+                                        }
+
+                                        Text(
+                                            text = card.expirationDate,
+                                            color = Color(0XFFCC9900),
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            textAlign = TextAlign.End,
+                                            modifier = Modifier
+                                                .align(Alignment.End)
+                                        )
+                                    }
                                 }
                             }
+                            Spacer(modifier = Modifier.height(15.dp))
                         }
-                        Spacer(modifier = Modifier.height(15.dp))
+                    } else {
+                        Spacer(modifier = Modifier.height(50.dp))
+                        Text(
+                            text = stringResource(id = R.string.no_cards),
+                            fontSize = 20.sp,
+                            modifier = Modifier.padding(16.dp)
+                        )
                     }
-                } else {
-                    Spacer(modifier = Modifier.height(50.dp))
-                    Text(
-                        text = stringResource(id = R.string.no_cards),
-                        fontSize = 20.sp,
-                        modifier = Modifier.padding(16.dp)
-                    )
                 }
 
                 Spacer(modifier = Modifier.height(40.dp))
@@ -346,20 +348,18 @@ fun CardsScreen(
                         fontSize = 19.sp
                     )
                 }
-                }
             }
-
         }
-
     }
 }
 
 
-@PreviewScreenSizes
-@Composable
-fun CardsScreenPreview(){
-    CardsScreen(
-        goToCreateCard = {},
-        viewModel = CardsViewModel()
-    )
-}
+
+//@PreviewScreenSizes
+//@Composable
+//fun CardsScreenPreview(){
+//    CardsScreen(
+//        goToCreateCard = {},
+//        viewModel = CardsViewModel()
+//    )
+//}

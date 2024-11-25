@@ -47,6 +47,7 @@ import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.R
+import pocket.pay.tp3_hci.model.CardType
 import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 import kotlin.math.round
 
@@ -118,22 +119,22 @@ fun AddCardScreen(
 
                 Spacer(modifier = Modifier.height(5.dp))
 
-                if (errorMessageCardNumber.isNotEmpty()) {
-                    if (errorMessageCardNumber == "empty"){
-                        Text(
-                            text = stringResource(R.string.empty_card_number),
-                            color = Color.Red,
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    } else {
-                        Text(
-                            text = stringResource(R.string.invalid_card_number),
-                            color = Color.Red,
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    }
-
-                }
+//                if (errorMessageCardNumber.isNotEmpty()) {
+//                    if (errorMessageCardNumber == "empty"){
+//                        Text(
+//                            text = stringResource(R.string.empty_card_number),
+//                            color = Color.Red,
+//                            style = MaterialTheme.typography.bodySmall,
+//                        )
+//                    } else {
+//                        Text(
+//                            text = stringResource(R.string.invalid_card_number),
+//                            color = Color.Red,
+//                            style = MaterialTheme.typography.bodySmall,
+//                        )
+//                    }
+//
+//                }
 
                 OutlinedTextField(
                     value = name,
@@ -151,13 +152,13 @@ fun AddCardScreen(
 
                 Spacer(modifier = Modifier.height(5.dp))
 
-                if (errorMessageCardName.isNotEmpty()) {
-                    Text(
-                        text = stringResource(R.string.empty_card_name),
-                        color = Color.Red,
-                        style = MaterialTheme.typography.bodySmall,
-                    )
-                }
+//                if (errorMessageCardName.isNotEmpty()) {
+//                    Text(
+//                        text = stringResource(R.string.empty_card_name),
+//                        color = Color.Red,
+//                        style = MaterialTheme.typography.bodySmall,
+//                    )
+//                }
 
             }
             Column(
@@ -185,21 +186,21 @@ fun AddCardScreen(
 
                 Spacer(modifier = Modifier.height(5.dp))
 
-                if (errorMessageExpDate.isNotEmpty()) {
-                    if (errorMessageExpDate == "empty"){
-                        Text(
-                            text = stringResource(R.string.empty_card_exp_date),
-                            color = Color.Red,
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    } else {
-                        Text(
-                            text = stringResource(R.string.invalid_card_exp_date),
-                            color = Color.Red,
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    }
-                }
+//                if (errorMessageExpDate.isNotEmpty()) {
+//                    if (errorMessageExpDate == "empty"){
+//                        Text(
+//                            text = stringResource(R.string.empty_card_exp_date),
+//                            color = Color.Red,
+//                            style = MaterialTheme.typography.bodySmall,
+//                        )
+//                    } else {
+//                        Text(
+//                            text = stringResource(R.string.invalid_card_exp_date),
+//                            color = Color.Red,
+//                            style = MaterialTheme.typography.bodySmall,
+//                        )
+//                    }
+//                }
 
                 OutlinedTextField(
                     value = cvv,
@@ -217,22 +218,21 @@ fun AddCardScreen(
 
                 Spacer(modifier = Modifier.height(5.dp))
 
-                if (errorMessage.isNotEmpty()) {
-                    if (errorMessage == "empty"){
-                        Text(
-                            text = stringResource(R.string.empty_card_cvv),
-                            color = Color.Red,
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    } else {
-                        Text(
-                            text = stringResource(R.string.invalid_card_cvv),
-                            color = Color.Red,
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    }
-
-                }
+//                if (errorMessage.isNotEmpty()) {
+//                    if (errorMessage == "empty"){
+//                        Text(
+//                            text = stringResource(R.string.empty_card_cvv),
+//                            color = Color.Red,
+//                            style = MaterialTheme.typography.bodySmall,
+//                        )
+//                    } else {
+//                        Text(
+//                            text = stringResource(R.string.invalid_card_cvv),
+//                            color = Color.Red,
+//                            style = MaterialTheme.typography.bodySmall,
+//                        )
+//                    }
+//                }
             }
         }
         Column(
@@ -264,9 +264,15 @@ fun AddCardScreen(
 
                 Button(
                     onClick = {
-                        viewModel.isCardDataValid(onValidCard = {
-                            goBackToCards()
-                        })
+                        viewModel.validateAndAddCard(
+                            number = number,
+                            expirationDate = date,
+                            fullName = name,
+                            cvv = cvv,
+                            type = CardType.CREDIT,
+                            onError = { errorMessage -> (errorMessage) },
+                            goBackToCards = { goBackToCards() }
+                        )
                     },
                     modifier = Modifier.wrapContentWidth()
                         .padding(horizontal = 9.dp),
@@ -326,22 +332,21 @@ fun AddCardScreen(
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            if (errorMessageCardNumber.isNotEmpty()) {
-                if (errorMessageCardNumber == "empty"){
-                    Text(
-                        text = stringResource(R.string.empty_card_number),
-                        color = Color.Red,
-                        style = MaterialTheme.typography.bodySmall,
-                    )
-                } else {
-                    Text(
-                        text = stringResource(R.string.invalid_card_number),
-                        color = Color.Red,
-                        style = MaterialTheme.typography.bodySmall,
-                    )
-                }
-
-            }
+//            if (errorMessageCardNumber.isNotEmpty()) {
+//                if (errorMessageCardNumber == "empty"){
+//                    Text(
+//                        text = stringResource(R.string.empty_card_number),
+//                        color = Color.Red,
+//                        style = MaterialTheme.typography.bodySmall,
+//                    )
+//                } else {
+//                    Text(
+//                        text = stringResource(R.string.invalid_card_number),
+//                        color = Color.Red,
+//                        style = MaterialTheme.typography.bodySmall,
+//                    )
+//                }
+//            }
 
             OutlinedTextField(
                 value = name,
@@ -359,13 +364,13 @@ fun AddCardScreen(
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            if (errorMessageCardName.isNotEmpty()) {
-                Text(
-                    text = stringResource(R.string.empty_card_name),
-                    color = Color.Red,
-                    style = MaterialTheme.typography.bodySmall,
-                )
-            }
+//            if (errorMessageCardName.isNotEmpty()) {
+//                Text(
+//                    text = stringResource(R.string.empty_card_name),
+//                    color = Color.Red,
+//                    style = MaterialTheme.typography.bodySmall,
+//                )
+//            }
 
             OutlinedTextField(
                 value = date,
@@ -383,21 +388,21 @@ fun AddCardScreen(
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            if (errorMessageExpDate.isNotEmpty()) {
-                if (errorMessageExpDate == "empty"){
-                    Text(
-                        text = stringResource(R.string.empty_card_exp_date),
-                        color = Color.Red,
-                        style = MaterialTheme.typography.bodySmall,
-                    )
-                } else {
-                    Text(
-                        text = stringResource(R.string.invalid_card_exp_date),
-                        color = Color.Red,
-                        style = MaterialTheme.typography.bodySmall,
-                    )
-                }
-            }
+//            if (errorMessageExpDate.isNotEmpty()) {
+//                if (errorMessageExpDate == "empty"){
+//                    Text(
+//                        text = stringResource(R.string.empty_card_exp_date),
+//                        color = Color.Red,
+//                        style = MaterialTheme.typography.bodySmall,
+//                    )
+//                } else {
+//                    Text(
+//                        text = stringResource(R.string.invalid_card_exp_date),
+//                        color = Color.Red,
+//                        style = MaterialTheme.typography.bodySmall,
+//                    )
+//                }
+//            }
 
             OutlinedTextField(
                 value = cvv,
@@ -415,22 +420,21 @@ fun AddCardScreen(
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            if (errorMessage.isNotEmpty()) {
-                if (errorMessage == "empty"){
-                    Text(
-                        text = stringResource(R.string.empty_card_cvv),
-                        color = Color.Red,
-                        style = MaterialTheme.typography.bodySmall,
-                    )
-                } else {
-                    Text(
-                        text = stringResource(R.string.invalid_card_cvv),
-                        color = Color.Red,
-                        style = MaterialTheme.typography.bodySmall,
-                    )
-                }
-
-            }
+//            if (errorMessage.isNotEmpty()) {
+//                if (errorMessage == "empty"){
+//                    Text(
+//                        text = stringResource(R.string.empty_card_cvv),
+//                        color = Color.Red,
+//                        style = MaterialTheme.typography.bodySmall,
+//                    )
+//                } else {
+//                    Text(
+//                        text = stringResource(R.string.invalid_card_cvv),
+//                        color = Color.Red,
+//                        style = MaterialTheme.typography.bodySmall,
+//                    )
+//                }
+//            }
 
             Spacer(modifier = Modifier.height(40.dp))
 
@@ -455,9 +459,15 @@ fun AddCardScreen(
 
                 Button(
                     onClick = {
-                        viewModel.isCardDataValid(onValidCard = {
-                            goBackToCards()
-                        })
+                        viewModel.validateAndAddCard(
+                            number = number,
+                            expirationDate = date,
+                            fullName = name,
+                            cvv = cvv,
+                            type = CardType.CREDIT,
+                            onError = { errorMessage -> (errorMessage) },
+                            goBackToCards = { goBackToCards() }
+                        )
                     },
                     modifier = Modifier.wrapContentWidth()
                         .padding(horizontal = 9.dp),
@@ -476,11 +486,11 @@ fun AddCardScreen(
     }
 }
 
-@PreviewScreenSizes
-@Composable
-fun AddCardScreenPreview(){
-    AddCardScreen(
-        goBackToCards = {},
-        viewModel = AccountViewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication))
-    )
-}
+//@PreviewScreenSizes
+//@Composable
+//fun AddCardScreenPreview(){
+//    AddCardScreen(
+//        goBackToCards = {},
+//        viewModel = AccountViewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication))
+//    )
+//}
