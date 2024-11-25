@@ -41,14 +41,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.ui.theme.Purple
+import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 import pocket.pay.tp3_hci.viewmodel.PaymentsViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun NewPaymentScreen(
     goBackToPayment: () -> Unit,
-    viewModel: PaymentsViewModel = viewModel(),
-    homeViewModel: HomeViewModel = viewModel()
+    //viewModel: Account//PaymentsViewModel = viewModel(),
+    homeViewModel: AccountViewModel = viewModel()//HomeViewModel = viewModel()
 ) {
     val companyName by viewModel.companyName.collectAsState()
     val errorMessageCompanyName by viewModel.errorTextCompanyName.collectAsState()

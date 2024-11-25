@@ -29,15 +29,15 @@ fun AppNavGraph(
 ) {
     val startDestination = if (isUserLoggedIn) AppDestinations.HOME.route else "landing"
 
-    val investmentViewModel = InvestmentViewModel()
+  //  val investmentViewModel = InvestmentViewModel()
 
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(route = AppDestinations.HOME.route) {
-            HomeScreen(goToMap = { navController.navigate("map") })
-        }
+//        composable(route = AppDestinations.HOME.route) {
+//            HomeScreen(goToMap = { navController.navigate("map") })
+//        }
         composable(route = AppDestinations.PAYMENTS.route) {
             PaymentsScreen(goToNewPayment = {navController.navigate("newpayment")})
         }

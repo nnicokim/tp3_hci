@@ -55,11 +55,12 @@ import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.viewmodel.Card
 import pocket.pay.tp3_hci.viewmodel.CardsViewModel
 import pocket.pay.tp3_hci.navigations.AppNavGraph
+import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 
 @Composable
 fun CardsScreen(
     goToCreateCard: () -> Unit,
-    viewModel: CardsViewModel = viewModel()
+    viewModel: AccountViewModel = viewModel()//CardsViewModel = viewModel()
 ) {
     val cards = viewModel.cards
     val configuration = LocalConfiguration.current
