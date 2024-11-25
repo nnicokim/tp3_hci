@@ -14,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -24,7 +25,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.navigations.AppDestinations
 import pocket.pay.tp3_hci.ui.theme.Purple
@@ -33,7 +36,9 @@ import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 @Composable
 fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit,
                    goToLogin : () -> Unit,
-                   viewModel: AccountViewModel) {
+                   viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(
+                       LocalContext.current.applicationContext as PocketPayApplication
+                   ))) {
 
     var firstname by rememberSaveable { mutableStateOf("") }
     var lastname by rememberSaveable { mutableStateOf("") }

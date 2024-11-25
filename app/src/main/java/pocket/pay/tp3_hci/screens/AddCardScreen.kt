@@ -1,5 +1,6 @@
 package pocket.pay.tp3_hci.screens
 
+import android.accounts.Account
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,9 +41,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.window.core.layout.WindowHeightSizeClass
+import okhttp3.internal.platform.android.BouncyCastleSocketAdapter.Companion.factory
+import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.R
+import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 import pocket.pay.tp3_hci.viewmodel.CardsViewModel
 import kotlin.math.round
 
@@ -49,7 +54,8 @@ import kotlin.math.round
 @Composable
 fun AddCardScreen(
     goBackToCards: () -> Unit,
-    viewModel: CardsViewModel = viewModel()
+    //viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication)
+    viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication))
 ) {
     val number by viewModel.cardNumber.collectAsState()
     val errorMessageCardNumber by viewModel.errorTextCardNumber.collectAsState()

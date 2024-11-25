@@ -34,12 +34,18 @@ import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import pocket.pay.tp3_hci.PocketPayApplication
 
 @Composable
 fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit,
                 goToHome: () -> Unit,
                 goToRegister: () -> Unit,
-                viewModel: AccountViewModel) {
+                viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(
+                    LocalContext.current.applicationContext as PocketPayApplication
+                ))
+) {
 
     var email by rememberSaveable { mutableStateOf("")}
     var password by rememberSaveable { mutableStateOf("")}

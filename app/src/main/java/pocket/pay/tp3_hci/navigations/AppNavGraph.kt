@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import pocket.pay.tp3_hci.screens.CardsScreen
 import pocket.pay.tp3_hci.screens.HomeScreen
-import pocket.pay.tp3_hci.screens.InvestmentScreen
+//import pocket.pay.tp3_hci.screens.InvestmentScreen
 import pocket.pay.tp3_hci.screens.LandingScreen
 import pocket.pay.tp3_hci.screens.LoginScreen
 import pocket.pay.tp3_hci.screens.MapScreen
@@ -15,7 +15,7 @@ import pocket.pay.tp3_hci.screens.PaymentsScreen
 import pocket.pay.tp3_hci.screens.RegisterScreen
 import androidx.compose.ui.Modifier
 import pocket.pay.tp3_hci.screens.AddCardScreen
-import pocket.pay.tp3_hci.screens.InvestmentScreen
+//import pocket.pay.tp3_hci.screens.InvestmentScreen
 import pocket.pay.tp3_hci.screens.NewPaymentScreen
 import pocket.pay.tp3_hci.screens.Profile
 

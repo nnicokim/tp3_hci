@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import pocket.pay.tp3_hci.R
@@ -34,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.AccountViewModel
@@ -42,7 +44,9 @@ import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Profile(goBackToHome: () -> Unit, goToLogin: () -> Unit,
-            viewModel: AccountViewModel,
+            viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(
+                LocalContext.current.applicationContext as PocketPayApplication
+            )),
             loggedOut: () -> Unit) {
 
     val configuration = LocalConfiguration.current  // Orientacion

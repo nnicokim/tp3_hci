@@ -42,15 +42,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowWidthSizeClass
+import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 
 
 @Composable
-fun HomeScreen(viewModel: AccountViewModel, goToMap: () -> Unit) {
+fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(
+    LocalContext.current.applicationContext as PocketPayApplication
+)), goToMap: () -> Unit) {
 
     val uiState = viewModel.uiState
 

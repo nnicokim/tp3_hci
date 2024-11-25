@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -38,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.ui.theme.Purple
@@ -48,8 +50,7 @@ import pocket.pay.tp3_hci.viewmodel.PaymentsViewModel
 @Composable
 fun NewPaymentScreen(
     goBackToPayment: () -> Unit,
-    //viewModel: Account//PaymentsViewModel = viewModel(),
-    homeViewModel: AccountViewModel = viewModel()//HomeViewModel = viewModel()
+    viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication))
 ) {
     val companyName by viewModel.companyName.collectAsState()
     val errorMessageCompanyName by viewModel.errorTextCompanyName.collectAsState()
