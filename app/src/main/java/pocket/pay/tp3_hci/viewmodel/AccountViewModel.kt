@@ -137,6 +137,15 @@ class AccountViewModel(
         { state, response -> state.copy(payments = response) }
     )
 
+
+    //validar email, contraseña, pagos
+
+    //payBalance, payCards, addcards son para hacer validate
+    //fijarse como funciona getCards
+    //
+
+
+
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
         updateState: (AccountUiState, R) -> AccountUiState
@@ -151,6 +160,7 @@ class AccountViewModel(
             Log.e(TAG, "Coroutine execution failed", e)
         }
     }
+
 
     private fun handleError(e: Throwable): Error {
         return if (e is DataSourceException) {

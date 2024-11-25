@@ -44,9 +44,9 @@ fun AppNavGraph(
         composable(route = AppDestinations.CARDS.route) {
             CardsScreen(goToCreateCard = { navController.navigate("addcard") })
         }
-        composable(route = AppDestinations.INVESTMENTS.route) {
-            InvestmentScreen(investmentViewModel)
-        }
+//        composable(route = AppDestinations.INVESTMENTS.route) {
+//            InvestmentScreen(investmentViewModel)
+//        }
         composable(route = "landing") {
             LandingScreen(goToLogin = { navController.navigate("login") },
                 goToRegister = { navController.navigate("register") })
