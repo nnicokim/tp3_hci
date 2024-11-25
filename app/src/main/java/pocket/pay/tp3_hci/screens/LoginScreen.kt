@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,23 +29,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
 import pocket.pay.tp3_hci.R
-import pocket.pay.tp3_hci.navigations.AppDestinations
 import pocket.pay.tp3_hci.ui.theme.Purple
-import pocket.pay.tp3_hci.viewmodel.LoginViewModel
+import pocket.pay.tp3_hci.viewmodel.AccountViewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
-fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goToHome: () -> Unit,
+fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit,
+                goToHome: () -> Unit,
                 goToRegister: () -> Unit,
-                viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+                viewModel: AccountViewModel) {
 
-    val email by viewModel.email.collectAsState()
-    val password by viewModel.password.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
+    var email by rememberSaveable { mutableStateOf("")}
+    var password by rememberSaveable { mutableStateOf("")}
 
-    val configuration = LocalConfiguration.current  //Orientacion
-    val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
+    val configuration = LocalConfiguration.current  // Orientacion
+    val adaptiveInfo = currentWindowAdaptiveInfo()  // Tamaño de la pantalla
 
     Column(
         modifier = Modifier
@@ -90,7 +91,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goTo
 
         OutlinedTextField(
             value = email,
-            onValueChange = { viewModel.updateEmail(it) },
+            onValueChange = { email = it },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
@@ -100,31 +101,24 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit, goTo
 
         PasswordInputField(
             password = password,
-            onPasswordChange = { viewModel.updatePassword(it) }
+            onPasswordChange = { password = it }
         )
 
         Spacer(modifier = Modifier.height(27.dp))
 
         Button(
             onClick = {
-                viewModel.validateAndLogin(onLoginSuccess = {
-                    onLoginSuccess()
-                    goToHome()
-                })
+                viewModel.validateAndLogin(
+                    email = email,
+                    password = password,
+                    onError = { errorMessage -> (errorMessage) },
+                    goToHome = { goToHome() }
+                )
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Login", fontSize = 17.sp)
         }
-
-        if (errorMessage.isNotEmpty()) {
-            Text(
-                text = errorMessage,
-                color = Color.Red,
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
-
 
         Spacer(modifier = Modifier.height(13.dp))
 
@@ -189,16 +183,6 @@ fun PasswordInputField(
     )
 }
 
-@PreviewScreenSizes
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    LoginScreen(onLoginSuccess = {},
-        onPasswordRecovery = {},
-        goToHome = {},
-        goToRegister = {},
-        viewModel = LoginViewModel()
-    )
-}
+
 
 

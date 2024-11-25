@@ -1,0 +1,176 @@
+package pocket.pay.tp3_hci.viewmodel
+
+import androidx.lifecycle.ViewModel
+import pocket.pay.tp3_hci.SessionManager
+import pocket.pay.tp3_hci.repository.UserRepository
+import android.util.Log
+import android.util.Patterns
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.launch
+import pocket.pay.tp3_hci.DataSourceException
+import pocket.pay.tp3_hci.PocketPayApplication
+import pocket.pay.tp3_hci.repository.WalletRepository
+import androidx.lifecycle.ViewModelProvider
+import pocket.pay.tp3_hci.repository.PaymentRepository
+
+
+class AccountViewModel(
+    sessionManager: SessionManager,
+    private val userRepository: UserRepository,
+    private val walletRepository: WalletRepository,
+    private val paymentRepository: PaymentRepository
+) : ViewModel() {
+
+    var uiState by mutableStateOf(pocket.pay.tp3_hci.states.AccountUiState(isLoggedIn = sessionManager.loadAuthToken() != null))
+        private set
+
+    fun login(username: String, password: String) = runOnViewModelScope (
+        { userRepository.login(username, password) },
+        { state, _ -> state.copy(pocket.pay.tp3_hci.states.AccountUiState.isLoggedIn = true) }
+    )
+
+    fun validateAndLogin(
+        email : String,
+        password : String,
+        onError : (String) -> Unit,
+        goToHome : () -> Unit
+    ) {
+        if (email.isBlank()) {
+            onError("Email cannot be empty")
+        } else if (password.isBlank()) {
+            onError("Password cannot be empty")
+        } else if (!isEmailValid(email)) {
+            onError("Invalid email format")
+        } else {
+            login(email, password)
+            goToHome()
+        }
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    fun register(
+        firstName: String,
+        lastName: String,
+        email: String,
+        birthDate: String,
+        password: String
+    ) = runOnViewModelScope(
+        {
+            val networkRegister = NetworkRegister(
+                firstName = firstName,
+                lastName = lastName,
+                email = email,
+                birthDate = birthDate,
+                password = password
+            )
+            userRepository.register(networkRegister)
+        },
+        { state, _ -> state.copy(isLoggedIn = true) }
+    )
+
+    fun validateAndRegister(
+        firstname: String,
+        lastname: String,
+        birthdate: String,
+        email: String,
+        password: String,
+        onError: (String) -> Unit,
+        goToHome : () -> Unit
+    ) {
+        if (firstname.isBlank()) {
+            onError("First name cannot be empty")
+        } else if (lastname.isBlank()) {
+            onError("Last name cannot be empty")
+        } else if (birthdate.isBlank()) {
+            onError("birth date cannot be empty")
+        } else if (email.isBlank()) {
+            onError("Email cannot be empty")
+        } else if (password.isBlank()) {
+            onError("Password field cannot be empty")
+        } else {
+            register(firstname, lastname, email, birthdate, password)
+            goToHome()
+        }
+    }
+
+    fun getCurrentUser() = runOnViewModelScope(
+        { userRepository.getCurrentUser(_uiState.value.currentUser == null) },
+        { state, response -> state.copy(currentUser = response) }
+    )
+
+    fun logoutExit (goToLogin : () -> Unit) {
+        logout()
+        goToLogin()
+    }
+
+    fun logout () = runOnViewModelScope(
+        { userRepository.logout() },
+        { state, _ -> state.copy(
+            isLoggedIn = false,
+            currentUser = null,
+        )
+        }
+    )
+
+    fun recharge(amount: Float) = runOnViewModelScope(
+        {
+            walletRepository.recharge(amount)
+        },
+        { state, _ -> state.copy(
+            )
+        }
+    )
+
+    fun getPayments(refresh: Boolean = false) = runOnViewModelScope(
+        {
+            paymentRepository.getPayments(refresh)
+        },
+        { state, response -> state.copy(payments = response) }
+    )
+
+    private fun <R> runOnViewModelScope(
+        block: suspend () -> R,
+        updateState: (AccountUiState, R) -> AccountUiState
+    ): Job = viewModelScope.launch {
+        uiState = uiState.copy(isFetching = true, error = null)
+        runCatching {
+            block()
+        }.onSuccess { response ->
+            uiState = updateState(uiState, response).copy(isFetching = false)
+        }.onFailure { e ->
+            uiState = uiState.copy(isFetching = false, error = handleError(e))
+            Log.e(TAG, "Coroutine execution failed", e)
+        }
+    }
+
+    private fun handleError(e: Throwable): Error {
+        return if (e is DataSourceException) {
+            Error("Code: ${e.code}, Message: ${e.message}")
+        } else {
+            Error("An unexpected error occurred")
+        }
+    }
+
+    companion object {
+        private const val TAG = "AccountViewModel"
+        fun provideFactory(
+            application: PocketPayApplication
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return LoginViewModel(
+                    application.sessionManager,
+                    application.userRepository,
+                    application.walletRepository
+                ) as T
+            }
+        }
+    }
+}

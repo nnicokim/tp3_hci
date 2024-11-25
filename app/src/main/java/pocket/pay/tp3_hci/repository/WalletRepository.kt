@@ -11,6 +11,10 @@ class WalletRepository (
     private val cardsMutex = Mutex()
     private var cards: List<Card> = emptyList()
 
+    suspend fun recharge(amount: Float)  {
+        remoteDataSource.recharge(amount)
+    }
+
     suspend fun getCards(refresh: Boolean = false): List<Card> {
         if (refresh || cards.isEmpty()) {
             val result = remoteDataSource.getCards()

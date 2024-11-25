@@ -18,7 +18,6 @@ import pocket.pay.tp3_hci.screens.AddCardScreen
 import pocket.pay.tp3_hci.screens.InvestmentScreen
 import pocket.pay.tp3_hci.screens.NewPaymentScreen
 import pocket.pay.tp3_hci.screens.Profile
-import pocket.pay.tp3_hci.viewmodel.InvestmentViewModel
 
 @Composable
 fun AppNavGraph(

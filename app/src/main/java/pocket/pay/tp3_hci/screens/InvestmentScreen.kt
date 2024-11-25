@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.R
-import pocket.pay.tp3_hci.viewmodel.InvestmentViewModel
 
 @Composable
 fun InvestmentScreen(viewModel: InvestmentViewModel = viewModel()) {

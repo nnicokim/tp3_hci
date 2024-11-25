@@ -38,22 +38,27 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.ui.theme.Purple
-import pocket.pay.tp3_hci.viewmodel.HomeViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowWidthSizeClass
 import pocket.pay.tp3_hci.PreviewScreenSizes
+import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
-    val balance by viewModel.balance.collectAsState()
-    val alias by viewModel.alias.collectAsState()
-    val cbu by viewModel.cbu.collectAsState()
-    val recentTransactions by viewModel.recentTransactions.collectAsState()
+fun HomeScreen(viewModel: AccountViewModel, goToMap: () -> Unit) {
+
+    val uiState = viewModel.uiState
+
+    val balance by rememberSaveable { mutableStateOf("")}
+    val alias by rememberSaveable { mutableStateOf("") }
+    val cbu by rememberSaveable { mutableStateOf("")}
+
+    // val recentTransactions by viewModel.recentTransactions.collectAsState()
 
     var showDepositDialog by remember { mutableStateOf(false) }
     var showWithdrawalDialog by remember { mutableStateOf(false) }
@@ -61,8 +66,8 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
     var inputAmount by remember { mutableStateOf("") }
     var withdrawalError by remember { mutableStateOf(false) }
 
-    val configuration = LocalConfiguration.current  //Orientacion
-    val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
+    val configuration = LocalConfiguration.current  // Orientacion
+    val adaptiveInfo = currentWindowAdaptiveInfo()  // Tamaño de la pantalla
 
     Row {
         if(configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -175,38 +180,6 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                         )
                                     }
                                 }
-
-                                Button(
-                                    onClick = { showWithdrawalDialog = true },
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color.White,
-                                        contentColor = Color.Black
-                                    ),
-                                    modifier = Modifier
-                                        .size(width = 130.dp, height = 100.dp)
-                                        .padding(horizontal = 10.dp),
-                                    shape = RoundedCornerShape(10.dp),
-                                    elevation = ButtonDefaults.buttonElevation(
-                                        defaultElevation = 8.dp,
-                                        pressedElevation = 2.dp,
-                                    )
-                                ) {
-                                    Column(
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        verticalArrangement = Arrangement.Center,
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.bill_arrow),
-                                            contentDescription = "withdrawal",
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                        Spacer(modifier = Modifier.height(4.dp))
-                                        Text(
-                                            text = stringResource(id = R.string.withdrawal),
-                                            fontSize = 12.sp
-                                        )
-                                    }
-                                }
                             }
                         }
                         Column (
@@ -226,7 +199,9 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                         modifier = Modifier.padding(16.dp)
                                     )
-                                    recentTransactions.takeLast(2)
+                                    viewModel.getPayments(
+                                        refresh = true
+                                    ).takeLast(2) // TODO: ver como obtener los pagos en algun tipo de lista
                                         .forEach { // Solo mostramos las ultimas 2 transacciones
                                             Text(
                                                 text = it,
@@ -429,7 +404,9 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                                 fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                 modifier = Modifier.padding(16.dp)
                             )
-                            recentTransactions.takeLast(2)
+                            viewModel.getPayments(
+                                refresh = true
+                            ).takeLast(2)
                                 .forEach { // Solo mostramos las ultimas 2 transacciones
                                     Text(
                                         text = it,
@@ -727,7 +704,9 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                             modifier = Modifier.padding(16.dp)
                         )
-                        recentTransactions.takeLast(2)
+                        viewModel.getPayments(
+                            refresh = true
+                        ).takeLast(2)
                             .forEach { // Solo mostramos las ultimas 2 transacciones
                                 Text(
                                     text = it,
@@ -757,7 +736,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                     confirmButton = {
                         Button(
                             onClick = {
-                                viewModel.addDeposit(inputAmount.toFloat())
+                                viewModel.recharge(inputAmount.toFloat())
                                 showDepositDialog = false
                                 inputAmount = ""
                             }
@@ -767,52 +746,6 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
                     },
                     dismissButton = {
                         Button(onClick = { showDepositDialog = false }) {
-                            Text(text = stringResource(id = R.string.cancel))
-                        }
-                    }
-                )
-            }
-
-            if (showWithdrawalDialog) {
-                AlertDialog(
-                    onDismissRequest = { showWithdrawalDialog = false },
-                    title = { Text(text = stringResource(id = R.string.withdrawal)) },
-                    text = {
-                        Column {
-                            Text(text = stringResource(id = R.string.enter_withdraw))
-                            TextField(
-                                value = inputAmount,
-                                onValueChange = { inputAmount = it },
-                                singleLine = true,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                            if (withdrawalError) {
-                                Text(
-                                    text = stringResource(id = R.string.insufficient_balance),
-                                    color = Color.Red,
-                                    modifier = Modifier.padding(top = 8.dp)
-                                )
-                            }
-                        }
-                    },
-                    confirmButton = {
-                        Button(
-                            onClick = {
-                                val success = viewModel.withdraw(inputAmount.toFloat())
-                                if (success) {
-                                    showWithdrawalDialog = false
-                                    inputAmount = ""
-                                    withdrawalError = false
-                                } else {
-                                    withdrawalError = true
-                                }
-                            }
-                        ) {
-                            Text(text = stringResource(id = R.string.accept))
-                        }
-                    },
-                    dismissButton = {
-                        Button(onClick = { showWithdrawalDialog = false }) {
                             Text(text = stringResource(id = R.string.cancel))
                         }
                     }
@@ -833,11 +766,4 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), goToMap: () -> Unit) {
             }
         }
     }
-}
-
-
-@PreviewScreenSizes
-@Composable
-fun HomeScreenPreview(){
-    HomeScreen {  }
 }

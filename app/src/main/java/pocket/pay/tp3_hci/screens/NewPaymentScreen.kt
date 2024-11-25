@@ -41,7 +41,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.R
 import pocket.pay.tp3_hci.ui.theme.Purple
-import pocket.pay.tp3_hci.viewmodel.HomeViewModel
 import pocket.pay.tp3_hci.viewmodel.PaymentsViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")

@@ -4,6 +4,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import pocket.pay.tp3_hci.model.User
 import pocket.pay.tp3_hci.network.UserRemoteDataSource
+import pocket.pay.tp3_hci.network.model.NetworkRegister
 
 class UserRepository (
     private val remoteDataSource: UserRemoteDataSource
@@ -13,6 +14,10 @@ class UserRepository (
 
     suspend fun login(username: String, password: String) {
         remoteDataSource.login(username, password)
+    }
+
+    suspend fun register(user: NetworkRegister) {
+        remoteDataSource.register(user)
     }
 
     suspend fun logout() {
