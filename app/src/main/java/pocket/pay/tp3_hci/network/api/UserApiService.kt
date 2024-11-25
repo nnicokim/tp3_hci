@@ -16,6 +16,9 @@ interface UserApiService {
     @POST("user")
     suspend fun register(@Body user: NetworkRegister): Response<NetworkUser>
 
+    @POST("verify")
+    suspend fun verify(@Body code: String): Response<NetworkUser>
+
     @POST("user/logout")
     suspend fun logout(): Response<Unit>
 

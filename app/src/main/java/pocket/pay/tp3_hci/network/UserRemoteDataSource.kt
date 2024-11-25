@@ -22,6 +22,10 @@ class UserRemoteDataSource(
         return handleApiResponse { userApiService.register(user) }
     }
 
+    suspend fun verify(code: String) : NetworkUser{
+        return handleApiResponse { userApiService.verify(code) }
+    }
+
     suspend fun logout() {
         handleApiResponse { userApiService.logout() }
         sessionManager.removeAuthToken()

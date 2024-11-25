@@ -34,7 +34,7 @@ import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 
 @Composable
-fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit,
+fun RegisterScreen(onLoginSuccess: () -> Unit, goToVerify: () -> Unit,
                    goToLogin : () -> Unit,
                    viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(
                        LocalContext.current.applicationContext as PocketPayApplication
@@ -157,7 +157,7 @@ fun RegisterScreen(onLoginSuccess: () -> Unit, goToHome: () -> Unit,
                     email = email,
                     password = password,
                     onError = { "Error" },
-                    goToHome = { goToHome() }
+                    goToHome = { goToVerify() }
                 )
             },
             modifier = Modifier.fillMaxWidth(),

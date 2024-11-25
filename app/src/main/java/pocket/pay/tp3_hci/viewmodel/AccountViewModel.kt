@@ -39,6 +39,11 @@ class AccountViewModel(
         { state, _ -> state.copy(isLoggedIn = true) }
     )
 
+    fun verify(code: String) = runOnViewModelScope(
+        { userRepository.verify(code)},
+        { state, _ -> state.copy() }
+    )
+
     fun validateAndLogin(
         email : String,
         password : String,
@@ -190,6 +195,8 @@ class AccountViewModel(
         { walletRepository.getCards(true) },
         { state, response -> state.copy(cards = response) }
     )
+
+    //null pointer exception
 
     fun addPayment(type: PaymentType,
                    amount: Float,

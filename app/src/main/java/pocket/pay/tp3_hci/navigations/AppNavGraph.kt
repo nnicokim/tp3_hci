@@ -18,6 +18,7 @@ import pocket.pay.tp3_hci.screens.AddCardScreen
 //import pocket.pay.tp3_hci.screens.InvestmentScreen
 import pocket.pay.tp3_hci.screens.NewPaymentScreen
 import pocket.pay.tp3_hci.screens.Profile
+import pocket.pay.tp3_hci.screens.VerifyScreen
 
 @Composable
 fun AppNavGraph(
@@ -44,6 +45,9 @@ fun AppNavGraph(
         composable(route = AppDestinations.CARDS.route) {
             CardsScreen(goToCreateCard = { navController.navigate("addcard") })
         }
+        composable(route = "verify"){
+            VerifyScreen(onLoginSuccess = onLoginSuccess, goToLogin = {navController.navigate("login")})
+        }
 //        composable(route = AppDestinations.INVESTMENTS.route) {
 //            InvestmentScreen(investmentViewModel)
 //        }
@@ -58,8 +62,7 @@ fun AppNavGraph(
                 goToRegister = { navController.navigate("register") })
         }
         composable(route = "register") {
-            RegisterScreen(onLoginSuccess = onLoginSuccess, goToHome = { navController.navigate(
-                AppDestinations.HOME.route) }, goToLogin = { navController.navigate("login") })
+            RegisterScreen(onLoginSuccess = onLoginSuccess, goToLogin = {navController.navigate("login")},goToVerify = { navController.navigate("verify") })
         }
         composable(route = "passwordRecovery") {
             PasswordRecoveryScreen(onLoginSuccess = onLoginSuccess, goToHome = { navController.navigate(
