@@ -15,7 +15,9 @@ import pocket.pay.tp3_hci.DataSourceException
 import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.repository.WalletRepository
 import androidx.lifecycle.ViewModelProvider
+import pocket.pay.tp3_hci.network.model.NetworkRegister
 import pocket.pay.tp3_hci.repository.PaymentRepository
+import pocket.pay.tp3_hci.states.AccountUiState
 
 
 class AccountViewModel(
@@ -25,12 +27,12 @@ class AccountViewModel(
     private val paymentRepository: PaymentRepository
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(pocket.pay.tp3_hci.states.AccountUiState(isLoggedIn = sessionManager.loadAuthToken() != null))
+    var uiState by mutableStateOf(AccountUiState(isLoggedIn = sessionManager.loadAuthToken() != null))
         private set
 
     fun login(username: String, password: String) = runOnViewModelScope (
         { userRepository.login(username, password) },
-        { state, _ -> state.copy(pocket.pay.tp3_hci.states.AccountUiState.isLoggedIn = true) }
+        { state, _ -> state.copy(isLoggedIn = true) }
     )
 
     fun validateAndLogin(
@@ -165,10 +167,11 @@ class AccountViewModel(
         ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return LoginViewModel(
+                return AccountViewModel(
                     application.sessionManager,
                     application.userRepository,
-                    application.walletRepository
+                    application.walletRepository,
+                    application.paymentRepository
                 ) as T
             }
         }

@@ -5,6 +5,7 @@ import pocket.pay.tp3_hci.network.PaymentRemoteDataSource
 import pocket.pay.tp3_hci.network.UserRemoteDataSource
 import pocket.pay.tp3_hci.network.WalletRemoteDataSource
 import pocket.pay.tp3_hci.network.api.RetrofitClient
+import pocket.pay.tp3_hci.repository.PaymentRepository
 import pocket.pay.tp3_hci.repository.UserRepository
 import pocket.pay.tp3_hci.repository.WalletRepository
 
@@ -26,5 +27,8 @@ class PocketPayApplication : Application() {
 
     val walletRepository: WalletRepository
         get() = WalletRepository(walletRemoteDataSource)
+
+    val paymentRepository: PaymentRepository
+        get() = PaymentRepository(paymentRemoteDataSource)
 
 }
