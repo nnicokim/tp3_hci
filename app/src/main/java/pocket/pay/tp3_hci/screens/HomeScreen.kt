@@ -58,7 +58,6 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
 
     val uiState = viewModel.uiState
 
-    val balance by rememberSaveable { mutableStateOf("")}
     val alias by rememberSaveable { mutableStateOf("") }
     val cbu by rememberSaveable { mutableStateOf("")}
 
@@ -107,7 +106,7 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                                     modifier = Modifier.padding(10.dp).align(Alignment.CenterHorizontally)
                                 )
                                 Text(
-                                    text = "$${String.format("%.2f", balance)}",
+                                    text = "$${uiState.currentBalance}",
                                     fontSize = 45.sp,
                                     fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                     textAlign = TextAlign.Center,
@@ -261,7 +260,7 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                             modifier = Modifier.padding(10.dp).align(Alignment.CenterHorizontally)
                         )
                         Text(
-                            text = "$${String.format("%.2f", balance)}",
+                            text = "$${uiState.currentBalance}",
                             fontSize = 45.sp,
                             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                             textAlign = TextAlign.Center,
@@ -438,7 +437,7 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                             modifier = Modifier.padding(10.dp).padding(start = 15.dp)
                         )
                         Text(
-                            text = "$${String.format("%.2f", balance)}",
+                            text = "$${uiState.currentBalance}",
                             fontSize = 45.sp,
                             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                             textAlign = TextAlign.Center,
@@ -561,7 +560,7 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                             modifier = Modifier.padding(10.dp).padding(start = 15.dp)
                         )
                         Text(
-                            text = "$${String.format("%.2f", balance)}",
+                            text = "$${uiState.currentBalance}",
                             fontSize = 45.sp,
                             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                             textAlign = TextAlign.Center,

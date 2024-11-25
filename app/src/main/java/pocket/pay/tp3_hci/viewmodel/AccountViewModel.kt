@@ -17,6 +17,7 @@ import pocket.pay.tp3_hci.repository.WalletRepository
 import androidx.lifecycle.ViewModelProvider
 import pocket.pay.tp3_hci.model.Card
 import pocket.pay.tp3_hci.model.CardType
+import pocket.pay.tp3_hci.model.Payment
 import pocket.pay.tp3_hci.network.model.NetworkRegister
 import pocket.pay.tp3_hci.repository.PaymentRepository
 import pocket.pay.tp3_hci.states.AccountUiState
@@ -124,15 +125,6 @@ class AccountViewModel(
         }
     )
 
-    fun recharge(amount: Float) = runOnViewModelScope(
-        {
-            walletRepository.recharge(amount)
-        },
-        { state, _ -> state.copy(
-            )
-        }
-    )
-
     fun addCard(number: String,
                 expirationDate: String,
                 fullName: String,
@@ -179,17 +171,47 @@ class AccountViewModel(
         }
     }
 
+    fun getBalance() = runOnViewModelScope(
+        { walletRepository.getBalance() },
+        { state, response -> state.copy(currentBalance = response) }
+    )
+
+    fun recharge(amount: Float) = runOnViewModelScope(
+        {
+            walletRepository.recharge(amount)
+        },
+        { state, response -> state.copy(currentBalance = response)
+        }
+    )
+
     fun getCards() = runOnViewModelScope(
         { walletRepository.getCards(true) },
         { state, response -> state.copy(cards = response) }
     )
 
-    fun getPayments(refresh: Boolean = false) = runOnViewModelScope(
-        {
-            paymentRepository.getPayments(refresh)
-        },
-        { state, response -> state.copy(payments = response) }
-    )
+//    fun payCard(number: String,
+//                expirationDate: String,
+//                fullName: String,
+//                cvv: String?,
+//                type: CardType,) = runOnViewModelScope(
+//        {
+//            val payment = Payment(
+//                number = number,
+//                expirationDate = expirationDate,
+//                fullName = fullName,
+//                cvv = cvv,
+//                type = type,
+//            )
+//            paymentRepository.payCard(payment)
+//        },
+//        { state, response ->
+//            state.copy(
+//                currentCard = response,
+//                cards = null
+//            )
+//        }
+//    )
+
 
 
     //validar email, contraseña, pagos

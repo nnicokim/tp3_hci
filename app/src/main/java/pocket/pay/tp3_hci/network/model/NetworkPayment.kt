@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class NetworkPayment (
-    var id: Int,
+    var id: Int?,
     var type: String, // Balance o Card
     var amount: Float,
     var balanceBefore: Float,

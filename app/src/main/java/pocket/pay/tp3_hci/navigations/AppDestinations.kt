@@ -12,7 +12,7 @@ enum class AppDestinations (
     HOME(label = R.string.home, icon = R.drawable.home_icon, "home"),
     PAYMENTS(label = R.string.payments, icon = R.drawable.wallet_icon, "payments"),
     CARDS(label = R.string.cards, icon = R.drawable.card_icon, "cards"),
-    INVESTMENTS(label = R.string.investments, icon = R.drawable.investing_arrow_icon, "investments")
+    PROFILE(label = R.string.profile, icon = R.drawable.account_icon, "profile")
 }
 
 

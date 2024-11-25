@@ -2,6 +2,7 @@ package pocket.pay.tp3_hci.repository
 
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import pocket.pay.tp3_hci.model.Balance
 import pocket.pay.tp3_hci.model.Card
 import pocket.pay.tp3_hci.network.WalletRemoteDataSource
 
@@ -11,8 +12,14 @@ class WalletRepository (
     private val cardsMutex = Mutex()
     private var cards: List<Card> = emptyList()
 
-    suspend fun recharge(amount: Float)  {
-        remoteDataSource.recharge(amount)
+    suspend fun getBalance() : Balance  {
+        val balance = remoteDataSource.getBalance().asModel()
+        return balance
+    }
+
+    suspend fun recharge(amount: Float) : Balance{
+        val balance = remoteDataSource.recharge(amount).asModel()
+        return balance
     }
 
     suspend fun getCards(refresh: Boolean = false): List<Card> {
