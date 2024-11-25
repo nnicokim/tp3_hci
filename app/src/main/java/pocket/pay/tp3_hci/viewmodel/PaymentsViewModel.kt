@@ -1,5 +1,6 @@
 package pocket.pay.tp3_hci.viewmodel
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -96,6 +97,9 @@ class PaymentsViewModel : ViewModel() {
     fun updatePaymentSource(newPaymentSource: String) {
         _paymentSource.value = newPaymentSource
     }
+
+
+    @SuppressLint("SuspiciousIndentation")
     private fun addPayment(){
         val newPayment = Payment(
             companyName = _companyName.value,

@@ -58,7 +58,7 @@ fun NewPaymentScreen(
     val paymentSource by viewModel.paymentSource.collectAsState()
     val errorMessagePaymentSource by viewModel.errorTextPaymentSource.collectAsState()
 
-    val amountBalance = homeViewModel.balance.value
+    val balance by homeViewModel.balance.collectAsState()
 
     val configuration = LocalConfiguration.current  //Orientacion
     val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
@@ -140,7 +140,7 @@ fun NewPaymentScreen(
         }
 
         Text(
-            text = "$amountBalance",
+            text = "$balance",
             color = Color.Red,
             style = MaterialTheme.typography.bodySmall,
         )
