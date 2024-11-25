@@ -65,13 +65,12 @@ fun NewPaymentScreen(
     var paymentAmount by rememberSaveable { mutableStateOf("")}
     var paymentSource by rememberSaveable { mutableStateOf("")}
 
-    val balance = viewModel.getBalance()
-
     val configuration = LocalConfiguration.current  //Orientacion
     val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
@@ -89,7 +88,8 @@ fun NewPaymentScreen(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -101,8 +101,9 @@ fun NewPaymentScreen(
             value = paymentDescription,
             onValueChange = { paymentDescription = it },
             label = { Text(stringResource(id = R.string.company_name)) },
-            modifier = Modifier.fillMaxWidth().
-            height(65.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp),
             shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             textStyle = TextStyle(
@@ -125,8 +126,9 @@ fun NewPaymentScreen(
             value = paymentAmount,
             onValueChange = {paymentAmount = it },
             label = { Text(stringResource(id = R.string.payment_amount)) },
-            modifier = Modifier.fillMaxWidth().
-            height(65.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp),
             shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             textStyle = TextStyle(
@@ -147,7 +149,7 @@ fun NewPaymentScreen(
 //        }
 
         Text(
-            text = "$balance",
+            text = "",
             color = Color.Red,
             style = MaterialTheme.typography.bodySmall,
         )
@@ -156,8 +158,9 @@ fun NewPaymentScreen(
             value = paymentSource,
             onValueChange = { paymentSource = it },
             label = { Text(stringResource(id = R.string.payment_source)) },
-            modifier = Modifier.fillMaxWidth().
-            height(65.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp),
             shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             textStyle = TextStyle(
@@ -189,7 +192,8 @@ fun NewPaymentScreen(
                 onClick = {
                     goBackToPayment()
                 },
-                modifier = Modifier.wrapContentWidth()
+                modifier = Modifier
+                    .wrapContentWidth()
                     .padding(horizontal = 9.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFD3D3D3),
@@ -214,7 +218,8 @@ fun NewPaymentScreen(
                         goBackToPayment = { goBackToPayment() }
                     )
                 },
-                modifier = Modifier.wrapContentWidth()
+                modifier = Modifier
+                    .wrapContentWidth()
                     .padding(horizontal = 9.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Purple,
