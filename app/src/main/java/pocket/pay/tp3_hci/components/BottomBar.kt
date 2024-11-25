@@ -27,7 +27,7 @@ fun BottomBar(
         AppDestinations.HOME,
         AppDestinations.PAYMENTS,
         AppDestinations.CARDS,
-        AppDestinations.INVESTMENTS
+        AppDestinations.PROFILE
     )
 
     NavigationBar (

@@ -22,7 +22,7 @@ import pocket.pay.tp3_hci.navigations.AppDestinations
             AppDestinations.HOME,
             AppDestinations.PAYMENTS,
             AppDestinations.CARDS,
-            AppDestinations.INVESTMENTS
+            AppDestinations.PROFILE
         )
 
         NavigationRail(

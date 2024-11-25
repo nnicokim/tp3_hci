@@ -56,7 +56,7 @@ fun PocketPayApp() {
                     AppDestinations.HOME.route,
                     AppDestinations.PAYMENTS.route,
                     AppDestinations.CARDS.route,
-                    AppDestinations.INVESTMENTS.route
+                    AppDestinations.PROFILE.route
                 )
             ) {
                 Header(
@@ -71,7 +71,7 @@ fun PocketPayApp() {
                     AppDestinations.HOME.route,
                     AppDestinations.PAYMENTS.route,
                     AppDestinations.CARDS.route,
-                    AppDestinations.INVESTMENTS.route
+                    AppDestinations.PROFILE.route
                 )
             ) {
                 BottomBar(
@@ -104,7 +104,7 @@ fun PocketPayApp() {
                         AppDestinations.HOME.route,
                         AppDestinations.PAYMENTS.route,
                         AppDestinations.CARDS.route,
-                        AppDestinations.INVESTMENTS.route
+                        AppDestinations.PROFILE.route
                     )
                 ) {
                     SideBar(
@@ -126,7 +126,7 @@ fun PocketPayApp() {
                         AppDestinations.HOME.route,
                         AppDestinations.PAYMENTS.route,
                         AppDestinations.CARDS.route,
-                        AppDestinations.INVESTMENTS.route
+                        AppDestinations.PROFILE.route
                     )
                 ) {
                     Header(
