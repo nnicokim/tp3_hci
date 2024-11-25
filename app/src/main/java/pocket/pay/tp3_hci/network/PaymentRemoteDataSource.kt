@@ -14,15 +14,9 @@ class PaymentRemoteDataSource (
 //        }
 //    }
 
-    suspend fun payCard(payment: NetworkPayment): NetworkPayment {
+    suspend fun addPayment(payment: NetworkPayment): NetworkPayment {
         return handleApiResponse {
-            paymentApiService.payCard(payment)
-        }
-    }
-
-    suspend fun payBalance(payment: NetworkPayment): NetworkPayment {
-        return handleApiResponse {
-            paymentApiService.payBalance(payment)
+            paymentApiService.addPayment(payment)
         }
     }
 }

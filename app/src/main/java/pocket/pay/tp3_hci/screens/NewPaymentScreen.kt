@@ -24,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,9 +43,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.R
+import pocket.pay.tp3_hci.model.CardType
+import pocket.pay.tp3_hci.model.PaymentType
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.AccountViewModel
-import pocket.pay.tp3_hci.viewmodel.PaymentsViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -52,14 +54,18 @@ fun NewPaymentScreen(
     goBackToPayment: () -> Unit,
     viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication))
 ) {
-    val companyName by viewModel.companyName.collectAsState()
-    val errorMessageCompanyName by viewModel.errorTextCompanyName.collectAsState()
-    val paymentAmount by viewModel.paymentAmount.collectAsState()
-    val errorMessagePaymentAmount by viewModel.errorTextPaymentAmount.collectAsState()
-    val paymentSource by viewModel.paymentSource.collectAsState()
-    val errorMessagePaymentSource by viewModel.errorTextPaymentSource.collectAsState()
+//    val companyName by viewModel.companyName.collectAsState()
+//    val errorMessageCompanyName by viewModel.errorTextCompanyName.collectAsState()
+//    val paymentAmount by viewModel.paymentAmount.collectAsState()
+//    val errorMessagePaymentAmount by viewModel.errorTextPaymentAmount.collectAsState()
+//    val paymentSource by viewModel.paymentSource.collectAsState()
+//    val errorMessagePaymentSource by viewModel.errorTextPaymentSource.collectAsState()
 
-    val balance by homeViewModel.balance.collectAsState()
+    var paymentDescription by rememberSaveable { mutableStateOf("")}
+    var paymentAmount by rememberSaveable { mutableStateOf("")}
+    var paymentSource by rememberSaveable { mutableStateOf("")}
+
+    val balance = viewModel.getBalance()
 
     val configuration = LocalConfiguration.current  //Orientacion
     val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
@@ -92,8 +98,8 @@ fun NewPaymentScreen(
 
 
         OutlinedTextField(
-            value = companyName,
-            onValueChange = { viewModel.updateCompanyName(it) },
+            value = paymentDescription,
+            onValueChange = { paymentDescription = it },
             label = { Text(stringResource(id = R.string.company_name)) },
             modifier = Modifier.fillMaxWidth().
             height(65.dp),
@@ -107,17 +113,17 @@ fun NewPaymentScreen(
 
         Spacer(modifier = Modifier.height(5.dp))
 
-        if (errorMessageCompanyName == "empty"){
-            Text(
-                text = stringResource(R.string.empty_company_name),
-                color = Color.Red,
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
+//        if (errorMessageCompanyName == "empty"){
+//            Text(
+//                text = stringResource(R.string.empty_company_name),
+//                color = Color.Red,
+//                style = MaterialTheme.typography.bodySmall,
+//            )
+//        }
 
         OutlinedTextField(
             value = paymentAmount,
-            onValueChange = { viewModel.updatePaymentAmount(it) },
+            onValueChange = {paymentAmount = it },
             label = { Text(stringResource(id = R.string.payment_amount)) },
             modifier = Modifier.fillMaxWidth().
             height(65.dp),
@@ -132,13 +138,13 @@ fun NewPaymentScreen(
         Spacer(modifier = Modifier.height(5.dp))
 
 
-        if (errorMessagePaymentAmount == "invalid"){
-            Text(
-                text = stringResource(R.string.invalid_payment_amount),
-                color = Color.Red,
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
+//        if (errorMessagePaymentAmount == "invalid"){
+//            Text(
+//                text = stringResource(R.string.invalid_payment_amount),
+//                color = Color.Red,
+//                style = MaterialTheme.typography.bodySmall,
+//            )
+//        }
 
         Text(
             text = "$balance",
@@ -148,7 +154,7 @@ fun NewPaymentScreen(
 
         OutlinedTextField(
             value = paymentSource,
-            onValueChange = { viewModel.updatePaymentSource(it) },
+            onValueChange = { paymentSource = it },
             label = { Text(stringResource(id = R.string.payment_source)) },
             modifier = Modifier.fillMaxWidth().
             height(65.dp),
@@ -160,22 +166,21 @@ fun NewPaymentScreen(
             )
         )
 
-        if (errorMessagePaymentSource.isNotEmpty()) {
-            if (errorMessagePaymentSource == "empty"){
-                Text(
-                    text = stringResource(R.string.empty_payment_source),
-                    color = Color.Red,
-                    style = MaterialTheme.typography.bodySmall,
-                )
-            } else {
-                Text(
-                    text = stringResource(R.string.invalid_payment_source),
-                    color = Color.Red,
-                    style = MaterialTheme.typography.bodySmall,
-                )
-            }
-
-        }
+//        if (errorMessagePaymentSource.isNotEmpty()) {
+//            if (errorMessagePaymentSource == "empty"){
+//                Text(
+//                    text = stringResource(R.string.empty_payment_source),
+//                    color = Color.Red,
+//                    style = MaterialTheme.typography.bodySmall,
+//                )
+//            } else {
+//                Text(
+//                    text = stringResource(R.string.invalid_payment_source),
+//                    color = Color.Red,
+//                    style = MaterialTheme.typography.bodySmall,
+//                )
+//            }
+//        }
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -199,12 +204,14 @@ fun NewPaymentScreen(
             Spacer(modifier = Modifier.width(16.dp))
 
             Button(
-                onClick = {
-                    viewModel.validatePayment(
-                        onValidPayment = {
-                            goBackToPayment()
-                        },
-                        homeViewModel = homeViewModel
+                onClick = { //Agregar IF dependiendo del tipo de pago
+                    viewModel.validateAndAddPayment(
+                        type = PaymentType.BALANCE,
+                        amount = paymentAmount.toFloat(),
+                        description = paymentDescription,
+                        pending = false,
+                        onError = { errorMessage -> (errorMessage) },
+                        goBackToPayment = { goBackToPayment() }
                     )
                 },
                 modifier = Modifier.wrapContentWidth()
@@ -223,11 +230,11 @@ fun NewPaymentScreen(
     }
 }
 
-@PreviewScreenSizes
-@Composable
-fun NewPaymentScreenPreview(){
-    NewPaymentScreen(goBackToPayment = {},
-        viewModel = PaymentsViewModel(),
-        homeViewModel = HomeViewModel()
-    )
-}
+//@PreviewScreenSizes
+//@Composable
+//fun NewPaymentScreenPreview(){
+//    NewPaymentScreen(goBackToPayment = {},
+//        viewModel = PaymentsViewModel(),
+//        homeViewModel = HomeViewModel()
+//    )
+//}

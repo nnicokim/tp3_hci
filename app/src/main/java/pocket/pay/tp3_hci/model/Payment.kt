@@ -7,15 +7,14 @@ import java.util.Date
 import java.util.Locale
 
 data class Payment (
-    var id: Int? = null,
-    var type: String,
+    var id: Int? = 0,
+    var type: PaymentType, // Balance o Card
     var amount: Float,
-    var balanceBefore: Float,
-    var balanceAfter: Float,
+    var description: String,
     var pending: Boolean,
     var linkUuid: String? = null,
-    var createdAt: Date? = null,
-    var updatedAt: Date? = null,
+    var createdAt: String? = null,
+    var updatedAt: String? = null,
     var card: Card? = null
 ) {
     fun asNetworkModel(): NetworkPayment {
@@ -26,8 +25,7 @@ data class Payment (
             id = id,
             type = type,
             amount = amount,
-            balanceBefore = balanceBefore,
-            balanceAfter = balanceAfter,
+            description = description,
             pending = pending,
             linkUuid = linkUuid,
             createdAt = createdAt.let { dateFormat.format(createdAt!!) },

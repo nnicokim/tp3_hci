@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import pocket.pay.tp3_hci.model.Card
 import pocket.pay.tp3_hci.model.CardType
 import pocket.pay.tp3_hci.model.Payment
+import pocket.pay.tp3_hci.model.PaymentType
 import pocket.pay.tp3_hci.network.model.NetworkRegister
 import pocket.pay.tp3_hci.repository.PaymentRepository
 import pocket.pay.tp3_hci.states.AccountUiState
@@ -188,6 +189,43 @@ class AccountViewModel(
         { walletRepository.getCards(true) },
         { state, response -> state.copy(cards = response) }
     )
+
+    fun addPayment(type: PaymentType,
+                   amount: Float,
+                   description: String,
+                   pending: Boolean
+                   ) = runOnViewModelScope(
+        {
+            val payment = Payment(
+                type = type,
+                amount = amount,
+                description = description,
+                pending = pending
+            )
+            paymentRepository.addPayment(payment)
+        },
+        { state, _ ->
+            state.copy()
+        }
+    )
+
+    fun validateAndAddPayment(
+        type: PaymentType,
+        amount: Float,
+        description: String,
+        pending: Boolean,
+        onError : (String) -> Unit,
+        goBackToPayment: () -> Unit
+    ) {
+        if (description.isBlank()) {
+            onError("Email cannot be empty") //arrojar error y agregar validacion de parametros
+        } else if (amount <= 0) {
+            onError("Password cannot be empty")
+        } else {
+            addPayment(type, amount,description,pending)
+            goBackToPayment()
+        }
+    }
 
 //    fun payCard(number: String,
 //                expirationDate: String,

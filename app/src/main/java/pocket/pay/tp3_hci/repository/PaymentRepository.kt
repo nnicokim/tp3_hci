@@ -22,15 +22,9 @@ class PaymentRepository (
 //        return paymentsMutex.withLock { this.payments }
 //    }
 
-    suspend fun payCard(payment: Payment) : Payment {
-        val newCard = remoteDataSource.payCard(payment.asNetworkModel()).asModel()
+    suspend fun addPayment(payment: Payment) : Payment {
+        val newPayment = remoteDataSource.addPayment(payment.asNetworkModel()).asModel()
         paymentsMutex.withLock{ this.payments = emptyList() }
-        return newCard
-    }
-
-    suspend fun payBalance(payment: Payment) : Payment {
-        val newCard = remoteDataSource.payBalance(payment.asNetworkModel()).asModel()
-        paymentsMutex.withLock{ this.payments = emptyList() }
-        return newCard
+        return newPayment
     }
 }

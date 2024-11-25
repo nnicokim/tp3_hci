@@ -8,10 +8,7 @@ import retrofit2.http.POST
 
 interface PaymentApiService {
     @POST("payment")
-    suspend fun payCard(@Body cardPayment: NetworkPayment): Response<NetworkPayment>
-
-    @POST("payment") // Si se paga con balance, lo restamos
-    suspend fun payBalance(@Body balancePayment: NetworkPayment): Response<NetworkPayment>
+    suspend fun addPayment(@Body cardPayment: NetworkPayment): Response<NetworkPayment>
 
 //    @GET("payment")
 //    suspend fun getPayments(): Response<List<NetworkPayment>>
