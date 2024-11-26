@@ -26,8 +26,8 @@ data class Payment (
             description = description,
             pending = pending,
             linkUuid = linkUuid,
-            createdAt = createdAt.let { dateFormat.format(createdAt!!) },
-            updatedAt = updatedAt.let { dateFormat.format(updatedAt!!) },
+            createdAt = createdAt?.let { dateFormat.format(createdAt!!) },
+            updatedAt = updatedAt?.let { dateFormat.format(updatedAt!!) },
             card = card?.asNetworkModel(),
         )
     }

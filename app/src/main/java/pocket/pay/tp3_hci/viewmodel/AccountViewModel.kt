@@ -130,19 +130,8 @@ class AccountViewModel(
         }
     )
 
-    fun addCard(number: String,
-                expirationDate: String,
-                fullName: String,
-                cvv: String?,
-                type: CardType,) = runOnViewModelScope(
+    fun addCard(card: Card) = runOnViewModelScope(
         {
-            val card = Card(
-                number = number,
-                expirationDate = expirationDate,
-                fullName = fullName,
-                cvv = cvv,
-                type = type,
-            )
             walletRepository.addCard(card)
         },
         { state, response ->
@@ -171,7 +160,12 @@ class AccountViewModel(
         } else if (cvv.isNullOrBlank()) {
             onError("Password cannot be empty")
         } else {
-            addCard(number, expirationDate,fullName,cvv,type)
+            val card = Card(number = number,
+                fullName = fullName,
+                expirationDate = expirationDate,
+                cvv = cvv,
+                type = type)
+            addCard(card)
             goBackToCards()
         }
     }
@@ -212,6 +206,18 @@ class AccountViewModel(
         },
         { state, _ ->
             state.copy()
+        }
+    )
+
+    fun addPayment(payment: Payment) = runOnViewModelScope(
+        {
+            paymentRepository.addPayment(payment)
+        },
+        { state, response ->
+            state.copy(
+                currentPayment = response,
+                payments = null
+            )
         }
     )
 

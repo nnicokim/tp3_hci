@@ -39,9 +39,13 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.R
+import pocket.pay.tp3_hci.model.Card
+import pocket.pay.tp3_hci.model.CardType
+import pocket.pay.tp3_hci.model.Payment
 import pocket.pay.tp3_hci.model.PaymentType
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.AccountViewModel
+import kotlin.random.Random
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -197,16 +201,24 @@ fun NewPaymentScreen(
             Spacer(modifier = Modifier.width(16.dp))
 
             Button(
-                onClick = { //Agregar IF dependiendo del tipo de pago
-                    viewModel.validateAndAddPayment(
-                        type = PaymentType.BALANCE,
-                        amount = paymentAmount.toDoubleOrNull(),
-                        description = paymentDescription,
-                        pending = false,
-                        onError = { errorMessage -> (errorMessage) },
-                        goBackToPayment = { goBackToPayment() }
-                    )
-                },
+                onClick =  //Agregar IF dependiendo del tipo de pago
+                   {
+                        val payment = Payment(description = "Nike",
+                            amount = 1000.0,
+                            type = PaymentType.BALANCE,
+                            pending = false)
+                        viewModel.addPayment(payment)
+                       goBackToPayment()
+                    }
+//                    viewModel.validateAndAddPayment(
+//                        type = PaymentType.BALANCE,
+//                        amount = paymentAmount.toDoubleOrNull(),
+//                        description = paymentDescription,
+//                        pending = false,
+//                        onError = { errorMessage -> (errorMessage) },
+//                        goBackToPayment = { goBackToPayment() }
+//                    )
+                ,
                 modifier = Modifier
                     .wrapContentWidth()
                     .padding(horizontal = 9.dp),

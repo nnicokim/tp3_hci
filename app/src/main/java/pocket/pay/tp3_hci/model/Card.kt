@@ -7,17 +7,16 @@ import java.util.Date
 
 
 data class Card(
-    var id: Int? = null,
-    var number: String,
-    var expirationDate: String,
-    var fullName: String,
-    var cvv: String?,
-    var type: CardType,
-    var createdAt: Date? = null,
-    var updatedAt: Date? = null
+var id: Int? = null,
+var number: String,
+var expirationDate: String,
+var fullName: String,
+var cvv: String?,
+var type: CardType,
+var createdAt: Date? = null,
+var updatedAt: Date? = null
 ) {
     fun asNetworkModel(): NetworkCard {
-
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault(Locale.Category.FORMAT))
 
         return NetworkCard(

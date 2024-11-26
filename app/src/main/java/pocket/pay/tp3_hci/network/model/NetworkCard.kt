@@ -1,10 +1,12 @@
 package pocket.pay.tp3_hci.network.model
 
+import kotlinx.serialization.Serializable
 import pocket.pay.tp3_hci.model.Card
 import pocket.pay.tp3_hci.model.CardType
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+@Serializable
 class NetworkCard(
     var id: Int?,
     var number: String,
@@ -16,9 +18,7 @@ class NetworkCard(
     var updatedAt: String?
 ) {
     fun asModel(): Card {
-
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault(Locale.Category.FORMAT))
-
         return Card(
             id = id,
             number = number,

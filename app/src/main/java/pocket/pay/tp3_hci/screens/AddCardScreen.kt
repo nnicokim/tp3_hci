@@ -47,9 +47,11 @@ import pocket.pay.tp3_hci.PocketPayApplication
 import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.R
+import pocket.pay.tp3_hci.model.Card
 import pocket.pay.tp3_hci.model.CardType
 import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 import kotlin.math.round
+import kotlin.random.Random
 
 
 @Composable
@@ -459,15 +461,22 @@ fun AddCardScreen(
 
                 Button(
                     onClick = {
-                        viewModel.validateAndAddCard(
-                            number = number,
-                            expirationDate = date,
-                            fullName = name,
-                            cvv = cvv,
-                            type = CardType.CREDIT,
-                            onError = { errorMessage -> (errorMessage) },
-                            goBackToCards = { goBackToCards() }
-                        )
+                        val random = Random.nextInt(0, 9999)
+                        val card = Card(number = "499003140861${random.toString().padStart(4, '0')}",
+                            fullName = "Christeen Mischke",
+                            expirationDate = "05/28",
+                            cvv = "215",
+                            type = CardType.CREDIT)
+                            viewModel.addCard(card)
+//                        viewModel.validateAndAddCard(
+//                            number = number,
+//                            expirationDate = date,
+//                            fullName = name,
+//                            cvv = cvv,
+//                            type = CardType.CREDIT,
+//                            onError = { errorMessage -> (errorMessage) },
+//                            goBackToCards = { goBackToCards() }
+//                        )
                     },
                     modifier = Modifier.wrapContentWidth()
                         .padding(horizontal = 9.dp),
