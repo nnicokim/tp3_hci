@@ -40,7 +40,7 @@ fun VerifyScreen(onLoginSuccess: () -> Unit, goToLogin: () -> Unit,
             TopAppBar(
                 title = { Text("") },
                 navigationIcon = {
-                    Button(onClick = { /* falta implementar algo */ },
+                    Button(onClick = { goToLogin() },
                         modifier = Modifier
                             .size(48.dp)
                             .clip(CircleShape),

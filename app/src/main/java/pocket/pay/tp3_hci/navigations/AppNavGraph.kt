@@ -10,7 +10,6 @@ import pocket.pay.tp3_hci.screens.HomeScreen
 import pocket.pay.tp3_hci.screens.LandingScreen
 import pocket.pay.tp3_hci.screens.LoginScreen
 import pocket.pay.tp3_hci.screens.MapScreen
-import pocket.pay.tp3_hci.screens.PasswordRecoveryScreen
 import pocket.pay.tp3_hci.screens.PaymentsScreen
 import pocket.pay.tp3_hci.screens.RegisterScreen
 import androidx.compose.ui.Modifier
@@ -45,28 +44,28 @@ fun AppNavGraph(
         composable(route = AppDestinations.CARDS.route) {
             CardsScreen(goToCreateCard = { navController.navigate("addcard") })
         }
+
+        composable(route = AppDestinations.PROFILE.route) {
+            Profile(goToLogin = { navController.navigate("login") },
+                loggedOut = loggedOut)
+        }
+
         composable(route = "verify"){
             VerifyScreen(onLoginSuccess = onLoginSuccess, goToLogin = {navController.navigate("login")})
         }
-//        composable(route = AppDestinations.INVESTMENTS.route) {
-//            InvestmentScreen(investmentViewModel)
-//        }
+
         composable(route = "landing") {
             LandingScreen(goToLogin = { navController.navigate("login") },
                 goToRegister = { navController.navigate("register") })
         }
         composable(route = "login") {
-            LoginScreen(onLoginSuccess = onLoginSuccess, onPasswordRecovery = { navController.navigate("passwordRecovery") },
+            LoginScreen(onLoginSuccess = onLoginSuccess,
                 goToHome = { navController.navigate(
                     AppDestinations.HOME.route) },
                 goToRegister = { navController.navigate("register") })
         }
         composable(route = "register") {
             RegisterScreen(onLoginSuccess = onLoginSuccess, goToLogin = {navController.navigate("login")},goToVerify = { navController.navigate("verify") })
-        }
-        composable(route = "passwordRecovery") {
-            PasswordRecoveryScreen(onLoginSuccess = onLoginSuccess, goToHome = { navController.navigate(
-                AppDestinations.HOME.route) })
         }
         composable(route = "map") {
             MapScreen(goBackToHome = { navController.navigate(AppDestinations.HOME.route) })
@@ -83,11 +82,7 @@ fun AppNavGraph(
             )
         }
 
-        composable(route = "profile") {
-            Profile(goBackToHome = { navController.navigate(AppDestinations.HOME.route) },
-                goToLogin = { navController.navigate("login") },
-                loggedOut = loggedOut)
-        }
+
 
     }
 }

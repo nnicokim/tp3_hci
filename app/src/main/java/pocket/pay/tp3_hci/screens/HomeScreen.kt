@@ -641,7 +641,7 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                     confirmButton = {
                         Button(
                             onClick = {
-                                viewModel.recharge(inputAmount.toDouble())
+                                inputAmount.toDoubleOrNull()?.let { viewModel.recharge(it) }
                                 showDepositDialog = false
                                 inputAmount = ""
                             }

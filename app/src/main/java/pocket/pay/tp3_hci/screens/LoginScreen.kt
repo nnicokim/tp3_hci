@@ -39,7 +39,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.PocketPayApplication
 
 @Composable
-fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit,
+fun LoginScreen(onLoginSuccess: () -> Unit,
                 goToHome: () -> Unit,
                 goToRegister: () -> Unit,
                 viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(
@@ -144,14 +144,6 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onPasswordRecovery: () -> Unit,
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        TextButton(
-            onClick = {
-                onPasswordRecovery()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Forgot your password?", fontSize = 19.sp)
-        }
     }
 }
 

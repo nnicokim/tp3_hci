@@ -31,38 +31,18 @@ fun Header(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            text = "Hello, $username",
-            style = MaterialTheme.typography.bodyLarge.copy(
-                fontSize = 21.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-        )
 
-        Button( onClick = { navController.navigate("profile")},
-            colors = ButtonDefaults.buttonColors(
-                Color.Transparent
-            ),
-            contentPadding = PaddingValues(3.dp)
-        ) {
-             Icon(
-                painter = painterResource(id = R.drawable.account_icon),
-                contentDescription = "Account Icon",
-                tint = Color.White
-            )
-        }
     }
 }
 
-@PreviewScreenSizes
-@Composable
-fun HeaderPreview(){
-    val mockNavController = rememberNavController() // Dummy NavController for preview
-    Header(
-        username = "John Doe",
-        navController = mockNavController
-    )
-}
+//@PreviewScreenSizes
+//@Composable
+//fun HeaderPreview(){
+//    val mockNavController = rememberNavController() // Dummy NavController for preview
+//    Header(
+//        username = "John Doe",
+//        navController = mockNavController
+//    )
+//}
 
 

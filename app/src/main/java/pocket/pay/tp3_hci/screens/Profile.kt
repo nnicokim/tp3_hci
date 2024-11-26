@@ -43,66 +43,15 @@ import pocket.pay.tp3_hci.viewmodel.AccountViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Profile(goBackToHome: () -> Unit, goToLogin: () -> Unit,
-            viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(
-                LocalContext.current.applicationContext as PocketPayApplication
-            )),
-            loggedOut: () -> Unit) {
-
-    val configuration = LocalConfiguration.current  // Orientacion
-    val adaptiveInfo = currentWindowAdaptiveInfo()  // Tamaño de la pantalla
-
-    val uiState = viewModel.uiState
-    uiState.currentUser ?: return
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("  Profile") },
-                navigationIcon = {
-                    Button(
-                        onClick = { goBackToHome() },
-                        modifier = Modifier
-                            .size(45.dp)
-                            .clip(CircleShape),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Gray
-                        ),
-                        contentPadding = PaddingValues(0.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.go_back_icon),
-                            contentDescription = "Go back",
-                            tint = Color.White,
-                            modifier = Modifier.size(25.dp)
-                        )
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
-        ProfileScreen(
-            modifier = Modifier.padding(paddingValues),
-            viewModel = viewModel,
-            userFirstName = uiState.currentUser?.firstName ?: "",
-            userLastName = uiState.currentUser?.lastName ?: "",
-            userEmail = uiState.currentUser?.email ?: "",
-            goToLogin = goToLogin,
-        )
-    }
-}
-
-@Composable
-fun ProfileScreen(
-    modifier: Modifier,
-    viewModel: AccountViewModel,
-    userFirstName: String,
-    userLastName: String,
-    userEmail: String,
-    goToLogin: () -> Unit,
-) {
+fun Profile(goToLogin: () -> Unit,
+                  viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(
+                      LocalContext.current.applicationContext as PocketPayApplication
+                  )),
+                  loggedOut: () -> Unit) {
     val configuration = LocalConfiguration.current
     val adaptiveInfo = currentWindowAdaptiveInfo()
+
+    val uiState = viewModel.uiState
 
     Row {
         if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -110,7 +59,7 @@ fun ProfileScreen(
         }
 
         Column(
-            modifier = modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -126,19 +75,19 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(25.dp))
 
             Text(
-                text = "First Name: $userFirstName",
+                text = "First Name: ${uiState.currentUser?.firstName}",
                 fontSize = 20.sp,
                 modifier = Modifier.padding(8.dp)
             )
 
             Text(
-                text = "Last Name: $userLastName",
+                text = "Last Name: ${uiState.currentUser?.lastName}",
                 fontSize = 20.sp,
                 modifier = Modifier.padding(8.dp)
             )
 
             Text(
-                text = "Email: $userEmail",
+                text = "Email: ${uiState.currentUser?.email}",
                 fontSize = 20.sp,
                 modifier = Modifier.padding(8.dp)
             )

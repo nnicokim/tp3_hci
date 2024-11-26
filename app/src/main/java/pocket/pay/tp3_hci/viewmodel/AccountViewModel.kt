@@ -59,7 +59,6 @@ class AccountViewModel(
         } else {
             login(email, password)
                 goToHome()
-
         }
     }
 
