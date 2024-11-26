@@ -24,9 +24,13 @@ data class NetworkPayment(
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault(Locale.Category.FORMAT))
         return Payment(
             id = id,
-            type = type,
+            type = when (type?.uppercase()) {
+                "BALANCE" -> PaymentType.BALANCE
+                "CARD" -> PaymentType.CREDIT
+                else -> PaymentType.UNKNOWN
+            },
             amount = amount,
-            description = description.orEmpty(), // Manejo de nulos
+            description = description.orEmpty(),
             pending = pending,
             receiverEmail = receiverEmail.orEmpty(),
             linkUuid = linkUuid,

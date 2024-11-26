@@ -7,7 +7,7 @@ import java.util.Locale
 
 data class Payment (
     var id: Int? = null,
-    var type: String? = null,
+    var type: PaymentType? = PaymentType.UNKNOWN,
     var amount: Float = 0f,
     var description: String? = null,
     var pending: Boolean = false,
@@ -23,9 +23,13 @@ data class Payment (
 
         return NetworkPayment(
             id = id,
-            type = type,
+            type = when (type) {
+                PaymentType.BALANCE -> "BALANCE"
+                PaymentType.CREDIT -> "CARD"
+                else -> "UNKNOWN"
+            },
             amount = amount,
-            description = description.orEmpty(), // Manejo de nulos
+            description = description.orEmpty(),
             pending = pending,
             receiverEmail = receiverEmail.orEmpty(),
             linkUuid = linkUuid,
