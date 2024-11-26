@@ -298,6 +298,14 @@ class AccountViewModel(
         }
     )
 
+    private fun isValidId(id: Int?): Boolean {
+        return id != null && id > 0
+    }
+
+    private fun isValidAmount(amount: Float): Boolean {
+        return amount > 0
+    }
+
     fun validateAndAddPayment(
         id: Int?,
         description: String,
