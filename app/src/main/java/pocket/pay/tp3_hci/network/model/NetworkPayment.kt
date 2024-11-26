@@ -8,13 +8,13 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Serializable
-class NetworkPayment (
-    var id: Int?,
-    var type: String, // Balance o Card
-    var amount: Float,
-    var description: String,
-    var pending: Boolean,
-    var receiverEmail: String,
+data class NetworkPayment(
+    var id: Int? = null,
+    var type: String? = null,
+    var amount: Float = 0f,
+    var description: String? = null,
+    var pending: Boolean = false,
+    var receiverEmail: String? = null,
     var linkUuid: String? = null,
     var createdAt: String? = null,
     var updatedAt: String? = null,
@@ -24,14 +24,14 @@ class NetworkPayment (
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault(Locale.Category.FORMAT))
         return Payment(
             id = id,
-            type = when (type) { "BALANCE" -> PaymentType.BALANCE else -> PaymentType.CREDIT },
+            type = type,
             amount = amount,
-            description = description,
+            description = description.orEmpty(), // Manejo de nulos
             pending = pending,
-            receiverEmail = receiverEmail,
+            receiverEmail = receiverEmail.orEmpty(),
             linkUuid = linkUuid,
-            createdAt = createdAt?.let { dateFormat.parse(createdAt!!) }.toString(),
-            updatedAt = updatedAt?.let { dateFormat.parse(updatedAt!!) }.toString(),
+            createdAt = createdAt?.let { runCatching { dateFormat.parse(it) }.getOrNull() }.toString(),
+            updatedAt = updatedAt?.let { runCatching { dateFormat.parse(it) }.getOrNull() }.toString(),
             card = card?.asModel()
         )
     }

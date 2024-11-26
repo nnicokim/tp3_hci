@@ -217,7 +217,7 @@ class AccountViewModel(
                 id = 1,
                 description = "Nike",
                 amount = 1000f,
-                type = PaymentType.BALANCE,
+                type = "Balance",
                 pending = false,
                 receiverEmail = "dashawn45@ethereal.email")
             paymentRepository.addPayment(payment)

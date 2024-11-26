@@ -1,16 +1,17 @@
 package pocket.pay.tp3_hci.model
 
+import pocket.pay.tp3_hci.network.model.NetworkCard
 import pocket.pay.tp3_hci.network.model.NetworkPayment
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 data class Payment (
     var id: Int? = null,
-    var type: PaymentType, // Balance o Card
-    var amount: Float,
-    var description: String,
-    var pending: Boolean,
-    var receiverEmail: String,
+    var type: String? = null,
+    var amount: Float = 0f,
+    var description: String? = null,
+    var pending: Boolean = false,
+    var receiverEmail: String? = null,
     var linkUuid: String? = null,
     var createdAt: String? = null,
     var updatedAt: String? = null,
@@ -22,15 +23,15 @@ data class Payment (
 
         return NetworkPayment(
             id = id,
-            type = when (type) { PaymentType.BALANCE -> "BALANCE" else -> "CREDIT" },
+            type = type,
             amount = amount,
-            description = description,
+            description = description.orEmpty(), // Manejo de nulos
             pending = pending,
-            receiverEmail = receiverEmail,
+            receiverEmail = receiverEmail.orEmpty(),
             linkUuid = linkUuid,
-            createdAt = createdAt?.let { dateFormat.format(createdAt!!) },
-            updatedAt = updatedAt?.let { dateFormat.format(updatedAt!!) },
-            card = card?.asNetworkModel(),
+            createdAt = createdAt?.let { runCatching { dateFormat.parse(it) }.getOrNull() }.toString(),
+            updatedAt = updatedAt?.let { runCatching { dateFormat.parse(it) }.getOrNull() }.toString(),
+            card = card?.asNetworkModel()
         )
     }
 }
