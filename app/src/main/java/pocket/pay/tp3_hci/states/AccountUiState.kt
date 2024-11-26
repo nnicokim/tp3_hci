@@ -10,7 +10,7 @@ data class AccountUiState(
     val isFetching: Boolean = false,
     val error: Error? = null,
     val currentCard: Card? = null,
-    val currentBalance: Float = 0f,
+    val currentBalance: Double = 0.0,
 
     val payments: List<Payment>? = emptyList(),
     val cards: List<Card>? = emptyList(),
