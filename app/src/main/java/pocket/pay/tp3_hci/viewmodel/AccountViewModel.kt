@@ -22,6 +22,9 @@ import pocket.pay.tp3_hci.model.PaymentType
 import pocket.pay.tp3_hci.network.model.NetworkRegister
 import pocket.pay.tp3_hci.repository.PaymentRepository
 import pocket.pay.tp3_hci.states.AccountUiState
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 
 class AccountViewModel(
@@ -151,6 +154,19 @@ class AccountViewModel(
     )
 
     //Add validations
+    fun isValidNumber(number: String): Boolean {
+        return number.matches(Regex("\\d{16}"))
+    }
+
+    fun isValidDate(date: String): Boolean {
+        val regex = Regex("^((0[1-9])|(1[0-2]))/([0-9]{2})$")
+        return date.matches(regex)
+    }
+
+
+    fun isValidCVV(cvv: String): Boolean {
+        return cvv.matches(Regex("\\d{3,4}"))
+    }
 
     fun validateAndAddCard(
         number: String,
@@ -168,14 +184,14 @@ class AccountViewModel(
         if (number.isBlank()) {
             onErrorNumber("empty_number") //arrojar error y agregar validacion de parametros
             flag = false
-        } else if(!validNumber){ //16 digitos
+        } else if(!isValidNumber(number)){ //16 digitos
             onErrorNumber("invalid_number")
             flag = false
         }
         if (expirationDate.isBlank()) {
             onErrorExpirationDate("empty_date")
             flag = false
-        } else if(!validDate){ //yyyy-mm-dd
+        } else if(!isValidDate(expirationDate)){ //yyyy-mm-dd
             onErrorNumber("invalid_number")
             flag = false
         }
@@ -186,7 +202,7 @@ class AccountViewModel(
         if (cvv.isNullOrBlank()) {
             onErrorCVV("empty_cvv")
             flag = false
-        }  else if(!validCVV){ //3 digitos
+        }  else if(!isValidCVV(cvv)){ //3 digitos
             onErrorNumber("invalid_number")
             flag = false
         }
