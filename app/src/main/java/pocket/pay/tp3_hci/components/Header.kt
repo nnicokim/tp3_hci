@@ -27,7 +27,7 @@ fun Header(
         modifier = modifier
             .fillMaxWidth()
             .background(color = Purple)
-            .padding(15.dp),
+            .padding(33.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

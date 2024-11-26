@@ -63,9 +63,8 @@ fun Profile(goToLogin: () -> Unit,
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if(configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                Spacer(modifier = Modifier.height(25.dp))
-            }
+            viewModel.getCurrentUser()
+            Spacer(modifier = Modifier.height(80.dp))
             Text(
                 text = stringResource(id = R.string.user_profile),
                 fontSize = 30.sp,
