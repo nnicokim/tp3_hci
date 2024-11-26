@@ -112,6 +112,15 @@ fun NewPaymentScreen(
             )
         )
 
+        if(errorMessageId == "invalid-id"){
+            Text(
+                text = stringResource(R.string.invalid_id),
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+
+
         Spacer(modifier = Modifier.height(5.dp))
 
 //        if (errorMessageCompanyName == "empty"){
@@ -136,6 +145,14 @@ fun NewPaymentScreen(
                 fontSize = 16.sp
             )
         )
+
+        if(errorMessageDescription == "empty-description"){
+            Text(
+                text = stringResource(R.string.empty_description),
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
 
         Spacer(modifier = Modifier.height(5.dp))
 
@@ -163,6 +180,14 @@ fun NewPaymentScreen(
             )
         )
 
+        if(errorMessageAmount == "invalid-amount"){
+            Text(
+                text = stringResource(R.string.invalid_amount),
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+
         Spacer(modifier = Modifier.height(5.dp))
 
         OutlinedTextField(
@@ -179,6 +204,15 @@ fun NewPaymentScreen(
                 fontSize = 16.sp
             )
         )
+
+        if(errorMessageReceiverEmail == "empty-receiver-email"){
+            Text(
+                text = stringResource(R.string.empty_receiver_email),
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+
 
 //        if (errorMessagePaymentSource.isNotEmpty()) {
 //            if (errorMessagePaymentSource == "empty"){
