@@ -1,13 +1,14 @@
 package pocket.pay.tp3_hci.network.model
 
+import pocket.pay.tp3_hci.model.CardType
 import pocket.pay.tp3_hci.model.Payment
 import pocket.pay.tp3_hci.model.PaymentType
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class NetworkPayment (
-    var id: Int? = 0,
-    var type: PaymentType, // Balance o Card
+    var id: Int?,
+    var type: String, // Balance o Card
     var amount: Double,
     var description: String,
     var pending: Boolean,
@@ -20,7 +21,7 @@ class NetworkPayment (
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault(Locale.Category.FORMAT))
         return Payment(
             id = id,
-            type = type,
+            type = when (type) { "BALANCE" -> PaymentType.BALANCE else -> PaymentType.CREDIT },
             amount = amount,
             description = description,
             pending = pending,

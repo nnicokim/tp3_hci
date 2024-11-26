@@ -21,7 +21,7 @@ data class Payment (
 
         return NetworkPayment(
             id = id,
-            type = type,
+            type = when (type) { PaymentType.BALANCE -> "BALANCE" else -> "CREDIT" },
             amount = amount,
             description = description,
             pending = pending,
