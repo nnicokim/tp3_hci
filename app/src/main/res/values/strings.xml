@@ -54,6 +54,18 @@
     <string name="invalid_email">Email is invalid</string>
     <string name="empty_password">Password cannot be empty</string>
 
+    <string name="id">Invalid payment Id</string>
+    <string name="description">Payment Description</string>
+    <string name="amount">Payment amount</string>
+    <string name="receiver_email">Receiver email</string>
+
+    <string name="invalid_id">Payment Id</string>
+    <string name="empty_description">Description cannot be empty</string>
+    <string name="invalid_description">Invalid payment Description</string>
+    <string name="invalid_amount">Invalid payment amount</string>
+    <string name="empty_receiver_email">Receiver email cannot be empty</string>
+    <string name="invalid_receiver_email">Invalid receiver email</string>
+
 
     <string name="invalid_card_number">Invalid card number. Number must have 16 digits</string>
     <string name="invalid_card_exp_date">Invalid expiration date. Format must be MM/YY</string>

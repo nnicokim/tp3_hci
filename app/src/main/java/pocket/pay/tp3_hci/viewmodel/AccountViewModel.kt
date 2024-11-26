@@ -161,17 +161,17 @@ class AccountViewModel(
     )
 
     //Add validations
-    fun isValidNumber(number: String): Boolean {
+    private fun isValidNumber(number: String): Boolean {
         return number.matches(Regex("\\d{16}"))
     }
 
-    fun isValidDate(date: String): Boolean {
+    private fun isValidDate(date: String): Boolean {
         val regex = Regex("^((0[1-9])|(1[0-2]))/([0-9]{2})$")
         return date.matches(regex)
     }
 
 
-    fun isValidCVV(cvv: String): Boolean {
+    private fun isValidCVV(cvv: String): Boolean {
         return cvv.matches(Regex("\\d{3,4}"))
     }
 
@@ -273,15 +273,15 @@ class AccountViewModel(
 //        }
 //    )
 
-    fun addPayment(/*payment: Payment*/) = runOnViewModelScope(
+    fun addPayment(payment: Payment) = runOnViewModelScope(
         {
-            val payment = Payment(
-                id = 1,
-                description = "Nike",
-                amount = 1000f,
-                type = PaymentType.BALANCE,
-                pending = false,
-                receiverEmail = "dashawn45@ethereal.email")
+//            val payment = Payment(
+//                id = 1,
+//                description = "Nike",
+//                amount = 1000f,
+//                type = PaymentType.BALANCE,
+//                pending = false,
+//                receiverEmail = "dashawn45@ethereal.email")
             paymentRepository.addPayment(payment)
         },
         { state, response ->
@@ -292,26 +292,57 @@ class AccountViewModel(
         }
     )
 
-//    fun validateAndAddPayment(
-//        type: PaymentType,
-//        amount: Float?,
-//        description: String,
-//        pending: Boolean,
-//        receiverEmail: String,
-//        onError: (String) -> Unit,
-//        goBackToPayment: () -> Unit
-//    ) {
-//        if (description.isBlank()) {
-//            onError("Email cannot be empty") //arrojar error y agregar validacion de parametros
-//        } else if (amount != null) {
-//            if (amount <= 0) {
-//                onError("Password cannot be empty")
-//            } else {
-//                addPayment(type, amount,description,pending, receiverEmail)
-//                goBackToPayment()
-//            }
-//        }
-//    }
+    fun validateAndAddPayment(
+        id: Int?,
+        description: String,
+        amount: Float,
+        receiverEmail: String,
+        onErrorId : (String) -> Unit,
+        onErrorDescription : (String) -> Unit,
+        onErrorAmount : (String) -> Unit,
+        onErrorReceiverEmail : (String) -> Unit,
+        goBackToPayment : () -> Unit
+    ) {
+        var flag = true
+        if(!isValidId(id)){ //Int
+            onErrorId("invalid_id")
+            flag = false
+        } else {
+            onErrorId("Valid")
+        }
+        if (description.isBlank()) {
+            onErrorDescription("empty_description")
+            flag = false
+        } else {
+            onErrorDescription("Valid")
+        }
+        if (!isValidAmount(amount)) {
+            onErrorAmount("invalid_amount")
+            flag = false
+        } else {
+            onErrorAmount("Valid")
+        }
+        if (receiverEmail.isBlank()) {
+            onErrorReceiverEmail("empty_email")
+            flag = false
+        }  else if(!isEmailValid(receiverEmail)){
+            onErrorReceiverEmail("invalid_email")
+            flag = false
+        } else {
+            onErrorReceiverEmail("Valid")
+        }
+        if (flag){
+            val payment = Payment(
+                id = id,
+                description = description,
+                amount = amount,
+                type = PaymentType.BALANCE,
+                pending = false,
+                receiverEmail = receiverEmail)
+            addPayment(payment)
+            goBackToPayment()
+        }
+    }
 
 //    fun payCard(number: String,
 //                expirationDate: String,

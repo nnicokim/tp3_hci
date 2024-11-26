@@ -22,6 +22,7 @@ import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -54,9 +55,15 @@ fun NewPaymentScreen(
     viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication))
 ) {
 
-    var paymentDescription by rememberSaveable { mutableStateOf("")}
-    var paymentAmount by rememberSaveable { mutableStateOf("")}
-    var paymentSource by rememberSaveable { mutableStateOf("")}
+    var id by rememberSaveable { mutableStateOf("") }
+    var description by rememberSaveable { mutableStateOf("") }
+    var amount by rememberSaveable { mutableStateOf("") }
+    var receiverEmail by rememberSaveable { mutableStateOf("") }
+
+    var errorMessageId by remember { mutableStateOf<String?>(null) }
+    var errorMessageDescription by remember { mutableStateOf<String?>(null) }
+    var errorMessageAmount by remember { mutableStateOf<String?>(null) }
+    var errorMessageReceiverEmail by remember { mutableStateOf<String?>(null) }
 
     val configuration = LocalConfiguration.current  //Orientacion
     val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
@@ -91,9 +98,9 @@ fun NewPaymentScreen(
 
 
         OutlinedTextField(
-            value = paymentDescription,
-            onValueChange = { paymentDescription = it },
-            label = { Text(stringResource(id = R.string.company_name)) },
+            value = id,
+            onValueChange = { id = it },
+            label = { Text(stringResource(id = R.string.id)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(65.dp),
@@ -116,9 +123,9 @@ fun NewPaymentScreen(
 //        }
 
         OutlinedTextField(
-            value = paymentAmount,
-            onValueChange = {paymentAmount = it },
-            label = { Text(stringResource(id = R.string.payment_amount)) },
+            value = description,
+            onValueChange = {description = it },
+            label = { Text(stringResource(id = R.string.description)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(65.dp),
@@ -141,16 +148,27 @@ fun NewPaymentScreen(
 //            )
 //        }
 
-        Text(
-            text = "",
-            color = Color.Red,
-            style = MaterialTheme.typography.bodySmall,
+        OutlinedTextField(
+            value = amount,
+            onValueChange = { amount = it },
+            label = { Text(stringResource(id = R.string.amount)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp),
+            shape = RoundedCornerShape(16.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            textStyle = TextStyle(
+                color = Color.Black,
+                fontSize = 16.sp
+            )
         )
 
+        Spacer(modifier = Modifier.height(5.dp))
+
         OutlinedTextField(
-            value = paymentSource,
-            onValueChange = { paymentSource = it },
-            label = { Text(stringResource(id = R.string.payment_source)) },
+            value = receiverEmail,
+            onValueChange = { receiverEmail = it },
+            label = { Text(stringResource(id = R.string.receiver_email)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(65.dp),
@@ -203,15 +221,17 @@ fun NewPaymentScreen(
             Button(
                 onClick =  //Agregar IF dependiendo del tipo de pago
                    {
-//                        val payment = Payment(
-//                            id = 1,
-//                            description = "Nike",
-//                            amount = 1000f,
-//                            type = PaymentType.BALANCE,
-//                            pending = false,
-//                            receiverEmail = "dashawn45@ethereal.email")
-                        viewModel.addPayment(/*payment*/)
-                       goBackToPayment()
+                      viewModel.validateAndAddPayment(
+                                    id = id.toInt(),
+                                    description = description,
+                                    amount = amount.toFloat(),
+                                    receiverEmail = receiverEmail,
+                                    onErrorId = { error -> errorMessageId = error },
+                                    onErrorDescription = { error -> errorMessageDescription = error },
+                                    onErrorAmount = { error -> errorMessageAmount = error },
+                                    onErrorReceiverEmail = { error -> errorMessageReceiverEmail = error },
+                                    goBackToPayment = { goBackToPayment() }
+                                )
                     }
 //                    viewModel.validateAndAddPayment(
 //                        type = PaymentType.BALANCE,
