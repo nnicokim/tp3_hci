@@ -78,5 +78,10 @@
     <string name="your_aliascbu">Your Alias/CBU</string>
     <string name="go_back_to_home">Go back to Home</string>
 
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="logout_question">Do you really want to logout?</string>
+
+
+
 
 </resources>
