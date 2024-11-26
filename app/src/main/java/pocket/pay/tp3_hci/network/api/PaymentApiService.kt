@@ -10,6 +10,6 @@ interface PaymentApiService {
     @POST("payment")
     suspend fun addPayment(@Body cardPayment: NetworkPayment): Response<NetworkPayment>
 
-//    @GET("payment")
-//    suspend fun getPayments(): Response<List<NetworkPayment>>
+    @GET("payment")
+  suspend fun getPayments(): Response<List<NetworkPayment>>
 }

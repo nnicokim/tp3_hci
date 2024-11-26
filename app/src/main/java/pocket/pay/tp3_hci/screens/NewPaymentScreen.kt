@@ -49,12 +49,6 @@ fun NewPaymentScreen(
     goBackToPayment: () -> Unit,
     viewModel: AccountViewModel = viewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication))
 ) {
-//    val companyName by viewModel.companyName.collectAsState()
-//    val errorMessageCompanyName by viewModel.errorTextCompanyName.collectAsState()
-//    val paymentAmount by viewModel.paymentAmount.collectAsState()
-//    val errorMessagePaymentAmount by viewModel.errorTextPaymentAmount.collectAsState()
-//    val paymentSource by viewModel.paymentSource.collectAsState()
-//    val errorMessagePaymentSource by viewModel.errorTextPaymentSource.collectAsState()
 
     var paymentDescription by rememberSaveable { mutableStateOf("")}
     var paymentAmount by rememberSaveable { mutableStateOf("")}

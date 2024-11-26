@@ -12,15 +12,15 @@ class PaymentRepository (
     private val paymentsMutex = Mutex()
     private var payments: List<Payment> = emptyList()
 
-//    suspend fun getPayments(refresh: Boolean = false): List<Payment> {
-//        if (refresh || payments.isEmpty()) {
-//            val result = remoteDataSource.getPayments()
-//            paymentsMutex.withLock {
-//                this.payments = result.map { it.asModel() }
-//            }
-//        }
-//        return paymentsMutex.withLock { this.payments }
-//    }
+    suspend fun getPayments(refresh: Boolean = false): List<Payment> {
+        if (refresh || payments.isEmpty()) {
+            val result = remoteDataSource.getPayments()
+            paymentsMutex.withLock {
+                this.payments = result.map { it.asModel() }
+            }
+        }
+        return paymentsMutex.withLock { this.payments }
+    }
 
     suspend fun addPayment(payment: Payment) : Payment {
         val newPayment = remoteDataSource.addPayment(payment.asNetworkModel()).asModel()

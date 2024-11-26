@@ -61,8 +61,6 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
     val alias by rememberSaveable { mutableStateOf("") }
     val cbu by rememberSaveable { mutableStateOf("")}
 
-    // val recentTransactions by viewModel.recentTransactions.collectAsState()
-
     var showDepositDialog by remember { mutableStateOf(false) }
     var showAliasDialog by remember { mutableStateOf(false) }
     var inputAmount by remember { mutableStateOf("") }
