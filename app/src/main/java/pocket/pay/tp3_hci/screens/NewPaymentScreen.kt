@@ -203,7 +203,9 @@ fun NewPaymentScreen(
             Button(
                 onClick =  //Agregar IF dependiendo del tipo de pago
                    {
-                        val payment = Payment(description = "Nike",
+                        val payment = Payment(
+                            id = 1,
+                            description = "Nike",
                             amount = 1000f,
                             type = PaymentType.BALANCE,
                             pending = false,
