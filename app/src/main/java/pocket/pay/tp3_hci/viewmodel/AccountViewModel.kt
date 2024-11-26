@@ -175,7 +175,7 @@ class AccountViewModel(
         { state, response -> state.copy(currentBalance = response.balance) }
     )
 
-    fun recharge(amount: Double) = runOnViewModelScope(
+    fun recharge(amount: Number) = runOnViewModelScope(
         {
             walletRepository.recharge(amount)
         },
