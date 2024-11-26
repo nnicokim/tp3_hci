@@ -82,7 +82,7 @@ fun AddCardScreen(
     val configuration = LocalConfiguration.current  //Orientacion
     val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
 
-    if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && adaptiveInfo.windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT) {
+//    if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && adaptiveInfo.windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT) {
         Column(
             modifier = Modifier.fillMaxSize()
                 .padding(16.dp),
@@ -198,9 +198,9 @@ fun AddCardScreen(
                         color = Color.Red,
                         style = MaterialTheme.typography.bodySmall,
                     )
+                }
 
-                    Spacer(modifier = Modifier.height(5.dp))
-
+                Spacer(modifier = Modifier.height(5.dp))
 
 
                     OutlinedTextField(
@@ -298,8 +298,9 @@ fun AddCardScreen(
                 }
             }
         }
-    }
-}
+
+
+//}
 //      {
 //        Column(
 //            modifier = Modifier.fillMaxSize()
