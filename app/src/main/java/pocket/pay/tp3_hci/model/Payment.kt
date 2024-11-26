@@ -1,15 +1,13 @@
 package pocket.pay.tp3_hci.model
 
-import pocket.pay.tp3_hci.network.model.NetworkCard
 import pocket.pay.tp3_hci.network.model.NetworkPayment
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 data class Payment (
     var id: Int? = 0,
     var type: PaymentType, // Balance o Card
-    var amount: Float,
+    var amount: Double,
     var description: String,
     var pending: Boolean,
     var linkUuid: String? = null,

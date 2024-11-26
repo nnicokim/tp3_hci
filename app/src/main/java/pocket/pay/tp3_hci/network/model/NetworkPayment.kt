@@ -8,7 +8,7 @@ import java.util.Locale
 class NetworkPayment (
     var id: Int? = 0,
     var type: PaymentType, // Balance o Card
-    var amount: Float,
+    var amount: Double,
     var description: String,
     var pending: Boolean,
     var linkUuid: String? = null,

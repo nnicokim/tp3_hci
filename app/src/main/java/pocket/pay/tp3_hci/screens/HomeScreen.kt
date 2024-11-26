@@ -66,7 +66,6 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
     var showDepositDialog by remember { mutableStateOf(false) }
     var showAliasDialog by remember { mutableStateOf(false) }
     var inputAmount by remember { mutableStateOf("") }
-    var withdrawalError by remember { mutableStateOf(false) }
 
     val configuration = LocalConfiguration.current  // Orientacion
     val adaptiveInfo = currentWindowAdaptiveInfo()  // Tamaño de la pantalla

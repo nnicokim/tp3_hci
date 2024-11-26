@@ -20,10 +20,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,14 +34,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.PocketPayApplication
-import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.R
-import pocket.pay.tp3_hci.model.CardType
 import pocket.pay.tp3_hci.model.PaymentType
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.AccountViewModel
@@ -211,7 +206,7 @@ fun NewPaymentScreen(
                 onClick = { //Agregar IF dependiendo del tipo de pago
                     viewModel.validateAndAddPayment(
                         type = PaymentType.BALANCE,
-                        amount = paymentAmount.toFloat(),
+                        amount = paymentAmount.toDoubleOrNull(),
                         description = paymentDescription,
                         pending = false,
                         onError = { errorMessage -> (errorMessage) },
