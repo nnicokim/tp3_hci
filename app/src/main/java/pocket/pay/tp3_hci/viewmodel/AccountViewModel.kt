@@ -166,6 +166,20 @@ class AccountViewModel(
         }
     )
 
+    fun deleteCard(cardId: Int) = runOnViewModelScope(
+        {
+            walletRepository.deleteCard(cardId)
+            walletRepository.getCards()
+        },
+        {
+            state, response ->
+                state.copy(
+                    currentCard = null,
+                    cards = response
+                )
+        }
+    )
+
     //Add validations
     private fun isValidNumber(number: String): Boolean {
         return number.matches(Regex("\\d{16}"))
