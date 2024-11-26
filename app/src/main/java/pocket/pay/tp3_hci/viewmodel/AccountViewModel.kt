@@ -58,9 +58,8 @@ class AccountViewModel(
             onError("Invalid email format")
         } else {
             login(email, password)
-            if (uiState.isLoggedIn){
                 goToHome()
-            }
+
         }
     }
 
