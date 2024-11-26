@@ -51,6 +51,18 @@
     <string name="invalid_email">Porfavor ingrese un mail valido</string>
     <string name="empty_password">La contraseña no puede estar vacio</string>
 
+    <string name="id">Id del pago</string>
+    <string name="description">Descripcion del pago</string>
+    <string name="amount">Monto del pago</string>
+    <string name="receiver_email">Email del receptor</string>
+
+    <string name="invalid_id">Id Invalido</string>
+    <string name="empty_description">La descripcion no puede estar vacio</string>
+    <string name="invalid_description">Descripcion invalida</string>
+    <string name="invalid_amount">Monto invalido</string>
+    <string name="empty_receiver_email">El mail del receptor no puede estar vacio</string>
+    <string name="invalid_receiver_email">Mail del receptor invalido</string>
+
     <string name="empty_card_number">El numero de la tarjeta no puede estar vacio</string>
     <string name="empty_card_name">El nombre del titular no puede estar vacio</string>
     <string name="empty_card_exp_date">La fecha de vencimiento no puede estar vacio</string>
