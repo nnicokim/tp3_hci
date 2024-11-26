@@ -211,8 +211,15 @@ class AccountViewModel(
 //        }
 //    )
 
-    fun addPayment(payment: Payment) = runOnViewModelScope(
+    fun addPayment(/*payment: Payment*/) = runOnViewModelScope(
         {
+            val payment = Payment(
+                id = 1,
+                description = "Nike",
+                amount = 1000f,
+                type = PaymentType.BALANCE,
+                pending = false,
+                receiverEmail = "dashawn45@ethereal.email")
             paymentRepository.addPayment(payment)
         },
         { state, response ->
