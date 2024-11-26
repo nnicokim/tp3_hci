@@ -114,6 +114,26 @@ fun CardsScreen(
                     }
 
                 }
+                Spacer(modifier = Modifier.height(80.dp))
+
+                Button(
+                    onClick = {
+                        uiState.currentCard?.id?.let { viewModel.deleteCard(cardId = it) }
+                    },
+                    modifier = Modifier.wrapContentWidth()
+                        .padding(horizontal = 9.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Purple,
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(15.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.delete_card),
+                        fontSize = 19.sp
+                    )
+                }
+
 
 
             }
