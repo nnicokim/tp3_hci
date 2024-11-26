@@ -127,13 +127,17 @@ class AccountViewModel(
         { state, response -> state.copy(currentUser = response) }
     )
 
-    fun logoutExit (goToLogin : () -> Unit) {
-        logout()
-        goToLogin()
+    fun logoutExit(goToLogin : () -> Unit) {
+        logout {
+            goToLogin()
+        }
     }
 
-    fun logout () = runOnViewModelScope(
-        { userRepository.logout() },
+    fun logout (onLogoutComplete: () -> Unit = {}) = runOnViewModelScope(
+        block = {
+            userRepository.logout()
+            onLogoutComplete() // Ejecuta solo después de completar el logout
+        },
         { state, _ -> state.copy(
             isLoggedIn = false,
             currentUser = null,

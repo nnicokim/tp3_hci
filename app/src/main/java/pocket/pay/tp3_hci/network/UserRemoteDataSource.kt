@@ -26,10 +26,19 @@ class UserRemoteDataSource(
         return handleApiResponse { userApiService.verify(code) }
     }
 
+//    suspend fun logout() {
+//        handleApiResponse { userApiService.logout() }
+//        sessionManager.removeAuthToken()
+//    }
+
     suspend fun logout() {
-        handleApiResponse { userApiService.logout() }
-        sessionManager.removeAuthToken()
+        try {
+            handleApiResponse { userApiService.logout() }
+        } finally {
+            sessionManager.invalidateSession()
+        }
     }
+
 
     suspend fun getCurrentUser(): NetworkUser {
         return handleApiResponse { userApiService.getCurrentUser() }

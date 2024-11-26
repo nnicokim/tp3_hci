@@ -24,6 +24,10 @@ class SessionManager(context: Context) {
         editor.apply()
     }
 
+    fun invalidateSession() {
+        removeAuthToken()
+    }
+
     companion object {
         const val PREFERENCES_NAME = "pocket.pay.tp3_hci"
         const val AUTH_TOKEN = "auth_token"

@@ -118,8 +118,8 @@ fun Profile(goToLogin: () -> Unit,
                         Button(
                             onClick = {
                                 showDialog = false
-                                //viewModel.logoutExit(goToLogin)
-                                viewModel.logout()
+                                viewModel.logoutExit(goToLogin)
+                                // viewModel.logout()
                             }
                         ) {
                             Text("Accept")
