@@ -69,7 +69,9 @@ class AccountViewModel(
         if(flag){
             //logica para buscar la cuenta
             login(email, password)
+            if(uiState.isLoggedIn){
                 goToHome()
+            }
         }
     }
 
