@@ -196,7 +196,7 @@ fun CardsScreen(
                                                             text = { Text(stringResource(id = R.string.delete_card)) },
                                                             onClick = {
                                                                 expanded = false
-//                                                    viewModel.removeCard(card)
+//                                                              viewModel.removeCard(card)
                                                             }
                                                         )
                                                     }

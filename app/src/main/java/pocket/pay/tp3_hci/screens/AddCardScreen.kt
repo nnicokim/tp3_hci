@@ -82,7 +82,7 @@ fun AddCardScreen(
     val configuration = LocalConfiguration.current  //Orientacion
     val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
 
-//    if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && adaptiveInfo.windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT) {
+    if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && adaptiveInfo.windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT) {
         Column(
             modifier = Modifier.fillMaxSize()
                 .padding(16.dp),
@@ -203,6 +203,425 @@ fun AddCardScreen(
                 Spacer(modifier = Modifier.height(5.dp))
 
 
+                OutlinedTextField(
+                    value = cvv,
+                    onValueChange = { cvv = it },
+                    label = { Text(stringResource(id = R.string.add_card_cvv)) },
+                    modifier = Modifier.fillMaxWidth().height(65.dp).padding(5.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    textStyle = TextStyle(
+                        color = Color.Black,
+                        fontSize = 16.sp
+                    )
+                )
+
+
+                if (errorMessageCVV == "empty_cvv") {
+                    Text(
+                        text = stringResource(R.string.empty_card_cvv),
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                } else if (errorMessageCVV == "invalid_cvv") {
+                    Text(
+                        text = stringResource(R.string.invalid_card_cvv),
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+
+
+                    Spacer(modifier = Modifier.height(5.dp))
+
+
+                    Column(
+                        modifier = Modifier.fillMaxSize()
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Spacer(modifier = Modifier.height(280.dp))
+
+                        Row {
+                            Button(
+                                onClick = {
+                                    goBackToCards()
+                                },
+                                modifier = Modifier.wrapContentWidth()
+                                    .padding(horizontal = 9.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFFD3D3D3),
+                                    contentColor = Color.White
+                                )
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.cancel),
+                                    color = Color.Black,
+                                    fontSize = 19.sp
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.width(16.dp))
+
+                            Button(
+                                onClick = {
+                                    viewModel.validateAndAddCard(
+                                        number = number,
+                                        expirationDate = date,
+                                        fullName = name,
+                                        cvv = cvv,
+                                        type = CardType.CREDIT,
+                                        onErrorNumber = { error -> errorMessageNumber = error },
+                                        onErrorName = { error -> errorMessageName = error },
+                                        onErrorExpirationDate = { error ->
+                                            errorMessageDate = error
+                                        },
+                                        onErrorCVV = { error -> errorMessageCVV = error },
+                                        goBackToCards = { goBackToCards() }
+                                    )
+                                },
+                                modifier = Modifier.wrapContentWidth()
+                                    .padding(horizontal = 9.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Purple,
+                                    contentColor = Color.White
+                                )
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.continue_string),
+                                    fontSize = 19.sp
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        Column(
+            modifier = Modifier.fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
+        ) {
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(
+                text = stringResource(id = R.string.add_card),
+                modifier = Modifier.padding(20.dp),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Left
+            )
+        }
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(80.dp))
+
+                OutlinedTextField(
+                    value = number,
+                    onValueChange = { number = it },
+                    label = { Text(stringResource(id = R.string.add_card_number)) },
+                    modifier = Modifier.fillMaxWidth().height(65.dp).padding(5.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    textStyle = TextStyle(
+                        color = Color.Black,
+                        fontSize = 16.sp
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+                if (errorMessageNumber == "empty_number") {
+                    Text(
+                        text = stringResource(R.string.empty_card_number),
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                } else if (errorMessageNumber == "invalid_number") {
+                    Text(
+                        text = stringResource(R.string.invalid_card_number),
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Cardholder's name:") },
+                    modifier = Modifier.fillMaxWidth().height(65.dp).padding(5.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    textStyle = TextStyle(
+                        color = Color.Black,
+                        fontSize = 16.sp
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+
+                if (errorMessageName == "empty_name") {
+                    Text(
+                        text = stringResource(R.string.empty_card_name),
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+
+
+
+
+                OutlinedTextField(
+                    value = date,
+                    onValueChange = { date = it },
+                    label = { Text(stringResource(id = R.string.add_card_exp_date)) },
+                    modifier = Modifier.fillMaxWidth().height(65.dp).padding(5.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    textStyle = TextStyle(
+                        color = Color.Black,
+                        fontSize = 16.sp
+                    )
+                )
+
+
+                if (errorMessageDate == "empty_date") {
+                    Text(
+                        text = stringResource(R.string.empty_card_exp_date),
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                } else if (errorMessageDate == "invalid_date") {
+                    Text(
+                        text = stringResource(R.string.invalid_card_exp_date),
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+
+                OutlinedTextField(
+                    value = cvv,
+                    onValueChange = { cvv = it },
+                    label = { Text(stringResource(id = R.string.add_card_cvv)) },
+                    modifier = Modifier.fillMaxWidth().height(65.dp).padding(5.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    textStyle = TextStyle(
+                        color = Color.Black,
+                        fontSize = 16.sp
+                    )
+                )
+
+
+                if (errorMessageCVV == "empty_cvv") {
+                    Text(
+                        text = stringResource(R.string.empty_card_cvv),
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                } else if (errorMessageCVV == "invalid_cvv") {
+                    Text(
+                        text = stringResource(R.string.invalid_card_cvv),
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+
+
+                    Spacer(modifier = Modifier.height(15.dp))
+
+
+
+                    Row {
+                        Button(
+                            onClick = {
+                                goBackToCards()
+                            },
+                            modifier = Modifier.wrapContentWidth()
+                                .padding(horizontal = 9.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFD3D3D3),
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.cancel),
+                                color = Color.Black,
+                                fontSize = 19.sp
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.width(16.dp))
+
+                        Button(
+                            onClick = {
+                                viewModel.validateAndAddCard(
+                                    number = number,
+                                    expirationDate = date,
+                                    fullName = name,
+                                    cvv = cvv,
+                                    type = CardType.CREDIT,
+                                    onErrorNumber = { error -> errorMessageNumber = error },
+                                    onErrorName = { error -> errorMessageName = error },
+                                    onErrorExpirationDate = { error ->
+                                        errorMessageDate = error
+                                    },
+                                    onErrorCVV = { error -> errorMessageCVV = error },
+                                    goBackToCards = { goBackToCards() }
+                                )
+                            },
+                            modifier = Modifier.wrapContentWidth()
+                                .padding(horizontal = 9.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Purple,
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.continue_string),
+                                fontSize = 19.sp
+                            )
+                        }
+                    }
+
+                }
+
+            }
+    }
+
+        /*{
+            Column(
+                modifier = Modifier.fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Text(
+                    text = stringResource(id = R.string.add_card),
+                    modifier = Modifier.padding(20.dp),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Left
+                )
+            }
+            Row {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(0.5f),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Spacer(modifier = Modifier.height(80.dp))
+
+                    OutlinedTextField(
+                        value = number,
+                        onValueChange = { number = it },
+                        label = { Text(stringResource(id = R.string.add_card_number)) },
+                        modifier = Modifier.fillMaxWidth().height(65.dp).padding(5.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        textStyle = TextStyle(
+                            color = Color.Black,
+                            fontSize = 16.sp
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.height(5.dp))
+
+                    if (errorMessageNumber == "empty_number") {
+                        Text(
+                            text = stringResource(R.string.empty_card_number),
+                            color = Color.Red,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    } else if (errorMessageNumber == "invalid_number") {
+                        Text(
+                            text = stringResource(R.string.invalid_card_number),
+                            color = Color.Red,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+
+                    OutlinedTextField(
+                        value = name,
+                        onValueChange = { name = it },
+                        label = { Text("Cardholder's name:") },
+                        modifier = Modifier.fillMaxWidth().height(65.dp).padding(5.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        textStyle = TextStyle(
+                            color = Color.Black,
+                            fontSize = 16.sp
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.height(5.dp))
+
+
+                    if (errorMessageName == "empty_name") {
+                        Text(
+                            text = stringResource(R.string.empty_card_name),
+                            color = Color.Red,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Spacer(modifier = Modifier.height(80.dp))
+
+                    OutlinedTextField(
+                        value = date,
+                        onValueChange = { date = it },
+                        label = { Text(stringResource(id = R.string.add_card_exp_date)) },
+                        modifier = Modifier.fillMaxWidth().height(65.dp).padding(5.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        textStyle = TextStyle(
+                            color = Color.Black,
+                            fontSize = 16.sp
+                        )
+                    )
+
+
+                    if (errorMessageDate == "empty_date") {
+                        Text(
+                            text = stringResource(R.string.empty_card_exp_date),
+                            color = Color.Red,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    } else if (errorMessageDate == "invalid_date") {
+                        Text(
+                            text = stringResource(R.string.invalid_card_exp_date),
+                            color = Color.Red,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(5.dp))
+
+
                     OutlinedTextField(
                         value = cvv,
                         onValueChange = { cvv = it },
@@ -296,8 +715,9 @@ fun AddCardScreen(
                         }
                     }
                 }
-            }
-        }
+
+        }}
+}
 
 
 //}
@@ -513,4 +933,4 @@ fun AddCardScreen(
 //        goBackToCards = {},
 //        viewModel = AccountViewModel(factory = AccountViewModel.provideFactory(LocalContext.current.applicationContext as PocketPayApplication))
 //    )
-//}
+//}*/

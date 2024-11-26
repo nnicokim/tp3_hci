@@ -187,24 +187,32 @@ class AccountViewModel(
         } else if(!isValidNumber(number)){ //16 digitos
             onErrorNumber("invalid_number")
             flag = false
+        } else {
+            onErrorNumber("Valid")
         }
         if (expirationDate.isBlank()) {
             onErrorExpirationDate("empty_date")
             flag = false
-        } else if(!isValidDate(expirationDate)){ //yyyy-mm-dd
-            onErrorNumber("invalid_number")
+        } else if(!isValidDate(expirationDate)){ //mm/yy
+            onErrorExpirationDate("invalid_number")
             flag = false
+        }  else {
+            onErrorExpirationDate("Valid")
         }
         if (fullName.isBlank()) {
             onErrorName("empty_name")
             flag = false
+        } else {
+            onErrorName("Valid")
         }
         if (cvv.isNullOrBlank()) {
             onErrorCVV("empty_cvv")
             flag = false
         }  else if(!isValidCVV(cvv)){ //3 digitos
-            onErrorNumber("invalid_number")
+            onErrorCVV("invalid_number")
             flag = false
+        } else {
+            onErrorCVV("Valid")
         }
         if (flag){
             val card = Card(number = number,
