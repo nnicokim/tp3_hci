@@ -50,6 +50,11 @@
     <string name="empty_card_exp_date">Expiration date cannot be empty</string>
     <string name="empty_card_cvv">CVV code cannot be empty</string>
 
+    <string name="empty_email">Email cannot be empty</string>
+    <string name="invalid_email">Email is invalid</string>
+    <string name="empty_password">Password cannot be empty</string>
+
+
     <string name="invalid_card_number">Invalid card number. Number must have 16 digits</string>
     <string name="invalid_card_exp_date">Invalid expiration date. Format must be MM/YY</string>
     <string name="invalid_card_cvv">Invalid CVV code. Code must have 3 digits</string>

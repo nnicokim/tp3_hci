@@ -466,7 +466,7 @@ fun AddCardScreen(
                             fullName = "Christeen Mischke",
                             expirationDate = "05/28",
                             cvv = "215",
-                            type = CardType.CREDIT)
+                            type = CardType.CREDIT) //Cambiar y hacer un dropdown para tipo de tarjeta
                             viewModel.addCard(card)
 //                        viewModel.validateAndAddCard(
 //                            number = number,

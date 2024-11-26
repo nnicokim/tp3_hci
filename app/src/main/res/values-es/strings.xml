@@ -47,6 +47,10 @@
     <string name="continue_string">Continuar</string>
     <string name="save_card">Guardar tarjeta</string>
 
+    <string name="empty_email">El mail no puede estar vacio</string>
+    <string name="invalid_email">Porfavor ingrese un mail valido</string>
+    <string name="empty_password">La contraseña no puede estar vacio</string>
+
     <string name="empty_card_number">El numero de la tarjeta no puede estar vacio</string>
     <string name="empty_card_name">El nombre del titular no puede estar vacio</string>
     <string name="empty_card_exp_date">La fecha de vencimiento no puede estar vacio</string>

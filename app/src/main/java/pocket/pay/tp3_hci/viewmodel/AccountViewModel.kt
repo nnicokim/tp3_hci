@@ -47,16 +47,24 @@ class AccountViewModel(
     fun validateAndLogin(
         email : String,
         password : String,
-        onError : (String) -> Unit,
+        onErrorEmail : (String) -> Unit,
+        onErrorPassword : (String) -> Unit,
         goToHome : () -> Unit
     ) {
+        var flag = true
         if (email.isBlank()) {
-            onError("Email cannot be empty")
-        } else if (password.isBlank()) {
-            onError("Password cannot be empty")
+            flag = false
+            onErrorEmail("empty_email")
         } else if (!isEmailValid(email)) {
-            onError("Invalid email format")
-        } else {
+            onErrorPassword("invalid_email")
+            flag = false
+        }
+        if (password.isBlank()) {
+            onErrorPassword("empty_password")
+            flag = false
+        }
+        if(flag){
+            //logica para buscar la cuenta
             login(email, password)
                 goToHome()
         }
@@ -142,24 +150,47 @@ class AccountViewModel(
         }
     )
 
+    //Add validations
+
     fun validateAndAddCard(
         number: String,
         expirationDate: String,
         fullName: String,
         cvv: String?,
         type: CardType,
-        onError : (String) -> Unit,
+        onErrorNumber : (String) -> Unit,
+        onErrorName : (String) -> Unit,
+        onErrorExpirationDate : (String) -> Unit,
+        onErrorCVV : (String) -> Unit,
         goBackToCards : () -> Unit
     ) {
+        var flag = true
         if (number.isBlank()) {
-            onError("Email cannot be empty") //arrojar error y agregar validacion de parametros
-        } else if (expirationDate.isBlank()) {
-            onError("Password cannot be empty")
-        } else if (fullName.isBlank()) {
-            onError("Password cannot be empty")
-        } else if (cvv.isNullOrBlank()) {
-            onError("Password cannot be empty")
-        } else {
+            onErrorNumber("empty_number") //arrojar error y agregar validacion de parametros
+            flag = false
+        } else if(!validNumber){ //16 digitos
+            onErrorNumber("invalid_number")
+            flag = false
+        }
+        if (expirationDate.isBlank()) {
+            onErrorExpirationDate("empty_date")
+            flag = false
+        } else if(!validDate){ //yyyy-mm-dd
+            onErrorNumber("invalid_number")
+            flag = false
+        }
+        if (fullName.isBlank()) {
+            onErrorName("empty_name")
+            flag = false
+        }
+        if (cvv.isNullOrBlank()) {
+            onErrorCVV("empty_cvv")
+            flag = false
+        }  else if(!validCVV){ //3 digitos
+            onErrorNumber("invalid_number")
+            flag = false
+        }
+        if (flag){
             val card = Card(number = number,
                 fullName = fullName,
                 expirationDate = expirationDate,
@@ -172,14 +203,14 @@ class AccountViewModel(
 
     fun getBalance() = runOnViewModelScope(
         { walletRepository.getBalance() },
-        { state, response -> state.copy(currentBalance = response.balance) }
+        { state, response -> state.copy(currentBalance = response) }
     )
 
     fun recharge(amount: Double) = runOnViewModelScope(
         {
             walletRepository.recharge(amount)
         },
-        { state, response -> state.copy(currentBalance = response.balance)
+        { state, response -> state.copy(currentBalance = response)
         }
     )
 

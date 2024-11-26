@@ -49,6 +49,8 @@ fun LoginScreen(onLoginSuccess: () -> Unit,
 
     var email by rememberSaveable { mutableStateOf("")}
     var password by rememberSaveable { mutableStateOf("")}
+    var errorMessageEmail by remember { mutableStateOf<String?>(null) }
+    var errorMessagePassword by remember { mutableStateOf<String?>(null) }
 
     val configuration = LocalConfiguration.current  // Orientacion
     val adaptiveInfo = currentWindowAdaptiveInfo()  // Tamaño de la pantalla
@@ -103,12 +105,35 @@ fun LoginScreen(onLoginSuccess: () -> Unit,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
 
+        if (errorMessageEmail == "empty_email"){
+            Text(
+                text = stringResource(R.string.empty_email),
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        } else if (errorMessageEmail == "invalid_email"){
+            Text(
+                text = stringResource(R.string.invalid_email),
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
 
         PasswordInputField(
             password = password,
             onPasswordChange = { password = it }
         )
+
+
+        if (errorMessagePassword == "empty_password"){
+            Text(
+                text = stringResource(R.string.empty_password),
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
 
         Spacer(modifier = Modifier.height(27.dp))
 
@@ -117,7 +142,8 @@ fun LoginScreen(onLoginSuccess: () -> Unit,
                 viewModel.validateAndLogin(
                     email = email,
                     password = password,
-                    onError = { errorMessage -> (errorMessage) },
+                    onErrorEmail = { error -> errorMessageEmail = error },
+                    onErrorPassword = { error -> errorMessagePassword = error },
                     goToHome = { goToHome() }
                 )
             },
