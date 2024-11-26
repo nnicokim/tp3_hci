@@ -89,20 +89,14 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                         ){
                             Card(
                                 modifier = Modifier.padding(10.dp),
-                                shape = RoundedCornerShape(40.dp),
+                                shape = RoundedCornerShape(30.dp),
                                 colors = CardDefaults.cardColors(
                                     containerColor = Purple,
                                     contentColor = Color.White
                                 )
                             ) {
                                 Text(
-                                    text = stringResource(id = R.string.balance),
-                                    fontSize = 25.sp,
-                                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                                    modifier = Modifier.padding(10.dp).align(Alignment.CenterHorizontally)
-                                )
-                                Text(
-                                    text = "$${uiState.currentBalance}",
+                                    text = "Balance: ${uiState.currentBalance?.balance ?: 0.0}",
                                     fontSize = 45.sp,
                                     fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                     textAlign = TextAlign.Center,
@@ -641,7 +635,7 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                     confirmButton = {
                         Button(
                             onClick = {
-                                inputAmount.toDoubleOrNull()?.let { viewModel.recharge(it) }
+                                inputAmount.toDoubleOrNull()?.let { viewModel.recharge(amount = it) }
                                 showDepositDialog = false
                                 inputAmount = ""
                             }

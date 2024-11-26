@@ -5,7 +5,7 @@ import pocket.pay.tp3_hci.model.Balance
 
 @Serializable
 class NetworkBalance (
-    var balance: Double
+    val balance: Double
 ) {
     fun asModel(): Balance {
         return Balance(

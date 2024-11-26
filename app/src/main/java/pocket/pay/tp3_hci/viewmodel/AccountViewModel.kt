@@ -19,12 +19,10 @@ import pocket.pay.tp3_hci.model.Card
 import pocket.pay.tp3_hci.model.CardType
 import pocket.pay.tp3_hci.model.Payment
 import pocket.pay.tp3_hci.model.PaymentType
+import pocket.pay.tp3_hci.network.model.NetworkAmount
 import pocket.pay.tp3_hci.network.model.NetworkRegister
 import pocket.pay.tp3_hci.repository.PaymentRepository
 import pocket.pay.tp3_hci.states.AccountUiState
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
 
 
 class AccountViewModel(
@@ -243,11 +241,25 @@ class AccountViewModel(
         { state, response -> state.copy(currentBalance = response) }
     )
 
+//    fun recharge(amount: Double) = runOnViewModelScope(
+//        {
+//            walletRepository.recharge(amount)
+//        },
+//        { state, response -> state.copy(currentBalance = response)
+//        }
+//    )
+
     fun recharge(amount: Double) = runOnViewModelScope(
         {
-            walletRepository.recharge(amount)
+            getBalance() // Llama a getBalance para actualizar el balance después de la recarga
+
+            val networkAmount = NetworkAmount(
+                amount = amount
+            )
+            walletRepository.recharge(networkAmount)
         },
-        { state, response -> state.copy(currentBalance = response)
+        { state, response ->
+            state.copy(currentBalance = response)
         }
     )
 
@@ -256,38 +268,9 @@ class AccountViewModel(
         { state, response -> state.copy(cards = response) }
     )
 
-    //null pointer exception
-
-//    fun addPayment(type: PaymentType,
-//                   amount: Float,
-//                   description: String,
-//                   pending: Boolean,
-//                   receiverEmail: String
-//                   ) = runOnViewModelScope(
-//        {
-//            val payment = Payment(
-//                type = type,
-//                amount = amount,
-//                description = description,
-//                pending = pending,
-//                receiverEmail = receiverEmail
-//            )
-//            paymentRepository.addPayment(payment)
-//        },
-//        { state, _ ->
-//            state.copy()
-//        }
-//    )
 
     fun addPayment(payment: Payment) = runOnViewModelScope(
         {
-//            val payment = Payment(
-//                id = 1,
-//                description = "Nike",
-//                amount = 1000f,
-//                type = PaymentType.BALANCE,
-//                pending = false,
-//                receiverEmail = "dashawn45@ethereal.email")
             paymentRepository.addPayment(payment)
         },
         { state, response ->
@@ -388,7 +371,6 @@ class AccountViewModel(
     //payBalance, payCards, addcards son para hacer validate
     //fijarse como funciona getCards
     //
-
 
 
     private fun <R> runOnViewModelScope(

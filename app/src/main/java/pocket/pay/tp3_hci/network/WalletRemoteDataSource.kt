@@ -1,6 +1,7 @@
 package pocket.pay.tp3_hci.network
 
 import pocket.pay.tp3_hci.network.api.WalletApiService
+import pocket.pay.tp3_hci.network.model.NetworkAmount
 import pocket.pay.tp3_hci.network.model.NetworkBalance
 import pocket.pay.tp3_hci.network.model.NetworkCard
 
@@ -14,7 +15,7 @@ class WalletRemoteDataSource(
         }
     }
 
-    suspend fun recharge(amount: Double): NetworkBalance {
+    suspend fun recharge(amount: NetworkAmount): NetworkBalance {
         return handleApiResponse {
             walletApiService.recharge(amount)
         }

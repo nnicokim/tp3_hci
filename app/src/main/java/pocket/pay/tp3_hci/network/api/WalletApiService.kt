@@ -1,5 +1,6 @@
 package pocket.pay.tp3_hci.network.api
 
+import pocket.pay.tp3_hci.network.model.NetworkAmount
 import pocket.pay.tp3_hci.network.model.NetworkBalance
 import pocket.pay.tp3_hci.network.model.NetworkCard
 import retrofit2.Response
@@ -15,7 +16,7 @@ interface WalletApiService {
     suspend fun getBalance(): Response<NetworkBalance>
 
     @POST("wallet/recharge")
-    suspend fun recharge(@Body amount: Double): Response<NetworkBalance>
+    suspend fun recharge(@Body amount: NetworkAmount): Response<NetworkBalance>
 
     @GET("wallet/cards")
     suspend fun getCards(): Response<List<NetworkCard>>
