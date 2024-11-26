@@ -17,7 +17,7 @@ class WalletRepository (
         return balance
     }
 
-    suspend fun recharge(amount: Number) : Balance{
+    suspend fun recharge(amount: Double) : Balance{
         val balance = remoteDataSource.recharge(amount).asModel()
         return balance
     }
