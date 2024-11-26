@@ -191,16 +191,18 @@ class AccountViewModel(
     //null pointer exception
 
     fun addPayment(type: PaymentType,
-                   amount: Double,
+                   amount: Float,
                    description: String,
-                   pending: Boolean
+                   pending: Boolean,
+                   receiverEmail: String
                    ) = runOnViewModelScope(
         {
             val payment = Payment(
                 type = type,
                 amount = amount,
                 description = description,
-                pending = pending
+                pending = pending,
+                receiverEmail = receiverEmail
             )
             paymentRepository.addPayment(payment)
         },
@@ -223,9 +225,10 @@ class AccountViewModel(
 
     fun validateAndAddPayment(
         type: PaymentType,
-        amount: Double?,
+        amount: Float?,
         description: String,
         pending: Boolean,
+        receiverEmail: String,
         onError: (String) -> Unit,
         goBackToPayment: () -> Unit
     ) {
@@ -235,7 +238,7 @@ class AccountViewModel(
             if (amount <= 0) {
                 onError("Password cannot be empty")
             } else {
-                addPayment(type, amount,description,pending)
+                addPayment(type, amount,description,pending, receiverEmail)
                 goBackToPayment()
             }
         }

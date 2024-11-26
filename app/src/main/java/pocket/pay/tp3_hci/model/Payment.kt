@@ -5,11 +5,12 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 data class Payment (
-    var id: Int? = 0,
+    var id: Int? = null,
     var type: PaymentType, // Balance o Card
-    var amount: Double,
+    var amount: Float,
     var description: String,
     var pending: Boolean,
+    var receiverEmail: String,
     var linkUuid: String? = null,
     var createdAt: String? = null,
     var updatedAt: String? = null,
@@ -25,6 +26,7 @@ data class Payment (
             amount = amount,
             description = description,
             pending = pending,
+            receiverEmail = receiverEmail,
             linkUuid = linkUuid,
             createdAt = createdAt?.let { dateFormat.format(createdAt!!) },
             updatedAt = updatedAt?.let { dateFormat.format(updatedAt!!) },

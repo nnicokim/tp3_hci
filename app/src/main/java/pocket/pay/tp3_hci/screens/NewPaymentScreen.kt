@@ -204,9 +204,10 @@ fun NewPaymentScreen(
                 onClick =  //Agregar IF dependiendo del tipo de pago
                    {
                         val payment = Payment(description = "Nike",
-                            amount = 1000.0,
+                            amount = 1000f,
                             type = PaymentType.BALANCE,
-                            pending = false)
+                            pending = false,
+                            receiverEmail = "johndoe@gmail.com")
                         viewModel.addPayment(payment)
                        goBackToPayment()
                     }
