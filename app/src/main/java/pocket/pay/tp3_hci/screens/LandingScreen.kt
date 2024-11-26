@@ -35,8 +35,8 @@ import pocket.pay.tp3_hci.ui.theme.Purple
 @Composable
 fun LandingScreen(goToLogin : () -> Unit, goToRegister : () -> Unit) {
 
-    val configuration = LocalConfiguration.current  //Orientacion
-    val adaptiveInfo = currentWindowAdaptiveInfo()  //Tamaño de la pantalla
+    val configuration = LocalConfiguration.current  // Orientacion
+    val adaptiveInfo = currentWindowAdaptiveInfo()  // Tamaño de la pantalla
 
     Column(
         modifier = Modifier

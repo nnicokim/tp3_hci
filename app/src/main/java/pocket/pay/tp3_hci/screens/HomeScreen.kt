@@ -64,7 +64,6 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
     // val recentTransactions by viewModel.recentTransactions.collectAsState()
 
     var showDepositDialog by remember { mutableStateOf(false) }
-    var showWithdrawalDialog by remember { mutableStateOf(false) }
     var showAliasDialog by remember { mutableStateOf(false) }
     var inputAmount by remember { mutableStateOf("") }
     var withdrawalError by remember { mutableStateOf(false) }
@@ -338,37 +337,6 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                             }
                         }
 
-                        Button(
-                            onClick = { showWithdrawalDialog = true },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.White,
-                                contentColor = Color.Black
-                            ),
-                            modifier = Modifier
-                                .size(width = 250.dp, height = 200.dp)
-                                .padding(horizontal = 10.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 8.dp,
-                                pressedElevation = 2.dp,
-                            )
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center,
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.bill_arrow),
-                                    contentDescription = "withdrawal",
-                                    modifier = Modifier.size(80.dp)
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    text = stringResource(id = R.string.withdrawal),
-                                    fontSize = 20.sp
-                                )
-                            }
-                        }
                     }
 
                     Spacer(modifier = Modifier.height(25.dp))
@@ -512,37 +480,6 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                             }
                         }
 
-                        Button(
-                            onClick = { showWithdrawalDialog = true },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.White,
-                                contentColor = Color.Black
-                            ),
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .padding(horizontal = 10.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 8.dp,
-                                pressedElevation = 2.dp,
-                            )
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center,
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.bill_arrow),
-                                    contentDescription = "withdrawal",
-                                    modifier = Modifier.size(24.dp)
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    text = stringResource(id = R.string.withdrawal),
-                                    fontSize = 12.sp
-                                )
-                            }
-                        }
                     }
                 } else {
                     Card(
@@ -633,38 +570,6 @@ fun HomeScreen(viewModel: AccountViewModel = viewModel(factory = AccountViewMode
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = stringResource(id = R.string.alias),
-                                    fontSize = 20.sp
-                                )
-                            }
-                        }
-
-                        Button(
-                            onClick = { showWithdrawalDialog = true },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.White,
-                                contentColor = Color.Black
-                            ),
-                            modifier = Modifier
-                                .size(width = 250.dp, height = 200.dp)
-                                .padding(horizontal = 10.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 8.dp,
-                                pressedElevation = 2.dp,
-                            )
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center,
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.bill_arrow),
-                                    contentDescription = "withdrawal",
-                                    modifier = Modifier.size(80.dp)
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    text = stringResource(id = R.string.withdrawal),
                                     fontSize = 20.sp
                                 )
                             }
