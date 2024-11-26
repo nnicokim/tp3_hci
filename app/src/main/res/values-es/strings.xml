@@ -79,4 +79,9 @@
     <string name="your_aliascbu">Tu Alias/CBU</string>
     <string name="go_back_to_home">Volver a Home</string>
 
+    <string name="are_you_sure">Está seguro?</string>
+    <string name="logout_question">Quiere cerrar sesión?</string>
+
+
+
 </resources>

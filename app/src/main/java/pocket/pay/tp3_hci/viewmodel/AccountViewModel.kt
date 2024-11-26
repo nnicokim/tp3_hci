@@ -137,6 +137,13 @@ class AccountViewModel(
         { state, _ -> state.copy(
             isLoggedIn = false,
             currentUser = null,
+            cards = null,
+            payments = null,
+            currentCard = null,
+            currentPayment = null,
+            currentBalance = null,
+            error = null,
+            isFetching = false,
         )
         }
     )
@@ -342,7 +349,7 @@ class AccountViewModel(
             uiState = updateState(uiState, response).copy(isFetching = false)
         }.onFailure { e ->
             uiState = uiState.copy(isFetching = false, error = handleError(e))
-            Log.e(TAG, "Coroutine execution failed", e)
+            Log.e(TAG, "Coroutine execution failed (runOnViewModelScope)", e)
         }
     }
 

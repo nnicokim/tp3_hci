@@ -1,34 +1,28 @@
 package pocket.pay.tp3_hci.screens
 
 import android.content.res.Configuration
-import android.widget.ImageView
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import pocket.pay.tp3_hci.R
 import androidx.compose.ui.res.stringResource
@@ -36,9 +30,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pocket.pay.tp3_hci.PocketPayApplication
-import pocket.pay.tp3_hci.PreviewScreenSizes
 import pocket.pay.tp3_hci.ui.theme.Purple
 import pocket.pay.tp3_hci.viewmodel.AccountViewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,6 +45,8 @@ fun Profile(goToLogin: () -> Unit,
                   loggedOut: () -> Unit) {
     val configuration = LocalConfiguration.current
     val adaptiveInfo = currentWindowAdaptiveInfo()
+
+    var showDialog by remember { mutableStateOf(false) }
 
     val uiState = viewModel.uiState
 
@@ -95,7 +92,7 @@ fun Profile(goToLogin: () -> Unit,
 
             Button(
                 onClick = {
-                    viewModel.logoutExit(goToLogin)
+                    showDialog = true
                 },
                 modifier = Modifier.padding(20.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -104,6 +101,39 @@ fun Profile(goToLogin: () -> Unit,
                 )
             ) {
                 Text(text = stringResource(id = R.string.logout))
+            }
+
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        showDialog = false
+                    },
+                    title = {
+                        Text(text = stringResource(id = R.string.are_you_sure))
+                    },
+                    text = {
+                        Text(text = stringResource(id = R.string.logout_question))
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                showDialog = false
+                                viewModel.logoutExit(goToLogin)
+                            }
+                        ) {
+                            Text("Accept")
+                        }
+                    },
+                    dismissButton = {
+                        Button(
+                            onClick = {
+                                showDialog = false
+                            }
+                        ) {
+                            Text( text = stringResource(id = R.string.cancel))
+                        }
+                    }
+                )
             }
         }
     }
