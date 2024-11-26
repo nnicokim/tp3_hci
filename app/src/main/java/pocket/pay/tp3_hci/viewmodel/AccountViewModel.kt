@@ -190,26 +190,26 @@ class AccountViewModel(
 
     //null pointer exception
 
-    fun addPayment(type: PaymentType,
-                   amount: Float,
-                   description: String,
-                   pending: Boolean,
-                   receiverEmail: String
-                   ) = runOnViewModelScope(
-        {
-            val payment = Payment(
-                type = type,
-                amount = amount,
-                description = description,
-                pending = pending,
-                receiverEmail = receiverEmail
-            )
-            paymentRepository.addPayment(payment)
-        },
-        { state, _ ->
-            state.copy()
-        }
-    )
+//    fun addPayment(type: PaymentType,
+//                   amount: Float,
+//                   description: String,
+//                   pending: Boolean,
+//                   receiverEmail: String
+//                   ) = runOnViewModelScope(
+//        {
+//            val payment = Payment(
+//                type = type,
+//                amount = amount,
+//                description = description,
+//                pending = pending,
+//                receiverEmail = receiverEmail
+//            )
+//            paymentRepository.addPayment(payment)
+//        },
+//        { state, _ ->
+//            state.copy()
+//        }
+//    )
 
     fun addPayment(payment: Payment) = runOnViewModelScope(
         {
@@ -223,26 +223,26 @@ class AccountViewModel(
         }
     )
 
-    fun validateAndAddPayment(
-        type: PaymentType,
-        amount: Float?,
-        description: String,
-        pending: Boolean,
-        receiverEmail: String,
-        onError: (String) -> Unit,
-        goBackToPayment: () -> Unit
-    ) {
-        if (description.isBlank()) {
-            onError("Email cannot be empty") //arrojar error y agregar validacion de parametros
-        } else if (amount != null) {
-            if (amount <= 0) {
-                onError("Password cannot be empty")
-            } else {
-                addPayment(type, amount,description,pending, receiverEmail)
-                goBackToPayment()
-            }
-        }
-    }
+//    fun validateAndAddPayment(
+//        type: PaymentType,
+//        amount: Float?,
+//        description: String,
+//        pending: Boolean,
+//        receiverEmail: String,
+//        onError: (String) -> Unit,
+//        goBackToPayment: () -> Unit
+//    ) {
+//        if (description.isBlank()) {
+//            onError("Email cannot be empty") //arrojar error y agregar validacion de parametros
+//        } else if (amount != null) {
+//            if (amount <= 0) {
+//                onError("Password cannot be empty")
+//            } else {
+//                addPayment(type, amount,description,pending, receiverEmail)
+//                goBackToPayment()
+//            }
+//        }
+//    }
 
 //    fun payCard(number: String,
 //                expirationDate: String,

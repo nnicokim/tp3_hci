@@ -207,7 +207,7 @@ fun NewPaymentScreen(
                             amount = 1000f,
                             type = PaymentType.BALANCE,
                             pending = false,
-                            receiverEmail = "johndoe@gmail.com")
+                            receiverEmail = "dashawn45@ethereal.email")
                         viewModel.addPayment(payment)
                        goBackToPayment()
                     }
